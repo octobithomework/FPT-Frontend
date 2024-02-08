@@ -1,0 +1,118 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    margin-top: 200px;
+    width: 600px;
+    background: #fff;
+    padding-bottom: 30px;
+}
+
+.company-header {
+    background-color: darkblue; /* Background color for the company header */
+    padding: 45px 0; /* Adjust padding as needed */
+    border-radius: 10px; /* Add border-radius for rounded corners */
+    width: 100%; /* Take full width */
+    box-sizing: border-box; /* Include padding and border in width calculation */
+    text-align: center;
+    color: white; /* Center align text */  
+    margin-top: -30px;
+    font-size: 38px;
+    border-radius: 0;
+}
+  
+.header{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.text{
+    color: black;
+    font-size: 48px;
+    font-weight: 700;
+}
+
+.underline{
+    width: 61px;
+    height: 6px;
+    background: black;
+    border-radius: 9px;
+}
+
+.inputs{
+    margin-top: 55px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.input{
+    display: flex;
+    align-items: center;
+    margin: auto;
+    width: 480px;
+    height: 80px;
+    background: #eaeaea;
+    border-radius: 6px;
+}
+
+.input img{
+    margin: 0px 30px;
+}
+
+.input input{
+    height: 50px;
+    width: 400px;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: 797979;
+    font-size: 19px;
+}
+
+.forgot-password{
+    padding-left: 62px;
+    margin-top: 27px;
+    color: #797979;
+    font-size: 18px;
+}
+
+.forgot-password span{
+    color: blue;
+    cursor: pointer;
+}
+
+.submit-container{
+    display: flex;
+    gap: 30px;
+    margin: 60px auto;
+}
+
+.submit{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 220px;
+    height: 59px;
+    color: #fff;
+    background: blue;
+    border-radius: 0px;
+    font-size: 19px;
+    font-weight: 700;
+    cursor: pointer;
+}
+.not-a-user {
+    display: flex;
+    margin-top: -10px; 
+    justify-content: center;
+    align-items: center;
+  }
+
+.not-a-user span{
+    color: blue;
+    cursor: pointer;
+}
