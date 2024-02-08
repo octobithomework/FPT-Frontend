@@ -1,7 +1,7 @@
 import React, { useState } from 'react' 
 import './Login.css'
-import email_icon from '../Assets/email.png'
-import password_lock from '../Assets/password.png'
+import email_icon from '../../Assets/email.png'
+import password_lock from '../../Assets/password.png'
 export const Login = () => {
 
   const [action,setAction] = useState("Login");
