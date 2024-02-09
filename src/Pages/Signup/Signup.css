@@ -1,11 +1,10 @@
-/* LoginPage.css */
+/* Signup.css */
 
-.login-container {
+.signup-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* Subtract out header and footer */
-    height: calc(100vh - 65px - 41px);
+    height: calc(100vh - 65px - 41px); 
     /* background-color: #f5f5f5; */
     background-image: url('../../Assets/gym-background.jpg');
     background-size: cover; 
@@ -13,7 +12,7 @@
     background-repeat: no-repeat;
 }
 
-.login-form {
+.signup-form {
     background-color: #333;
     color: white;
     padding: 20px;
@@ -53,7 +52,7 @@
     background-color: #0056b3;
 }
 
-.login-actions {
+.signup-actions {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -79,5 +78,5 @@
 .form-error {
     color: red;
     text-align: center;
-    margin-top: 20px;
+    margin-bottom: 20px; 
 }
