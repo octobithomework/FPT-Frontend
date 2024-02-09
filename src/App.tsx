@@ -1,12 +1,16 @@
-// App.tsx
 import React from 'react';
-import SignupPage from './Pages/Signup/SignupPage';
+import { BrowserRouter as Router } from 'react-router-dom';
+import Routes from './Routes';
+import Header from './Pages/Header';
 
 const App: React.FC = () => {
   return (
-    <div className="App">
-      <SignupPage />
-    </div>
+    <Router>
+      <div className="App">
+        <Header />
+        <Routes />
+      </div>
+    </Router>
   );
 };
 

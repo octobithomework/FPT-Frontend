@@ -1,0 +1,11 @@
+.banner {
+    background-color: #007bff; /* Blue background color */
+    color: #fff; /* White text color */
+    text-align: center;
+    padding: 20px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+  
