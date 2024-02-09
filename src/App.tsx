@@ -9,6 +9,8 @@ import Header from './Pages/Header/Header';
 import Footer from './Pages/Footer/Footer';
 import SignupPage from './Pages/Signup/Signup';
 import ForgotPasswordPage from './Pages/ForgotPassword/ForgotPassword';
+import ResetPasswordPage from './Pages/ResetPassword/ResetPassword';
+import DashboardPage from './Pages/Dashboard/Dashboart';
 // import HomePage from './HomePage';
 // import ProtectedPage from './ProtectedPage';
 
@@ -21,8 +23,9 @@ const App: React.FC = () => {
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/signup" element={<SignupPage />} />
                 <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-                {/* <Route path="/" element={<HomePage />} /> */}
-                <Route path="/protected" element={<ProtectedRoute component={LoginPage} />} />
+                <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
+                <Route path="/dashboard" element={<ProtectedRoute component={DashboardPage} />} />
+                <Route path="*" element={<Navigate replace to="/login" />} />
             </Routes>
             <Footer />
         </Router>

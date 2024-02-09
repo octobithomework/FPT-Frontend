@@ -7,7 +7,6 @@ const ForgotPasswordPage: React.FC = () => {
     const [emailError, setEmailError] = useState('');
     const [formSuccess, setFormSuccess] = useState('');
     const [formError, setFormError] = useState('');
-    const navigate = useNavigate();
 
     const validateEmail = () => {
         setEmailError('');
