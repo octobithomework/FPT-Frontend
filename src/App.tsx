@@ -1,14 +1,13 @@
+// App.tsx
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import Login from './Pages/Login/Login';
+import SignupPage from './Pages/Signup/SignupPage';
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div>
-      <Login/>
+    <div className="App">
+      <SignupPage />
     </div>
   );
-}
+};
 
 export default App;
