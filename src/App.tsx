@@ -1,14 +1,17 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import Login from './Pages/Login/Login';
+import { BrowserRouter as Router } from 'react-router-dom';
+import Routes from './Routes';
+import Header from './Pages/Header';
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div>
-      <Login/>
-    </div>
+    <Router>
+      <div className="App">
+        <Header />
+        <Routes />
+      </div>
+    </Router>
   );
-}
+};
 
 export default App;
