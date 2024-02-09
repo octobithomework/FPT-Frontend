@@ -8,6 +8,7 @@ import ProtectedRoute from './Utils/ProtectedRoute';
 import Header from './Pages/Header/Header';
 import Footer from './Pages/Footer/Footer';
 import SignupPage from './Pages/Signup/Signup';
+import ForgotPasswordPage from './Pages/ForgotPassword/ForgotPassword';
 // import HomePage from './HomePage';
 // import ProtectedPage from './ProtectedPage';
 
@@ -19,6 +20,7 @@ const App: React.FC = () => {
                 <Route path="/" element={<Navigate replace to="/login" />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/signup" element={<SignupPage />} />
+                <Route path="/forgot-password" element={<ForgotPasswordPage />} />
                 {/* <Route path="/" element={<HomePage />} /> */}
                 <Route path="/protected" element={<ProtectedRoute component={LoginPage} />} />
             </Routes>

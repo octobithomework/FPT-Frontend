@@ -1,11 +1,9 @@
-/* LoginPage.css */
-
 .login-container {
     display: flex;
     justify-content: center;
     align-items: center;
     /* Subtract out header and footer */
-    height: calc(100vh - 65px - 41px);
+    height: calc(100vh - 65px - 60px);
     /* background-color: #f5f5f5; */
     background-image: url('../../Assets/gym-background.jpg');
     background-size: cover; 
