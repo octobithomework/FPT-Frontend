@@ -56,8 +56,8 @@ const ForgotPasswordPage: React.FC = () => {
                 {formSuccess && <p className="form-success">{formSuccess}</p>}
                 {formError && <p className="form-error">{formError}</p>}
                 <div className="form-field">
-                    <label>Email</label>
-                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <label htmlFor="email">Email</label>
+                    <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
                     {emailError && <span className="error">{emailError}</span>}
                 </div>
                 <button type="submit" className="submit-btn">Send Reset Email</button>
