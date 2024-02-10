@@ -38,7 +38,7 @@ describe('ForgotPasswordPage', () => {
     userEvent.click(screen.getByRole('button', { name: /send reset email/i }));
 
     await waitFor(() => {
-      expect(screen.getByText(/A password reset email has been sent if the email is registered in our system\./)).toBeInTheDocument();
+      expect(screen.getByText("A password reset email has been sent if the email is registered in our system\.")).toBeInTheDocument();
     });
   });
 

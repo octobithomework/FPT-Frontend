@@ -80,7 +80,7 @@ const SignupPage: React.FC = () => {
             });
 
             if (!response.ok) {
-                throw new Error('Signup failed.');
+                throw new Error('Signup failed. Make sure you are using a unique email address.');
             }
 
             // Assuming the API response includes a token upon successful signup

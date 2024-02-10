@@ -21,6 +21,8 @@ const ForgotPasswordPage: React.FC = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setFormSuccess('');
+        setFormError('');
 
         if (!validateEmail()) {
             return;

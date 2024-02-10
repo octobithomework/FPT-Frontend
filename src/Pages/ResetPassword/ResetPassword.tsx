@@ -52,7 +52,7 @@ const ResetPasswordPage: React.FC = () => {
             isValid = false;
         }
 
-        if (newPassword !== confirmNewPassword) {
+        if (newPassword !== confirmNewPassword && newPassword.length > 0) {
             setConfirmPasswordError('Passwords do not match.');
             isValid = false;
         }
@@ -62,6 +62,7 @@ const ResetPasswordPage: React.FC = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setFormError('');
 
         if (!validatePasswords()) {
             return;
