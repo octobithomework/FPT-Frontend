@@ -8,7 +8,7 @@ import ForgotPasswordPage from './ForgotPassword';
 import fetchMock from 'jest-fetch-mock';
 fetchMock.enableMocks();
 
-const renderWithRouter = (ui: JSX.Element, { route = '/' } = {}) => {
+const renderWithRouter = (ui: JSX.Element, { route = '/forgot-password' } = {}) => {
   window.history.pushState({}, 'Test page', route);
   return render(ui, { wrapper: BrowserRouter });
 };
@@ -38,6 +38,11 @@ describe('ForgotPasswordPage', () => {
     userEvent.click(screen.getByRole('button', { name: /send reset email/i }));
 
     await waitFor(() => {
+      // expect to have been called with user email in body
+      expect(fetchMock).toHaveBeenCalledWith(expect.anything(), expect.objectContaining({
+        method: 'POST',
+        body: JSON.stringify({ email: 'user@example.com' }),
+      }));
       expect(screen.getByText("A password reset email has been sent if the email is registered in our system\.")).toBeInTheDocument();
     });
   });

@@ -1,5 +1,3 @@
-// ResetPasswordPage.tsx
-
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode'; 
@@ -93,17 +91,17 @@ const ResetPasswordPage: React.FC = () => {
             <form onSubmit={handleSubmit} className="reset-password-form">
                 {formError && <p className="form-error">{formError}</p>}
                 <div className="form-field">
-                    <label>Email</label>
-                    <input type="email" value={email} disabled />
+                    <label htmlFor='email'>Email</label>
+                    <input type="email" id="email" value={email} disabled />
                 </div>
                 <div className="form-field">
-                    <label>New Password</label>
-                    <input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
+                    <label htmlFor='new-password'>New Password</label>
+                    <input type="password" id="new-password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
                     {passwordError && <span className="error">{passwordError}</span>}
                 </div>
                 <div className="form-field">
-                    <label>Confirm Password</label>
-                    <input type="password" value={confirmNewPassword} onChange={(e) => setConfirmNewPassword(e.target.value)} />
+                    <label htmlFor='confirm-password'>Confirm Password</label>
+                    <input type="password" id="confirm-password" value={confirmNewPassword} onChange={(e) => setConfirmNewPassword(e.target.value)} />
                     {confirmPasswordError && <span className="error">{confirmPasswordError}</span>}
                 </div>
                 <button type="submit" className="submit-btn">Reset Password</button>
