@@ -31,6 +31,7 @@ const renderWithRouter = (ui: JSX.Element, { route = '/forgot-password/some-toke
 describe('ResetPasswordPage', () => { 
   beforeEach(() => {
     fetchMock.resetMocks();
+    mockNavigate.mockClear();
     (useParams as jest.Mock).mockClear();
 
     (useParams as jest.Mock).mockReturnValue({ token: 'some-token' });
