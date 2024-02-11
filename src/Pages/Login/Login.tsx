@@ -68,13 +68,13 @@ const LoginPage: React.FC = () => {
             <form onSubmit={handleLogin} className="login-form">
                 {formError && <p className="form-error">{formError}</p>}
                 <div className="form-field">
-                    <label>Email</label>
-                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <label htmlFor="email">Email</label>
+                    <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
                     {emailError && <span className="error">{emailError}</span>}
                 </div>
                 <div className="form-field">
-                    <label>Password</label>
-                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                    <label htmlFor ="password">Password</label>
+                    <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                     {passwordError && <span className="error">{passwordError}</span>}
                 </div>
                 <button type="submit" className="submit-btn">Login</button>
