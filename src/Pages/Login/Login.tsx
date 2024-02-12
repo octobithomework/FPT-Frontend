@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Login.css'; 
+import { post } from '../../Utils/APIHelpers';
 
 const LoginPage: React.FC = () => {
     const [email, setEmail] = useState('');
@@ -39,13 +40,7 @@ const LoginPage: React.FC = () => {
         }
 
         try {
-            const response = await fetch('http://localhost:5000/api/login/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ email, password })
-            });
+            const response = await post("/login", {email,  password})
 
             if (!response.ok) {
                 throw new Error('Login failed.');

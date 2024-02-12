@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Signup.css';
+import { post } from '../../Utils/APIHelpers';
 
 const SignupPage: React.FC = () => {
     const [firstName, setFirstName] = useState('');
@@ -71,13 +72,7 @@ const SignupPage: React.FC = () => {
         }
 
         try {
-            const response = await fetch('http://localhost:5000/api/register/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ firstName, lastName, email, password })
-            });
+            const response = await post('/register', {firstName, lastName, email, password})
 
             if (!response.ok) {
                 throw new Error('Signup failed. Make sure you are using a unique email address.');

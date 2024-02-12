@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './ForgotPassword.css';
+import { post } from '../../Utils/APIHelpers';
 
 const ForgotPasswordPage: React.FC = () => {
     const [email, setEmail] = useState('');
@@ -29,13 +30,7 @@ const ForgotPasswordPage: React.FC = () => {
         }
 
         try {
-            const response = await fetch('http://localhost:5000/api/forgot-password/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ email })
-            });
+            const response = await post("/forgot-password/", {email})
 
             if (!response.ok) {
                 throw new Error('Failed to send password reset email.');
