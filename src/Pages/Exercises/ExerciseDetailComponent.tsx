@@ -23,13 +23,13 @@ const ExerciseDetailComponent: React.FC = () => {
 };
 
 interface ExerciseDetail {
-    exercise_id: number;
+    exerciseId: number;
     name: string;
     description: string;
-    category_type: string;
-    body_part_focus: string;
-    difficulty_level: string;
-    equipment_needed: string;
+    categoryType: string;
+    bodyPartFocus: string;
+    difficultLevel: string;
+    equipmentNeeded: string;
 }
 
 export default ExerciseDetailComponent;
