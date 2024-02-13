@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Login.css'; 
+import { post } from '../../Utils/APIHelpers';
 
 const LoginPage: React.FC = () => {
     const [email, setEmail] = useState('');
@@ -39,13 +40,7 @@ const LoginPage: React.FC = () => {
         }
 
         try {
-            const response = await fetch('http://localhost:5000/api/login/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ email, password })
-            });
+            const response = await post("/login", {email,  password})
 
             if (!response.ok) {
                 throw new Error('Login failed.');
@@ -68,13 +63,13 @@ const LoginPage: React.FC = () => {
             <form onSubmit={handleLogin} className="login-form">
                 {formError && <p className="form-error">{formError}</p>}
                 <div className="form-field">
-                    <label>Email</label>
-                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <label htmlFor="email">Email</label>
+                    <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
                     {emailError && <span className="error">{emailError}</span>}
                 </div>
                 <div className="form-field">
-                    <label>Password</label>
-                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                    <label htmlFor ="password">Password</label>
+                    <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                     {passwordError && <span className="error">{passwordError}</span>}
                 </div>
                 <button type="submit" className="submit-btn">Login</button>

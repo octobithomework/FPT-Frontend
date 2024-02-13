@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode'; 
 import './ResetPassword.css';
+import { post } from '../../Utils/APIHelpers';
 
 interface TokenPayload {
     sub: string;
@@ -67,14 +68,7 @@ const ResetPasswordPage: React.FC = () => {
         }
 
         try {
-            // Example API call
-            const response = await fetch('http://localhost:5000/api/reset-password/' + token, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ newPassword })
-            });
+            const response = await post('/reset-password/' + token, {newPassword})
 
             if (!response.ok) {
                 throw new Error('Failed to reset password.');

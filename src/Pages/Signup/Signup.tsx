@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Signup.css';
+import { post } from '../../Utils/APIHelpers';
 
 const SignupPage: React.FC = () => {
     const [firstName, setFirstName] = useState('');
@@ -71,13 +72,7 @@ const SignupPage: React.FC = () => {
         }
 
         try {
-            const response = await fetch('http://localhost:5000/api/register/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ firstName, lastName, email, password })
-            });
+            const response = await post('/register', {firstName, lastName, email, password})
 
             if (!response.ok) {
                 throw new Error('Signup failed. Make sure you are using a unique email address.');
@@ -97,36 +92,35 @@ const SignupPage: React.FC = () => {
     };
 
     return (
-        <div className="signup-container"> {/* Consider renaming the class for general use */}
-            <form onSubmit={handleSignup} className="signup-form"> {/* Consider renaming the class for general use */}
-                {formError && <p className="form-error">{formError}</p>}
-                <div className="form-field">
-                    <label>First Name</label>
-                    <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-                    {firstNameError && <span className="error">{firstNameError}</span>}
-                </div>
-                <div className="form-field">
-                    <label>Last Name</label>
-                    <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />
-                    {lastNameError && <span className="error">{lastNameError}</span>}
-                </div>
-                <div className="form-field">
-                    <label>Email</label>
-                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                    {emailError && <span className="error">{emailError}</span>}
-                </div>
-                <div className="form-field">
-                    <label>Password</label>
-                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                    {passwordError && <span className="error">{passwordError}</span>}
-                </div>
-                <button type="submit" className="submit-btn">Sign Up</button>
-                <div className="signup-actions">
-                    <Link to="/login" className="action-link">Have an account? Login</Link>
-                </div>
-            </form>
-        </div>
-    );
+        <div className="signup-container">
+        <form onSubmit={handleSignup} className="signup-form">
+            {formError && <p className="form-error">{formError}</p>}
+            <div className="form-field">
+                <label htmlFor="firstName">First Name</label>
+                <input id="firstName" type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                {firstNameError && <span className="error">{firstNameError}</span>}
+            </div>
+            <div className="form-field">
+                <label htmlFor="lastName">Last Name</label>
+                <input id="lastName" type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+                {lastNameError && <span className="error">{lastNameError}</span>}
+            </div>
+            <div className="form-field">
+                <label htmlFor="email">Email</label>
+                <input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                {emailError && <span className="error">{emailError}</span>}
+            </div>
+            <div className="form-field">
+                <label htmlFor="password">Password</label>
+                <input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                {passwordError && <span className="error">{passwordError}</span>}
+            </div>
+            <button type="submit" className="submit-btn">Sign Up</button>
+            <div className="signup-actions">
+                <Link to="/login" className="action-link">Have an account? Login</Link>
+            </div>
+        </form>
+    </div>
+);
 };
-
 export default SignupPage;
