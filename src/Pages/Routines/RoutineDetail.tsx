@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { get } from '../../Utils/APIHelpers';
-import './RoutineDetail.css'; 
+import './RoutineDetail.css';
 
 
-const RoutineDetailPage: React.FC = () => {
+const RoutineDetail: React.FC = () => {
     const { RoutineID } = useParams<{ RoutineID: string }>(); // Get RoutineID from URL params
     const [routineDetail, setRoutineDetail] = useState<RoutineDetail | null>(null);
     const [isAuthorized, setIsAuthorized] = useState<boolean>(true); // Assume authorized by default
@@ -57,7 +57,7 @@ const RoutineDetailPage: React.FC = () => {
         <div>
             <h1>{routineDetail.name}</h1>
             <p>Description: {routineDetail.description}</p>
-            
+
             <h2>Exercises</h2>
             <ul>
                 {routineDetail.exercises.map((exercise, index) => (
@@ -70,7 +70,7 @@ const RoutineDetailPage: React.FC = () => {
                     </li>
                 ))}
             </ul>
-            
+
             {!isAuthorized && <p>Access to this routine is restricted.</p>}
         </div>
     );
@@ -92,6 +92,6 @@ interface ExerciseDetail {
     restingTime: number;
 }
 
-export default RoutineDetailPage;
+export default RoutineDetail;
 
 

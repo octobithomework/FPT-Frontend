@@ -11,8 +11,8 @@ import SignupPage from './Pages/Signup/Signup';
 import ForgotPasswordPage from './Pages/ForgotPassword/ForgotPassword';
 import ResetPasswordPage from './Pages/ResetPassword/ResetPassword';
 import DashboardPage from './Pages/Dashboard/Dashboart';
-import ExerciseDetailComponent from './Pages/Exercises/ExerciseDetailComponent';
-import RoutineDetailPage from './Pages/Routines/RoutineDetailComponent';
+import ExerciseDetail from './Pages/Exercises/ExerciseDetail';
+import RoutineDetail from './Pages/Routines/RoutineDetail';
 // import HomePage from './HomePage';
 // import ProtectedPage from './ProtectedPage';
 
@@ -28,8 +28,8 @@ const App: React.FC = () => {
                 <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
                 <Route path="/dashboard" element={<ProtectedRoute component={DashboardPage} />} />
                 <Route path="*" element={<Navigate replace to="/login" />} />
-                <Route path="/exercise-details/:ExerciseID" element={<ExerciseDetailComponent />} />
-                <Route path="/routine-details/:RoutineID" element={<RoutineDetailPage />} />
+                <Route path="/exercise-details/:ExerciseID" element={<ExerciseDetail />} />
+                <Route path="/routine-details/:RoutineID" element={<RoutineDetail />} />
 
             </Routes>
             <Footer />

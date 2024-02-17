@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { get } from '../../Utils/APIHelpers';
-import './ExerciseDetailComponent.css'; // Import the CSS file for styling
+import './ExerciseDetail.css'; // Import the CSS file for styling
 
-const ExerciseDetailComponent: React.FC = () => {
+const ExerciseDetail: React.FC = () => {
     const { exerciseId } = useParams<{ exerciseId: string }>(); // Get exerciseId from URL params
     const [exerciseDetailInfo, setExerciseDetailInfo] = useState<ExerciseDetail | null>(null)
 
@@ -55,4 +55,4 @@ interface ExerciseDetail {
     equipmentNeeded: string;
 }
 
-export default ExerciseDetailComponent;
+export default ExerciseDetail;
