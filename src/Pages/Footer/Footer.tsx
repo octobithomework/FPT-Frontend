@@ -6,7 +6,9 @@ import './Footer.css';
 const Footer: React.FC = () => {
     return (
         <footer className="footer">
-            © {new Date().getFullYear()} Fitness Progress Tracker
+            <div className="footer-text">
+                © {new Date().getFullYear()} Fitness Progress Tracker
+            </div>
         </footer>
     );
 };

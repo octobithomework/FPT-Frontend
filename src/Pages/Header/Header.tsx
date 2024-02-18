@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './Header.css'; // Assume you create a corresponding CSS file
+import './Header.css';
 
 const Header: React.FC = () => {
     return (
         <header className="header">
-            <h3 className="header-text"><Link to="dashboard">Fitness Progress Tracker</Link></h3>
+            <div className="header-text"><Link to="dashboard">Fitness Progress Tracker</Link></div>
             <nav className="navbar">
                 <Link to="/about">About</Link>
                 <Link to="/contact">Contact</Link>

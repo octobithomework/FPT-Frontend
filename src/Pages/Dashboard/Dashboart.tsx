@@ -1,5 +1,15 @@
+import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import Calendar from "./Components/Calendar";
+import './Dashboard.css';
+  
 const DashboardPage: React.FC = () => {
-    return <div></div>
+    return (
+        <div className="dashboard-container">
+            <ChakraProvider>
+                <Calendar />
+            </ChakraProvider>
+        </div>
+    );
 };
 
 export default DashboardPage;

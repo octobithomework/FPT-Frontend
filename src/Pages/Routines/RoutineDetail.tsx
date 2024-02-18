@@ -4,7 +4,7 @@ import { get } from '../../Utils/APIHelpers';
 import './RoutineDetail.css';
 
 
-const RoutineDetail: React.FC = () => {
+const RoutineDetailPage: React.FC = () => {
     const { RoutineID } = useParams<{ RoutineID: string }>(); // Get RoutineID from URL params
     const [routineDetail, setRoutineDetail] = useState<RoutineDetail | null>(null);
     const [isAuthorized, setIsAuthorized] = useState<boolean>(true); // Assume authorized by default
@@ -92,6 +92,6 @@ interface ExerciseDetail {
     restingTime: number;
 }
 
-export default RoutineDetail;
+export default RoutineDetailPage;
 
 

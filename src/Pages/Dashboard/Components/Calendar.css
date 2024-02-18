@@ -1,0 +1,27 @@
+.calendar-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 65px - 60px);
+}
+
+.calendar-box {
+    width: 65%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Full Calendar */
+a.fc-daygrid-day-number {
+    width: 100%;
+    text-align: center;
+}
+
+a.fc-daygrid-day-number {
+    width: 100%;
+    text-align: center;
+}
+
+a.fc-daygrid-day-number {
+    width: 100%;
+    text-align: center;
+}

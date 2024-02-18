@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { get } from '../../Utils/APIHelpers';
 import './ExerciseDetail.css'; // Import the CSS file for styling
 
-const ExerciseDetail: React.FC = () => {
+const ExerciseDetailPage: React.FC = () => {
     const { exerciseId } = useParams<{ exerciseId: string }>(); // Get exerciseId from URL params
     const [exerciseDetailInfo, setExerciseDetailInfo] = useState<ExerciseDetail | null>(null)
 
@@ -55,4 +55,4 @@ interface ExerciseDetail {
     equipmentNeeded: string;
 }
 
-export default ExerciseDetail;
+export default ExerciseDetailPage;

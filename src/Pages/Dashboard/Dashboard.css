@@ -1,0 +1,4 @@
+.dashboard-container {
+    height: calc(100vh - 65px - 60px); 
+    background-color: #f5f5f5;
+}
