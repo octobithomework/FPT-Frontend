@@ -11,7 +11,7 @@ const DashboardPage: React.FC = () => {
     const [completedRoutines, setCompletedRoutines] = useState<Routine[]>([]);
     const [currentMonth, setCurrentMonth] = useState(new Date().getMonth() + 1);
     const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
-    const [selectedDate, setSelectedDate] = useState<string | null>(null);
+    const [selectedInfo, setSelectedInfo] = useState<string | null>(null);
 
     useEffect(() => {
         const fetchCompletedRoutines = async () => {
@@ -45,7 +45,7 @@ const DashboardPage: React.FC = () => {
                 <Calendar
                     completedRoutines={completedRoutines}
                     setCurrentMonthYear={(month, year) => { setCurrentMonth(month); setCurrentYear(year); }}
-                    onDateOrEventClick={(date) => setSelectedDate(date)}
+                    onDateOrEventClick={(info) => setSelectedInfo(info)}
                 />
             </ChakraProvider>
 
@@ -53,7 +53,7 @@ const DashboardPage: React.FC = () => {
                 completedRoutines={completedRoutines} 
                 currentMonth={currentMonth}
                 currentYear={currentYear}
-                selectedDate={selectedDate}
+                selectedInfo={selectedInfo}
             />
         </div>
     );

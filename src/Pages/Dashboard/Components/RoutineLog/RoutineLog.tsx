@@ -7,15 +7,21 @@ interface RoutineLogProps {
     completedRoutines: Routine[];
     currentMonth: number;
     currentYear: number;
-    selectedDate: string | null;
+    selectedInfo: string | null;
 }
 
-const RoutineLog: React.FC<RoutineLogProps> = ({ completedRoutines, currentMonth, currentYear, selectedDate }) => {
+const RoutineLog: React.FC<RoutineLogProps> = ({ completedRoutines, currentMonth, currentYear, selectedInfo }) => {
     const filteredRoutines = completedRoutines.filter(routine => {
-        console.log(routine.date)
-        if (selectedDate) {
-            return routine.date === selectedDate;
+        const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+        
+        if (selectedInfo && !dateRegex.test(selectedInfo)) {
+            return routine.routineLogId.toString() == selectedInfo;
         }
+
+        if (selectedInfo && dateRegex.test(selectedInfo)) {
+            return routine.date === selectedInfo;
+        }
+
         const routineDate = new Date(routine.date);
         const routineMonth = routineDate.getMonth() + 1;
         const routineYear = routineDate.getFullYear();
