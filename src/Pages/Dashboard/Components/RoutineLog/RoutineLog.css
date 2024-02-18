@@ -28,6 +28,7 @@
 .name-date-container {
     display: flex;
     justify-content: space-between;
+    
 }
 
 .name, .date {
@@ -40,6 +41,18 @@
     text-overflow: ellipsis;
 }
 
+.name {
+    font-weight: bold;
+}
+
 .date {
     text-align: right;
+}
+
+.description {
+    color: #CCCCCC;;
+}
+
+.no-routines {
+    text-align: center;
 }

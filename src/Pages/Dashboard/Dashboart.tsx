@@ -49,7 +49,11 @@ const DashboardPage: React.FC = () => {
                 />
             </ChakraProvider>
 
-            <RoutineLog completedRoutines={completedRoutines} />
+            <RoutineLog 
+                completedRoutines={completedRoutines} 
+                currentMonth={currentMonth}
+                currentYear={currentYear}
+            />
         </div>
     );
 };

@@ -33,7 +33,8 @@ const Calendar: React.FC<ComponentProps> = ({ completedRoutines, setCurrentMonth
   }, [completedRoutines]);
 
   const handleDatesSet = useCallback((info: any) => {
-    const currentMonth = info.end.getMonth();
+    // For some reason December is 0, so we need to set it to 12
+    const currentMonth = info.end.getMonth() == 0 ? 12 : info.end.getMonth();
     const currentYear = info.end.getFullYear();
     setCurrentMonthYear(currentMonth, currentYear);
   }, [setCurrentMonthYear]);
