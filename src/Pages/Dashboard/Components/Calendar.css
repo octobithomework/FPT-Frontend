@@ -15,6 +15,10 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.fc-daygrid-day-events:hover {
+    cursor: pointer;
+}
+
 /* Full Calendar */
 a.fc-daygrid-day-number {
     width: 100%;
