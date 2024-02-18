@@ -10,11 +10,11 @@ import { Routine } from '../../../../Interfaces/Routine';
 interface CalendarProps {
   completedRoutines: Routine[];
   setCurrentMonthYear: (month: number, year: number) => void;
-  onDateOrEventClick: (info: string) => void;
+  onDateOrEventClick: (date: string, id: string) => void;
 }
 
 const Calendar: React.FC<CalendarProps> = ({ completedRoutines, setCurrentMonthYear, onDateOrEventClick }) => {
-  const [events, setEvents] = useState<{ title: string; date: string; id: number | string }[]>([]);
+  const [events, setEvents] = useState<{ title: string; date: string; id: string }[]>([]);
 
   useEffect(() => {
     const routineGroups: { [key: string]: Routine[] } = completedRoutines.reduce((acc, routine) => {
@@ -24,9 +24,9 @@ const Calendar: React.FC<CalendarProps> = ({ completedRoutines, setCurrentMonthY
       return acc;
     }, {} as { [key: string]: Routine[] });
 
-    const newEvents: { title: string; date: string; id: number | string }[] = Object.entries(routineGroups).flatMap(([date, routines]) => {
+    const newEvents: { title: string; date: string; id: string }[] = Object.entries(routineGroups).flatMap(([date, routines]) => {
       return routines.length > 2
-        ? [...routines.slice(0, 2).map(routine => ({ title: routine.name, date, id: routine.routineLogId })), { title: '...', date, id: "" }]
+        ? [...routines.slice(0, 2).map(routine => ({ title: routine.name, date, id: routine.routineLogId.toString() })), { title: '...', date, id: "" }]
         : routines.map(routine => ({ title: routine.name, date, id: routine.routineLogId }));
     });
 
@@ -67,8 +67,8 @@ const Calendar: React.FC<CalendarProps> = ({ completedRoutines, setCurrentMonthY
             events={events.map(event => ({ ...event, id: event.id.toString() }))}
             eventContent={renderEventContent}
             datesSet={handleDatesSet}
-            eventClick={(clickInfo) => onDateOrEventClick(clickInfo.event.id)}
-            dateClick={(clickInfo) => onDateOrEventClick(clickInfo.dateStr)}
+            dateClick={(clickInfo) => onDateOrEventClick(clickInfo.dateStr, "")}
+            eventClick={(clickInfo) => onDateOrEventClick(clickInfo.event.startStr, clickInfo.event.id)}
           />
         </Box>
       </div>

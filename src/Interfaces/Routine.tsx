@@ -1,5 +1,5 @@
 export interface Routine {
-    routineLogId: number;
+    routineLogId: string;
     name: string;
     description: string,
     date: string;

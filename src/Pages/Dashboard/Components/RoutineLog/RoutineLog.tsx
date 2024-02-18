@@ -1,4 +1,3 @@
-// CompletedRoutinesList.js
 import React from 'react';
 import { Routine } from '../../../../Interfaces/Routine';
 import './RoutineLog.css';
@@ -7,19 +6,18 @@ interface RoutineLogProps {
     completedRoutines: Routine[];
     currentMonth: number;
     currentYear: number;
-    selectedInfo: string | null;
+    selectedDate: string | null;
+    selectedId: string | null;
 }
 
-const RoutineLog: React.FC<RoutineLogProps> = ({ completedRoutines, currentMonth, currentYear, selectedInfo }) => {
+const RoutineLog: React.FC<RoutineLogProps> = ({ completedRoutines, currentMonth, currentYear, selectedDate, selectedId }) => {
     const filteredRoutines = completedRoutines.filter(routine => {
-        const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
-        
-        if (selectedInfo && !dateRegex.test(selectedInfo)) {
-            return routine.routineLogId.toString() == selectedInfo;
+        if (selectedDate && selectedId) {
+            return routine.routineLogId.toString() === selectedId;
         }
 
-        if (selectedInfo && dateRegex.test(selectedInfo)) {
-            return routine.date === selectedInfo;
+        if (selectedDate && !selectedId) {
+            return routine.date === selectedDate;
         }
 
         const routineDate = new Date(routine.date);
@@ -27,6 +25,13 @@ const RoutineLog: React.FC<RoutineLogProps> = ({ completedRoutines, currentMonth
         const routineYear = routineDate.getFullYear();
         return routineMonth === currentMonth && routineYear === currentYear;
     });
+
+    const renderNoRoutinesMessage = () => {
+        if (selectedDate) {
+            return <p className="routine-entry no-routines">No routines completed on this day.</p>;
+        }
+        return <p className="routine-entry no-routines">No routines completed in this month.</p>;
+    };
 
     return (
         <div className="routine-log-container">
@@ -44,7 +49,7 @@ const RoutineLog: React.FC<RoutineLogProps> = ({ completedRoutines, currentMonth
                         </div>
                     ))
                 ) : (
-                    <p className="routine-entry no-routines">No routines completed in this month.</p>
+                    renderNoRoutinesMessage()
                 )}
             </div>
         </div>
