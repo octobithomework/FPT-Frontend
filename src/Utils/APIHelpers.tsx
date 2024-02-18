@@ -11,10 +11,10 @@ const GET_DEFAULT_HEADERS = {
 }
 
 export async function get(apiPath: string, body?: any, headers = GET_DEFAULT_HEADERS) {
-    return await fetch(DEFAULT_PATH + apiPath, {
-      method: 'GET',
-      headers: headers
-    })
+  return await fetch(DEFAULT_PATH + apiPath, {
+    method: 'GET',
+    headers: headers
+  })
 }
 
 export async function getAuth(apiPath: string, body?: any) {
@@ -22,15 +22,15 @@ export async function getAuth(apiPath: string, body?: any) {
     'Access-Control-Allow-Origin': '*',
     'Authorization': 'Bearer ' + localStorage.getItem("token")
   }
-  return get(apiPath, body, headers)
+  return await get(apiPath, body, headers)
 }
 
 export async function post(apiPath: string, body?: any, headers = DEFAULT_HEADERS) {
-    return await fetch(DEFAULT_PATH + apiPath, {
-      method: 'POST',
-      headers: headers,
-      body: JSON.stringify(body),
-    })
+  return await fetch(DEFAULT_PATH + apiPath, {
+    method: 'POST',
+    headers: headers,
+    body: JSON.stringify(body),
+  })
 }
 
 export async function postAuth(apiPath: string, body?: any) {
@@ -39,5 +39,5 @@ export async function postAuth(apiPath: string, body?: any) {
     'Access-Control-Allow-Origin': '*',
     'Authorization': 'Bearer ' + localStorage.getItem("token")
   }
-  return post(apiPath, body, headers)
+  return await post(apiPath, body, headers)
 }
