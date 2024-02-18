@@ -1,7 +1,7 @@
 // DashboardPage.js
 import React, { useEffect, useState } from 'react';
 import { ChakraProvider } from "@chakra-ui/react";
-import Calendar from "./Components/Calendar"; // Ensure the correct path
+import Calendar from "./Components/Calendar/Calendar"; // Ensure the correct path
 import './Dashboard.css';
 import { getAuth } from '../../Utils/APIHelpers'; // Ensure the correct path
 import { Routine } from '../../Interfaces/Routine';
@@ -43,8 +43,8 @@ const DashboardPage: React.FC = () => {
         <div className="dashboard-container">
             <ChakraProvider>
                 <Calendar
-                  completedRoutines={completedRoutines}
-                  setCurrentMonthYear={(month, year) => { setCurrentMonth(month); setCurrentYear(year); }}
+                    completedRoutines={completedRoutines}
+                    setCurrentMonthYear={(month, year) => { setCurrentMonth(month); setCurrentYear(year); }}
                 />
             </ChakraProvider>
         </div>
