@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from 'react';
+// Calendar.js
+import React, { useState, useEffect, useCallback } from 'react';
 import { Box } from '@chakra-ui/react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from "@fullcalendar/interaction";
-import './Calendar.css';
-import { Routine } from '../../../Interfaces/Routine';
+import './Calendar.css'; // Ensure correct path
+import { Routine } from '../../../Interfaces/Routine'; // Ensure correct path
 
 interface ComponentProps {
   completedRoutines: Routine[];
+  setCurrentMonthYear: (month: number, year: number) => void; // New prop to update parent state
 }
 
-const Calendar: React.FC<ComponentProps> = ({ completedRoutines }) => {
-  // State for storing calendar events
+const Calendar: React.FC<ComponentProps> = ({ completedRoutines, setCurrentMonthYear }) => {
   const [events, setEvents] = useState<{ title: string; date: string; }[]>([]);
 
   useEffect(() => {
@@ -23,43 +24,24 @@ const Calendar: React.FC<ComponentProps> = ({ completedRoutines }) => {
     }, {} as { [key: string]: Routine[] });
 
     const newEvents: { title: string; date: string; }[] = Object.entries(routineGroups).flatMap(([date, routines]) => {
-      if (routines.length > 2) {
-        // If there are more than 2 routines for a date, show the first two and an ellipsis
-        return [
-          ...routines.slice(0, 2).map(routine => ({ title: routine.name, date })),
-          { title: '...', date }
-        ];
-      } else {
-        // If there are 2 or fewer routines, show them normally
-        return routines.map(routine => ({ title: routine.name, date }));
-      }
+      return routines.length > 2
+        ? [...routines.slice(0, 2).map(routine => ({ title: routine.name, date })), { title: '...', date }]
+        : routines.map(routine => ({ title: routine.name, date }));
     });
 
     setEvents(newEvents);
   }, [completedRoutines]);
 
+  const handleDatesSet = useCallback((info: any) => {
+    const currentMonth = info.end.getMonth();
+    const currentYear = info.end.getFullYear();
+    setCurrentMonthYear(currentMonth, currentYear);
+  }, [setCurrentMonthYear]);
+
   const renderEventContent = (eventInfo: any) => {
-    // Center text for events with the title '...'
-    if (eventInfo.event.title === '...') {
-      return (
-        <div style={{ textAlign: 'center', width: '100%' }}>
-          {eventInfo.event.title}
-        </div>
-      );
-    } else {
-      // Default rendering for other events
-      return (
-        <div style={{
-          whiteSpace: 'nowrap',
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-          maxWidth: '100%',
-          paddingLeft: '5px',
-        }}>
-          {eventInfo.event.title}
-        </div>
-      );
-    }
+    return eventInfo.event.title === '...'
+      ? (<div style={{ textAlign: 'center', width: '100%' }}>{eventInfo.event.title}</div>)
+      : (<div style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '100%', paddingLeft: '5px', }}>{eventInfo.event.title}</div>);
   };
 
   return (
@@ -67,14 +49,14 @@ const Calendar: React.FC<ComponentProps> = ({ completedRoutines }) => {
       <div className="calendar-box">
         <Box p="5" borderRadius="lg">
           <FullCalendar
-            key={events.length}
             plugins={[dayGridPlugin, interactionPlugin]}
             initialView="dayGridMonth"
             weekends={true}
             eventOrder={"date"}
             height="calc(100vh - 185px)"
-            events={events} 
+            events={events}
             eventContent={renderEventContent}
+            datesSet={handleDatesSet}
           />
         </Box>
       </div>
