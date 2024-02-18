@@ -8,9 +8,10 @@ interface RoutineLogProps {
     currentYear: number;
     selectedDate: string | null;
     selectedId: string | null;
+    clearFilters: () => void;
 }
 
-const RoutineLog: React.FC<RoutineLogProps> = ({ completedRoutines, currentMonth, currentYear, selectedDate, selectedId }) => {
+const RoutineLog: React.FC<RoutineLogProps> = ({ completedRoutines, currentMonth, currentYear, selectedDate, selectedId, clearFilters }) => {
     const filteredRoutines = completedRoutines.filter(routine => {
         if (selectedDate && selectedId) {
             return routine.routineLogId.toString() === selectedId;
@@ -20,10 +21,14 @@ const RoutineLog: React.FC<RoutineLogProps> = ({ completedRoutines, currentMonth
             return routine.date === selectedDate;
         }
 
-        const routineDate = new Date(routine.date);
-        const routineMonth = routineDate.getMonth() + 1;
-        const routineYear = routineDate.getFullYear();
-        return routineMonth === currentMonth && routineYear === currentYear;
+        if (!selectedDate && !selectedId) {
+            const routineDate = new Date(routine.date);
+            const routineMonth = routineDate.getMonth() + 1;
+            const routineYear = routineDate.getFullYear();
+            return routineMonth === currentMonth && routineYear === currentYear;
+        }
+
+        
     });
 
     const renderNoRoutinesMessage = () => {
@@ -36,6 +41,10 @@ const RoutineLog: React.FC<RoutineLogProps> = ({ completedRoutines, currentMonth
     return (
         <div className="routine-log-container">
             <div className="routine-log-box">
+                <div className="btn-container">
+                    <button onClick={clearFilters} className="clear-filters-btn">Clear Filters</button> {}
+                </div>
+                
                 {filteredRoutines.length > 0 ? (
                     filteredRoutines.map((routine) => (
                         <div key={routine.routineLogId} className="routine-entry">

@@ -17,6 +17,20 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.clear-filters-btn {
+    padding: .4em .65em;
+    border-radius: .25em;
+    margin: 20px;
+    background-color: var(--fc-button-bg-color);
+    border-color: var(--fc-button-border-color);
+}
+
+.btn-container {
+    display: flex;
+    justify-content: end;
+    border-bottom: 1px solid #444;
+}
+
 .routine-entry {
     display: flex;
     flex-direction: column; /* Change to column layout */

@@ -56,6 +56,7 @@ const DashboardPage: React.FC = () => {
                 currentYear={currentYear}
                 selectedDate={selectedDate}
                 selectedId={selectedId}
+                clearFilters={() => (setSelectedDate(""), setSelectedId(""))}
             />
         </div>
     );
