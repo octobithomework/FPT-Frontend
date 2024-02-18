@@ -5,6 +5,7 @@ import Calendar from "./Components/Calendar/Calendar"; // Ensure the correct pat
 import './Dashboard.css';
 import { getAuth } from '../../Utils/APIHelpers'; // Ensure the correct path
 import { Routine } from '../../Interfaces/Routine';
+import RoutineLog from './Components/RoutineLog/RoutineLog';
 
 const DashboardPage: React.FC = () => {
     const [completedRoutines, setCompletedRoutines] = useState<Routine[]>([]);
@@ -47,6 +48,8 @@ const DashboardPage: React.FC = () => {
                     setCurrentMonthYear={(month, year) => { setCurrentMonth(month); setCurrentYear(year); }}
                 />
             </ChakraProvider>
+
+            <RoutineLog completedRoutines={completedRoutines} />
         </div>
     );
 };

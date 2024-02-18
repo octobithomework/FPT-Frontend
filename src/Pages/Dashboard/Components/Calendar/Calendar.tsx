@@ -4,8 +4,8 @@ import { Box } from '@chakra-ui/react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from "@fullcalendar/interaction";
-import './Calendar.css'; // Ensure correct path
-import { Routine } from '../../../../Interfaces/Routine'; // Ensure correct path
+import './Calendar.css'; 
+import { Routine } from '../../../../Interfaces/Routine';
 
 interface ComponentProps {
   completedRoutines: Routine[];
@@ -41,7 +41,15 @@ const Calendar: React.FC<ComponentProps> = ({ completedRoutines, setCurrentMonth
   const renderEventContent = (eventInfo: any) => {
     return eventInfo.event.title === '...'
       ? (<div style={{ textAlign: 'center', width: '100%' }}>{eventInfo.event.title}</div>)
-      : (<div style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '100%', paddingLeft: '5px', }}>{eventInfo.event.title}</div>);
+      : (<div style={{ 
+          textAlign: 'center', 
+          whiteSpace: 'nowrap', 
+          overflow: 'hidden', 
+          textOverflow: 'ellipsis', 
+          maxWidth: '100%', 
+          paddingLeft: '5px', 
+        }}>{eventInfo.event.title}
+      </div>);
   };
 
   return (
