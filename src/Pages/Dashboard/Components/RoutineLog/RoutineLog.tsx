@@ -28,7 +28,7 @@ const RoutineLog: React.FC<RoutineLogProps> = ({ completedRoutines, currentMonth
             return routineMonth === currentMonth && routineYear === currentYear;
         }
 
-        
+        return false; // Ensure a boolean is returned for all paths
     });
 
     const renderNoRoutinesMessage = () => {
@@ -38,11 +38,14 @@ const RoutineLog: React.FC<RoutineLogProps> = ({ completedRoutines, currentMonth
         return <p className="routine-entry no-routines">No routines completed in this month.</p>;
     };
 
+    // Determine if the clear filters button should be disabled
+    const isClearFiltersDisabled = !selectedDate && !selectedId;
+
     return (
         <div className="routine-log-container">
             <div className="routine-log-box">
                 <div className="btn-container">
-                    <button onClick={clearFilters} className="clear-filters-btn">Clear Filters</button> {}
+                    <button onClick={clearFilters} className="clear-filters-btn" disabled={isClearFiltersDisabled}>Clear Filters</button> {}
                 </div>
                 
                 {filteredRoutines.length > 0 ? (
