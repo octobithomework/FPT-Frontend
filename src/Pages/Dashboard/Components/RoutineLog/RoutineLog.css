@@ -25,6 +25,11 @@
     border-bottom: 1px solid #444;
 }
 
+.routine-entry:hover {
+    cursor: pointer; 
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
 .name-date-container {
     display: flex;
     justify-content: space-between;
