@@ -9,12 +9,12 @@ const Calendar: React.FC = () => {
   return (
     <div className="calendar-container">
       <div className="calendar-box">
-        <Box p="5" bg="gray.50" borderRadius="lg">
+        <Box p="5" borderRadius="lg">
           <FullCalendar
             plugins={[dayGridPlugin, interactionPlugin]}
             initialView="dayGridMonth"
             weekends={true}
-            height="75vh"
+            height="70vh"
             events={[
               { title: 'Event 1', date: '2024-02-18' },
               { title: 'Event 2', date: '2024-02-18' },

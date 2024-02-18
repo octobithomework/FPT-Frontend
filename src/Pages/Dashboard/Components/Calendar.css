@@ -3,10 +3,15 @@
     justify-content: center;
     align-items: center;
     height: calc(100vh - 65px - 60px);
+    width: 65%;  
 }
 
 .calendar-box {
-    width: 65%;
+    margin: 10px;
+    width: 100%;
+    background-color: #333;
+    color: white;
+    border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 

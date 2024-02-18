@@ -5,7 +5,7 @@ import './Header.css';
 const Header: React.FC = () => {
     return (
         <header className="header">
-            <div className="header-text"><Link to="dashboard">Fitness Progress Tracker</Link></div>
+            <div className="header-text"><Link to="/dashboard">Fitness Progress Tracker</Link></div>
             <nav className="navbar">
                 <Link to="/about">About</Link>
                 <Link to="/contact">Contact</Link>
