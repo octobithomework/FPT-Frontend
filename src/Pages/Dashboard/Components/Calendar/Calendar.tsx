@@ -9,10 +9,11 @@ import { Routine } from '../../../../Interfaces/Routine';
 
 interface ComponentProps {
   completedRoutines: Routine[];
-  setCurrentMonthYear: (month: number, year: number) => void; // New prop to update parent state
+  setCurrentMonthYear: (month: number, year: number) => void;
+  onDateOrEventClick: (date: string) => void;
 }
 
-const Calendar: React.FC<ComponentProps> = ({ completedRoutines, setCurrentMonthYear }) => {
+const Calendar: React.FC<ComponentProps> = ({ completedRoutines, setCurrentMonthYear, onDateOrEventClick }) => {
   const [events, setEvents] = useState<{ title: string; date: string; }[]>([]);
 
   useEffect(() => {
@@ -66,6 +67,8 @@ const Calendar: React.FC<ComponentProps> = ({ completedRoutines, setCurrentMonth
             events={events}
             eventContent={renderEventContent}
             datesSet={handleDatesSet}
+            eventClick={(clickInfo) => onDateOrEventClick(clickInfo.event.startStr)}
+            dateClick={(clickInfo) => onDateOrEventClick(clickInfo.dateStr)}
           />
         </Box>
       </div>

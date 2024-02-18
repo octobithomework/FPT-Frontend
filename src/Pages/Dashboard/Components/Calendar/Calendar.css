@@ -15,13 +15,17 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.fc-daygrid-day-frame {
+    cursor: pointer;
+}
+
 .fc-daygrid-event {
     background-color: var(--fc-button-bg-color);
     border: var(--fc-button-border-color);
 }
 
 .fc-daygrid-event:hover {
-    cursor: pointer;
+    
     background-color: var(--fc-button-hover-bg-color);
     border-color: var(--fc-button-hover-border-color);
 }
