@@ -44,7 +44,7 @@ const RoutineDetailPage: React.FC = () => {
     if (errorLoading) {
         return (
             <div className="error-container">
-                <p>No Routines in database</p>
+                <p>Error Loading</p>
             </div>
         );
     }

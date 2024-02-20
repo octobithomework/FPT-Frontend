@@ -22,7 +22,7 @@ const DashboardPage: React.FC = () => {
                     throw new Error('Failed to fetch completed routines.');
                 }
                 const newData = await response.json();
-
+                
                 setCompletedRoutines((prevRoutines: Routine[]) => {
                     const updatedRoutines: Routine[] = [...prevRoutines];
                     newData.forEach((newRoutine: Routine) => {

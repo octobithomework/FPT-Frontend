@@ -3,8 +3,18 @@ import { useParams } from 'react-router-dom';
 import { get } from '../../Utils/APIHelpers';
 import './ExerciseDetail.css'; // Import the CSS file for styling
 
+type ExerciseDetail = {
+    exerciseId: number;
+    name: string;
+    description: string;
+    categoryType: string;
+    bodyPartFocus: string;
+    difficultLevel: string;
+    equipmentNeeded: string;
+}
+
 const ExerciseDetailPage: React.FC = () => {
-    const { exerciseId } = useParams<{ exerciseId: string }>(); // Get exerciseId from URL params
+    const { ExerciseID } = useParams<{ ExerciseID: string }>(); // Get ExerciseID from URL params
     const [exerciseDetailInfo, setExerciseDetailInfo] = useState<ExerciseDetail | null>(null)
 
     async function getExerciseDetail(id: string) {
@@ -19,10 +29,10 @@ const ExerciseDetailPage: React.FC = () => {
     }
 
     useEffect(() => {
-        if (exerciseId) {
-            getExerciseDetail(exerciseId).then(setExerciseDetailInfo);
+        if (ExerciseID) {
+            getExerciseDetail(ExerciseID).then(setExerciseDetailInfo);
         }
-    }, [exerciseId]); // Fetch exercise details when exerciseId changes
+    }, [ExerciseID]); // Fetch exercise details when ExerciseID changes
 
     if (!exerciseDetailInfo) {
         return (
@@ -44,15 +54,5 @@ const ExerciseDetailPage: React.FC = () => {
         </div>
     );
 };
-
-interface ExerciseDetail {
-    exerciseId: number;
-    name: string;
-    description: string;
-    categoryType: string;
-    bodyPartFocus: string;
-    difficultLevel: string;
-    equipmentNeeded: string;
-}
 
 export default ExerciseDetailPage;
