@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Component, ReactNode, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { get } from '../../Utils/APIHelpers';
 import './ExerciseDetail.css'; // Import the CSS file for styling

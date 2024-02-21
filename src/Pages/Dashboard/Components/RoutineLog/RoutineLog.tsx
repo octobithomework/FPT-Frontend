@@ -1,6 +1,7 @@
 import React from 'react';
 import { Routine } from '../../../../Interfaces/Routine';
 import './RoutineLog.css';
+import RoutineDetailComponent from '../../../Routines/RoutineDetail';
 
 interface RoutineLogProps {
     completedRoutines: Routine[];
@@ -51,15 +52,17 @@ const RoutineLog: React.FC<RoutineLogProps> = ({ completedRoutines, currentMonth
                 {filteredRoutines.length > 0 ? (
                     filteredRoutines.map((routine) => (
                         // add data attribute to the div
-                        <div key={routine.routineLogId} className="routine-entry" data-routine-id={routine.routineId}>
-                            <div className="name-date-container">
-                                <p className="name">{routine.name}</p>
-                                <p className="date">{new Date(routine.date + 'T00:00:00').toLocaleDateString()}</p>
+                        <RoutineDetailComponent routineId={routine.routineId} popoverTrigger={
+                            <div key={routine.routineLogId} className="routine-entry" data-routine-id={routine.routineId}>
+                                <div className="name-date-container">
+                                    <p className="name">{routine.name}</p>
+                                    <p className="date">{new Date(routine.date + 'T00:00:00').toLocaleDateString()}</p>
+                                </div>
+                                <div>
+                                    <p className="description">{routine.description}</p>
+                                </div>
                             </div>
-                            <div>
-                                <p className="description">{routine.description}</p>
-                            </div>
-                        </div>
+                        }/>
                     ))
                 ) : (
                     renderNoRoutinesMessage()

@@ -1,6 +1,6 @@
 // DashboardPage.js
 import React, { useEffect, useState } from 'react';
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, Flex } from "@chakra-ui/react";
 import Calendar from "./Components/Calendar/Calendar"; // Ensure the correct path
 import './Dashboard.css';
 import { getAuth } from '../../Utils/APIHelpers'; // Ensure the correct path
@@ -41,24 +41,23 @@ const DashboardPage: React.FC = () => {
     }, [currentMonth, currentYear]);
 
     return (
-        <div className="dashboard-container">
+        <Flex>
             <ChakraProvider>
                 <Calendar
                     completedRoutines={completedRoutines}
                     setCurrentMonthYear={(month, year) => { setCurrentMonth(month); setCurrentYear(year); }}
                     onDateOrEventClick={(date, id) => (setSelectedDate(date), setSelectedId(id))}
                 />
+                <RoutineLog 
+                    completedRoutines={completedRoutines} 
+                    currentMonth={currentMonth}
+                    currentYear={currentYear}
+                    selectedDate={selectedDate}
+                    selectedId={selectedId}
+                    clearFilters={() => (setSelectedDate(""), setSelectedId(""))}
+                />
             </ChakraProvider>
-
-            <RoutineLog 
-                completedRoutines={completedRoutines} 
-                currentMonth={currentMonth}
-                currentYear={currentYear}
-                selectedDate={selectedDate}
-                selectedId={selectedId}
-                clearFilters={() => (setSelectedDate(""), setSelectedId(""))}
-            />
-        </div>
+        </Flex>
     );
 };
 

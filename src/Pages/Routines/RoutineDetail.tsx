@@ -1,11 +1,32 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { get } from '../../Utils/APIHelpers';
+import React, { ReactNode, useEffect, useState } from 'react';
+import { get, getAuth } from '../../Utils/APIHelpers';
 import './RoutineDetail.css';
+import { Box, Divider, Heading, Popover, VStack, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverHeader, PopoverTrigger, StackDivider, Text } from '@chakra-ui/react';
 
+interface RoutineDetail {
+    routineId: string;
+    name: string;
+    description: string;
+    exercises: ExerciseDetail[];
+}
 
-const RoutineDetailPage: React.FC = () => {
-    const { RoutineID } = useParams<{ RoutineID: string }>(); // Get RoutineID from URL params
+interface ExerciseDetail {
+    exerciseId: string;
+    name: string;
+    order: number;
+    repetitions: number;
+    sets: number;
+    restingTime: number;
+}
+
+// export default RoutineDetailPage;
+
+type RoutineDetailProps = {
+    routineId: string;
+    popoverTrigger: ReactNode | null;
+}
+
+const RoutineDetailComponent: React.FC<RoutineDetailProps> = ({routineId, popoverTrigger} : RoutineDetailProps) => {
     const [routineDetail, setRoutineDetail] = useState<RoutineDetail | null>(null);
     const [isAuthorized, setIsAuthorized] = useState<boolean>(true); // Assume authorized by default
     const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -13,7 +34,7 @@ const RoutineDetailPage: React.FC = () => {
 
     async function fetchRoutineDetails(id: string) {
         try {
-            const response = await get(`/routine-details/${id}`);
+            const response = await getAuth(`/routine-details/${id}`);
             const json = await response.json();
             setRoutineDetail(json);
             // Check if routine visibility is private and current user is not the author
@@ -28,10 +49,8 @@ const RoutineDetailPage: React.FC = () => {
     }
 
     useEffect(() => {
-        if (RoutineID) {
-            fetchRoutineDetails(RoutineID);
-        }
-    }, [RoutineID]); // Fetch routine details when RoutineID changes
+        fetchRoutineDetails(routineId);
+    }, [routineId]); // Fetch routine details when RoutineID changes
 
     if (isLoading) {
         return (
@@ -52,46 +71,50 @@ const RoutineDetailPage: React.FC = () => {
     if (!routineDetail) {
         return <div>No Routines in database</div>;
     }
-
-    return (
-        <div>
-            <h1>{routineDetail.name}</h1>
-            <p>Description: {routineDetail.description}</p>
-
-            <h2>Exercises</h2>
-            <ul>
-                {routineDetail.exercises.map((exercise, index) => (
-                    <li key={index}>
-                        <strong>Exercise Name:</strong> {exercise.name}<br />
-                        <strong>Order:</strong> {exercise.order}<br />
-                        <strong>Repetitions:</strong> {exercise.repetitions}<br />
-                        <strong>Sets:</strong> {exercise.sets}<br />
-                        <strong>Resting Time:</strong> {exercise.restingTime}<br />
-                    </li>
-                ))}
-            </ul>
-
-            {!isAuthorized && <p>Access to this routine is restricted.</p>}
-        </div>
-    );
+    
+    if (popoverTrigger) {
+        return (
+                <Popover placement='left'>
+                    <PopoverTrigger>
+                        {popoverTrigger}
+                    </PopoverTrigger>
+                    <PopoverContent>
+                        <PopoverArrow bg={'#333'}/>
+                        <PopoverCloseButton/>
+                        <PopoverBody bg={'#333'}>
+                            <PopoverHeader>{routineDetail.name}</PopoverHeader>
+                            {detailDialog(routineDetail, isAuthorized)}
+                        </PopoverBody>
+                    </PopoverContent>
+                </Popover>
+        )
+    } else return detailDialog(routineDetail, isAuthorized)
 };
 
-interface RoutineDetail {
-    routineId: string;
-    name: string;
-    description: string;
-    exercises: ExerciseDetail[];
+const detailDialog = (routineDetail: RoutineDetail, isAuthorized: boolean) => {
+    return (
+        <Box overflow='scroll' p={4} height={'md'}>
+            <Text mb={4} fontStyle={'italic'}>{routineDetail.description}</Text>
+            <Heading as="h2" size="md" mb={2}>Exercises</Heading>
+            <Divider/>
+            <VStack mb={2} divider={<StackDivider/>}>
+                {routineDetail.exercises.map((exercise, index) => (
+                    <Box key={index}>
+                        <Text><strong>Exercise Name:</strong> {exercise.name}</Text>
+                        <Text><strong>Repetitions:</strong> {exercise.repetitions}</Text>
+                        <Text><strong>Sets:</strong> {exercise.sets}</Text>
+                        <Text><strong>Resting Time:</strong> {exercise.restingTime} Seconds</Text>
+                    </Box>
+                ))}
+            </VStack>
+
+            {!isAuthorized && <Text color="red.500">Access to this routine is restricted.</Text>}
+        </Box>
+    )
+
+
 }
 
-interface ExerciseDetail {
-    exerciseId: string;
-    name: string;
-    order: number;
-    repetitions: number;
-    sets: number;
-    restingTime: number;
-}
-
-export default RoutineDetailPage;
+export default RoutineDetailComponent;
 
 
