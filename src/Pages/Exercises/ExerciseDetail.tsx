@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { get } from '../../Utils/APIHelpers';
 import './ExerciseDetail.css'; // Import the CSS file for styling
 
+
 type ExerciseDetail = {
     exerciseId: number;
     name: string;
@@ -16,10 +17,14 @@ type ExerciseDetail = {
 const ExerciseDetailPage: React.FC = () => {
     const { ExerciseID } = useParams<{ ExerciseID: string }>(); // Get ExerciseID from URL params
     const [exerciseDetailInfo, setExerciseDetailInfo] = useState<ExerciseDetail | null>(null)
-
+    
     async function getExerciseDetail(id: string) {
         try {
             const response = await get(`/exercise-details/${id}`);
+            console.log('Response:', response);
+            if (!response || !response.ok) {
+                throw new Error('Failed to fetch exercise details');
+            }
             const json = await response.json();
             return json as ExerciseDetail;
         } catch (error) {
@@ -27,12 +32,12 @@ const ExerciseDetailPage: React.FC = () => {
             return null;
         }
     }
-
+    
     useEffect(() => {
         if (ExerciseID) {
             getExerciseDetail(ExerciseID).then(setExerciseDetailInfo);
         }
-    }, [ExerciseID]); // Fetch exercise details when ExerciseID changes
+    }, [ExerciseID]); 
 
     if (!exerciseDetailInfo) {
         return (
