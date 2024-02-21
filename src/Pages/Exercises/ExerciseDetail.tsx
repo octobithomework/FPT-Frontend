@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { get } from '../../Utils/APIHelpers';
 import './ExerciseDetail.css'; // Import the CSS file for styling
 
-
+// changed to use type instead of interface
 type ExerciseDetail = {
     exerciseId: number;
     name: string;
@@ -15,16 +15,22 @@ type ExerciseDetail = {
 }
 
 const ExerciseDetailPage: React.FC = () => {
-    const { ExerciseID } = useParams<{ ExerciseID: string }>(); // Get ExerciseID from URL params
+    // Get ExerciseID from URL params
+    const { ExerciseID } = useParams<{ ExerciseID: string }>(); 
+    //null if no information is available, setter function setExerciseDetailInfo is used to update this variables state
     const [exerciseDetailInfo, setExerciseDetailInfo] = useState<ExerciseDetail | null>(null)
     
+    //gets exercise details from backend
     async function getExerciseDetail(id: string) {
         try {
-            const response = await get(`/exercise-details/${id}`);
+            //hit the endpoint
+            const response = await get('/exercise-details/' + id)
             console.log('Response:', response);
+            //error handling
             if (!response || !response.ok) {
                 throw new Error('Failed to fetch exercise details');
             }
+            //get json from response and put it in variable exercise Detail
             const json = await response.json();
             return json as ExerciseDetail;
         } catch (error) {
@@ -34,11 +40,15 @@ const ExerciseDetailPage: React.FC = () => {
     }
     
     useEffect(() => {
+        //if the exerciseID in the url exists
         if (ExerciseID) {
+            // execute the above function to query the db 
+            //.then setExerciseDetailInfo is used to update the state of exerciseDetailInfo with the exercise details fetched from the backend API.
             getExerciseDetail(ExerciseID).then(setExerciseDetailInfo);
         }
     }, [ExerciseID]); 
 
+    //checks if exerciseDetailInfo is falsy
     if (!exerciseDetailInfo) {
         return (
             <div className="loading-container">
@@ -46,7 +56,7 @@ const ExerciseDetailPage: React.FC = () => {
             </div>
         );
     }
-
+    //render info from query here upon success, can be made nicer to look at once functionality is confirmed
     return (
         <div className="exercise-detail-container">
             <h1>{exerciseDetailInfo.name}</h1>
