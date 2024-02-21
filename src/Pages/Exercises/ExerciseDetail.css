@@ -26,3 +26,44 @@
   padding: 10px 0;
   text-align: center;
 }
+.exercise-detail-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.exercise-detail-card {
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.exercise-detail-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.exercise-detail-content {
+  text-align: center;
+}
+
+.exercise-detail-name {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.exercise-detail-description,
+.exercise-detail-category,
+.exercise-detail-body-part,
+.exercise-detail-difficulty,
+.exercise-detail-equipment {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.footer {
+  text-align: center;
+  margin-top: 20px;
+}

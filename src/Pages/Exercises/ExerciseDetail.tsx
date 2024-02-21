@@ -1,54 +1,43 @@
-import React, { Component, ReactNode, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { get } from '../../Utils/APIHelpers';
 import './ExerciseDetail.css'; // Import the CSS file for styling
 
-// changed to use type instead of interface
-type ExerciseDetail = {
-    exerciseId: number;
-    name: string;
-    description: string;
-    categoryType: string;
-    bodyPartFocus: string;
-    difficultLevel: string;
-    equipmentNeeded: string;
-}
-
 const ExerciseDetailPage: React.FC = () => {
-    // Get ExerciseID from URL params
-    const { ExerciseID } = useParams<{ ExerciseID: string }>(); 
-    //null if no information is available, setter function setExerciseDetailInfo is used to update this variables state
-    const [exerciseDetailInfo, setExerciseDetailInfo] = useState<ExerciseDetail | null>(null)
-    
-    //gets exercise details from backend
-    async function getExerciseDetail(id: string) {
+    const { ExerciseID } = useParams<{ ExerciseID: string }>();
+    const [exerciseDetailInfo, setExerciseDetailInfo] = useState<any | null>(null); // Avoid using ExerciseDetail type
+
+    const getExerciseDetail = async (id: string) => {
         try {
-            //hit the endpoint
-            const response = await get('/exercise-details/' + id)
+            const response = await get('/exercise-details/' + id);
             console.log('Response:', response);
-            //error handling
             if (!response || !response.ok) {
                 throw new Error('Failed to fetch exercise details');
             }
-            //get json from response and put it in variable exercise Detail
             const json = await response.json();
-            return json as ExerciseDetail;
+
+            // Accessing data individually without relying on ExerciseDetail interface
+            setExerciseDetailInfo({
+                name: json.name,
+                description: json.description,
+                categoryType: json.category_type,
+                bodyPartFocus: json.body_part_focus,
+                difficultyLevel: json.difficulty_level,
+                equipmentNeeded: json.equipment_needed
+            });
         } catch (error) {
             console.error('Error fetching exercise details:', error);
-            return null;
+            setExerciseDetailInfo(null);
         }
-    }
-    
+    };
+
     useEffect(() => {
-        //if the exerciseID in the url exists
+        console.log('ExerciseID:', ExerciseID); // Log the ExerciseID
         if (ExerciseID) {
-            // execute the above function to query the db 
-            //.then setExerciseDetailInfo is used to update the state of exerciseDetailInfo with the exercise details fetched from the backend API.
-            getExerciseDetail(ExerciseID).then(setExerciseDetailInfo);
+            getExerciseDetail(ExerciseID);
         }
     }, [ExerciseID]); 
 
-    //checks if exerciseDetailInfo is falsy
     if (!exerciseDetailInfo) {
         return (
             <div className="loading-container">
@@ -56,15 +45,19 @@ const ExerciseDetailPage: React.FC = () => {
             </div>
         );
     }
-    //render info from query here upon success, can be made nicer to look at once functionality is confirmed
+    
     return (
-        <div className="exercise-detail-container">
-            <h1>{exerciseDetailInfo.name}</h1>
-            <p>Description: {exerciseDetailInfo.description}</p>
-            <p>Category Type: {exerciseDetailInfo.categoryType}</p>
-            <p>Body Part Focus: {exerciseDetailInfo.bodyPartFocus}</p>
-            <p>Difficulty Level: {exerciseDetailInfo.difficultLevel}</p>
-            <p>Equipment Needed: {exerciseDetailInfo.equipmentNeeded}</p>
+        <div className="exercise-detail-card">
+            <div className="exercise-detail-header">
+                <h1 className="exercise-detail-name">{exerciseDetailInfo.name}</h1>
+            </div>
+            <div className="exercise-detail-content">
+                <p className="exercise-detail-description">Description: {exerciseDetailInfo.description}</p>
+                <p className="exercise-detail-category">Category Type: {exerciseDetailInfo.categoryType}</p>
+                <p className="exercise-detail-body-part">Body Part Focus: {exerciseDetailInfo.bodyPartFocus}</p>
+                <p className="exercise-detail-difficulty">Difficulty Level: {exerciseDetailInfo.difficultyLevel}</p>
+                <p className="exercise-detail-equipment">Equipment Needed: {exerciseDetailInfo.equipmentNeeded}</p>
+            </div>
             <footer className="footer">Bottom Header</footer>
         </div>
     );
