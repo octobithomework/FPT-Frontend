@@ -8,6 +8,7 @@
 }
 
 .routine-log-box {
+    overflow: auto;
     margin: 10px;
     width: calc(100% - 20px);
     height: 100%;

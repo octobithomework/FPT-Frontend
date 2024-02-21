@@ -1,7 +1,7 @@
 import React from 'react';
 import { Routine } from '../../../../Interfaces/Routine';
+import { Link } from 'react-router-dom';
 import './RoutineLog.css';
-import RoutineDetailComponent from '../../../Routines/RoutineDetail';
 
 interface RoutineLogProps {
     completedRoutines: Routine[];
@@ -46,14 +46,13 @@ const RoutineLog: React.FC<RoutineLogProps> = ({ completedRoutines, currentMonth
         <div className="routine-log-container">
             <div className="routine-log-box">
                 <div className="btn-container">
-                    <button onClick={clearFilters} className="clear-filters-btn" disabled={isClearFiltersDisabled}>Clear Filters</button> {}
+                    <button onClick={clearFilters} className="clear-filters-btn" disabled={isClearFiltersDisabled}>Clear Filters</button> { }
                 </div>
-                
+
                 {filteredRoutines.length > 0 ? (
                     filteredRoutines.map((routine) => (
-                        // add data attribute to the div
-                        <RoutineDetailComponent routineId={routine.routineId} popoverTrigger={
-                            <div key={routine.routineLogId} className="routine-entry" data-routine-id={routine.routineId}>
+                        <div key={routine.routineLogId} className="routine-entry">
+                            <Link to={`/routine-detail/${routine.routineLogId}`}>
                                 <div className="name-date-container">
                                     <p className="name">{routine.name}</p>
                                     <p className="date">{new Date(routine.date + 'T00:00:00').toLocaleDateString()}</p>
@@ -61,8 +60,8 @@ const RoutineLog: React.FC<RoutineLogProps> = ({ completedRoutines, currentMonth
                                 <div>
                                     <p className="description">{routine.description}</p>
                                 </div>
-                            </div>
-                        }/>
+                            </Link>
+                        </div>
                     ))
                 ) : (
                     renderNoRoutinesMessage()
