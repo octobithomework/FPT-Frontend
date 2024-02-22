@@ -98,14 +98,14 @@ const detailDialog = (routineDetail: RoutineDetail, isAuthorized: boolean) => {
             <Heading as="h2" size="md" mb={2}>Exercises</Heading>
             <Divider/>
             <VStack mb={2} divider={<StackDivider/>}>
-                {routineDetail.exercises.map((exercise, index) => (
+                {/* {routineDetail.exercises.map((exercise, index) => (
                     <Box key={index}>
                         <Text><strong>Exercise Name:</strong> {exercise.name}</Text>
                         <Text><strong>Repetitions:</strong> {exercise.repetitions}</Text>
                         <Text><strong>Sets:</strong> {exercise.sets}</Text>
                         <Text><strong>Resting Time:</strong> {exercise.restingTime} Seconds</Text>
                     </Box>
-                ))}
+                ))} */}
             </VStack>
 
             {!isAuthorized && <Text color="red.500">Access to this routine is restricted.</Text>}
