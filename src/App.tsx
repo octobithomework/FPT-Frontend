@@ -16,18 +16,28 @@ import RoutineDetailPage from './Pages/Routines/RoutineDetail';
 // import HomePage from './HomePage';
 // import ProtectedPage from './ProtectedPage';
 
+function AutoRedirect() {
+    //Check if user is logged in
+    if (localStorage.getItem('token')) {
+        return <Navigate replace to="/dashboard" />
+    }
+    else {
+        return <Navigate replace to="/login" />
+    }
+}
+
 const App: React.FC = () => {
     return (
         <Router>
             <Header />
             <Routes>
-                <Route path="/" element={<Navigate replace to="/login" />} />
+                <Route path="/" element={<AutoRedirect />} />
+                <Route path="*" element={<AutoRedirect />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/signup" element={<SignupPage />} />
                 <Route path="/forgot-password" element={<ForgotPasswordPage />} />
                 <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
                 <Route path="/dashboard" element={<ProtectedRoute component={DashboardPage} />} />
-                <Route path="*" element={<Navigate replace to="/login" />} />
                 <Route path="/exercise-detail/:ExerciseID" element={<ExerciseDetailPage />} />
                 <Route path="/routine-detail/:routine-id" element={<ProtectedRoute component={RoutineDetailPage} />} />
 

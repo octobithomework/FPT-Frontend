@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import './Header.css';
 import { post } from '../../Utils/APIHelpers';
 
+// This is the logout action
 const handleLogout = async (e: React.FormEvent) => {
 
     try {
@@ -14,6 +15,7 @@ const handleLogout = async (e: React.FormEvent) => {
 }
 
 function LoginLogoutButton() {
+    // Check if user is logged in
     if (localStorage.getItem('token')) {
         return (<div className = "login-logout">
         <form onSubmit={handleLogout}>
