@@ -67,3 +67,178 @@
   text-align: center;
   margin-top: 20px;
 }
+
+
+.exercise-detail-close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+}
+.exercise-detail-page {
+  background-color: #fff; /* Set background color to white */
+  height: 100vh; /* Adjust the height as needed */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: none; /* Ensure no background image is displayed */
+}
+
+body {
+  overflow: hidden;
+}
+
+.exercise-detail-page {
+  position: relative;
+}
+
+.background {
+  position: fixed;
+  background-repeat: no-repeat;
+}
+
+.exercise-detail-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.exercise-detail-container {
+  position: relative;
+  height: calc(100vh - 65px - 60px);
+}
+
+.loading-container {
+  position: relative;
+  height: calc(100vh - 65px - 60px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-text {
+  text-align: center;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #333;
+  /* Match the color with the top header */
+  color: #fff;
+  /* Text color for better visibility */
+  padding: 10px 0;
+  text-align: center;
+}
+.exercise-detail-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.exercise-detail-card {
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.exercise-detail-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.exercise-detail-content {
+  text-align: center;
+}
+
+.exercise-detail-name {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.exercise-detail-description,
+.exercise-detail-category,
+.exercise-detail-body-part,
+.exercise-detail-difficulty,
+.exercise-detail-equipment {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.footer {
+  text-align: center;
+  margin-top: 20px;
+}
+
+
+.exercise-detail-close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+
+body {
+  overflow: hidden;
+}
+
+.exercise-detail-page {
+  position: relative;
+}
+
+
+
+
+.exercise-detail-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.exercise-detail-modal {
+  background-color: #333; /* Dark background color */
+  color: #fff; /* Light text color */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Light shadow */
+  text-align: left; /* Left align text */
+  width: 70%; /* Set the width to 70% to make it more square */
+}
+
+
+.exercise-detail-header {
+  text-align: center;
+  text-align: left; /* Left align text */
+
+}
+
+.exercise-detail-content {
+  margin-top: 20px;
+  text-align: left; /* Left align text */
+
+}
+
+
+
