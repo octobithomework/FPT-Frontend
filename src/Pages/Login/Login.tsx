@@ -72,7 +72,7 @@ const LoginPage: React.FC = () => {
                     <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                     {passwordError && <span className="error">{passwordError}</span>}
                 </div>
-                <button type="submit" className="submit-btn">Login</button>
+                <button type="submit" className="submit-btn">Log In</button>
                 <div className="login-actions">
                     <Link to="/signup" className="action-link">Signup</Link>
                     <Link to="/forgot-password" className="action-link">Forgot Password</Link>
