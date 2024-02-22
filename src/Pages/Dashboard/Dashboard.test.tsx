@@ -4,11 +4,6 @@ import userEvent from '@testing-library/user-event';
 import DashboardPage from './Dashboart';
 import { BrowserRouter } from 'react-router-dom';
 
-// Mocking API response
-// jest.mock('../../Utils/APIHelpers', () => ({
-//   getAuth: jest.fn().mockResolvedValueOnce({ ok: true, json: () => Promise.resolve([]) }),
-// }));
-
 import fetchMock from 'jest-fetch-mock';
 fetchMock.enableMocks();
 
@@ -39,23 +34,44 @@ describe('DashboardPage', () => {
   });
 
   it('tests interactions with the clear filter button and logs', async () => {
-    const routineLogResponse = [
-      { routine_log_id: 1, routine_id: 1, date: '2024-02-21', completion_status: 0 },
-      { routine_log_id: 2, routine_id: 2, date: '2024-02-22', completion_status: 0 },
+    // const routineLogResponse = [
+    //   { routine_log_id: 1, routine_id: 1, date: '2024-02-21', completion_status: 0 },
+    //   { routine_log_id: 2, routine_id: 2, date: '2024-02-22', completion_status: 0 },
+    // ];
+    // const routineResponse = [
+    //   { routine_id: 1, name: 'walk', description: 'walked 10 mins', routine_visibility: 'PUBLIC' },
+    //   { routine_id: 2, name: 'talk', description: 'talked for 10 mins', routine_visibility: 'PUBLIC' },
+    // ];
+    // fetchMock.mockResponses(
+    //   JSON.stringify(routineLogResponse),
+    //   JSON.stringify(routineResponse)
+    // );
+    const apiResponse = [
+      {
+        routineLogId: 1,
+        routineId: 1,
+        name: 'walk',
+        description: 'walked 10 mins',
+        date: '2024-02-21',
+        completionStatus: 0
+      },
+      {
+        routineLogId: 2,
+        routineId: 2,
+        name: 'talk',
+        description: 'talked for 10 mins',
+        date: '2024-02-20',
+        completionStatus: 0
+      }
     ];
-    const routineResponse = [
-      { routine_id: 1, name: 'walk', description: 'walked 10 mins', routine_visibility: 'PUBLIC' },
-      { routine_id: 2, name: 'talk', description: 'talked for 10 mins', routine_visibility: 'PUBLIC' },
-    ];
-    fetchMock.mockResponses(
-      JSON.stringify(routineLogResponse),
-      JSON.stringify(routineResponse)
-    );
+
+    // Remove { } around apiResponse
+    fetchMock.mockResponseOnce(JSON.stringify(apiResponse), { status: 200 });
     render(<DashboardPage />);
     userEvent.click(screen.getByRole('button', { name: /today/i }));
     
     await waitFor(() => {
-      expect(getByText(/walk/)).toBeInTheDocument();
+      expect(screen.getByText(/walk/)).toBeInTheDocument();
     });
       
    
