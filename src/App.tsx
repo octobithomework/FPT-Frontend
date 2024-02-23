@@ -23,8 +23,8 @@ const App: React.FC = () => {
                 <Route path="/forgot-password" element={<ForgotPasswordPage />} />
                 <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
                 <Route path="/dashboard" element={<ProtectedRoute component={DashboardPage} />} />
-                <Route path="/exercise-detail/:exercise-id" element={<ExerciseDetailPage />} />
-                <Route path="/routine-detail/:routine-id" element={<ProtectedRoute component={RoutineDetailPage} />} />
+                <Route path="/exercise-details/:exerciseId" element={<ExerciseDetailPage />} />
+                <Route path="/routine-details/:routineId" element={<ProtectedRoute component={RoutineDetailPage} />} />
                 <Route path="*" element={<Navigate replace to="/login" />} />
             </Routes>
             <Footer />

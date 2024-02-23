@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { get } from '../../Utils/APIHelpers';
 import './ExerciseDetail.css'; // Import the CSS file for styling
-import gymBackground from '../../Assets/gym-background.jpg'; // Import the background image
 
 interface ExerciseDetail {
     name: string;
@@ -14,12 +13,18 @@ interface ExerciseDetail {
 }
 
 interface ExerciseDetailProps {
-    exerciseID?: string; // Make exerciseID prop optional
+    exerciseId?: string; // Renamed prop to follow camelCase convention
 }
 
-const ExerciseDetailComponent: React.FC<ExerciseDetailProps> = ({ exerciseID }: ExerciseDetailProps) => {
-    const [exerciseDetailInfo, setExerciseDetailInfo] = useState<ExerciseDetail | null>(null);
-    const modalRef = useRef<HTMLDivElement>(null);
+const ExerciseDetailComponent: React.FC<ExerciseDetailProps> = ({ exerciseId }: ExerciseDetailProps) => {
+    const [exerciseDetailInfo, setExerciseDetailInfo] = useState<ExerciseDetail>({
+        name: '',
+        description: '',
+        categoryType: '',
+        bodyPartFocus: '',
+        difficultyLevel: '',
+        equipmentNeeded: ''
+    });
 
     const getExerciseDetail = async (id: string) => {
         try {
@@ -28,8 +33,7 @@ const ExerciseDetailComponent: React.FC<ExerciseDetailProps> = ({ exerciseID }: 
                 throw new Error('Failed to fetch exercise details');
             }
             const json = await response.json();
-            console.log('JSON response from server:', json); // Add this line to log the JSON response
-
+            console.log('JSON response from server:', json);
 
             setExerciseDetailInfo({
                 name: json.name,
@@ -41,84 +45,45 @@ const ExerciseDetailComponent: React.FC<ExerciseDetailProps> = ({ exerciseID }: 
             });
         } catch (error) {
             console.error('Error fetching exercise details:', error);
-            setExerciseDetailInfo(null);
         }
     };
 
     useEffect(() => {
-        if (exerciseID) {
-            getExerciseDetail(exerciseID);
+        if (exerciseId) {
+            getExerciseDetail(exerciseId);
         }
-    }, [exerciseID]);
+    }, [exerciseId]);
 
-    if (!exerciseDetailInfo || !exerciseID) {
-        return null; // Don't render anything if exerciseDetailInfo is not available or exerciseID is undefined
-    }
-    
     return (
-        <div className="exercise-detail-modal-overlay">
-            <div className="exercise-detail-modal" ref={modalRef}>
-                <div className="exercise-detail-header">
-                    <h1 className="exercise-detail-name">{exerciseDetailInfo.name}</h1>
-                </div>
-                <div className="exercise-detail-content">
-                    <p className="exercise-detail-description">Description:</p>
-                    <p>{exerciseDetailInfo.description}</p> {/* Description on a new line */}                    
-                    <p className="exercise-detail-category">Category Type: {exerciseDetailInfo.categoryType}</p>
-                    <p className="exercise-detail-body-part">Body Part Focus: {exerciseDetailInfo.bodyPartFocus}</p>
-                    <p className="exercise-detail-difficulty">Difficulty Level: {exerciseDetailInfo.difficultyLevel}</p>
-                    <p className="exercise-detail-equipment">Equipment Needed: {exerciseDetailInfo.equipmentNeeded}</p>
-                </div>
+        <div className="exercise-detail-box">
+            <div className="exercise-detail-header">
+                <h1 className="exercise-detail-name">{exerciseDetailInfo.name}</h1>
+            </div>
+            <div className="exercise-detail-info">
+                {exerciseDetailInfo.description && (
+                    <>
+                        <p className="exercise-detail-description">Description:</p>
+                        <p>{exerciseDetailInfo.description}</p>
+                    </>
+                )}
+                {exerciseDetailInfo.categoryType && <p className="exercise-detail-category">Category Type: <span className="exercise-detail-value">{exerciseDetailInfo.categoryType}</span></p>}
+                {exerciseDetailInfo.bodyPartFocus && <p className="exercise-detail-body-part">Body Part Focus: <span className="exercise-detail-value">{exerciseDetailInfo.bodyPartFocus}</span></p>}
+                {exerciseDetailInfo.difficultyLevel && <p className="exercise-detail-difficulty">Difficulty Level: <span className="exercise-detail-value">{exerciseDetailInfo.difficultyLevel}</span></p>}
+                {exerciseDetailInfo.equipmentNeeded && <p className="exercise-detail-equipment">Equipment Needed: <span className="exercise-detail-value">{exerciseDetailInfo.equipmentNeeded}</span></p>}
             </div>
         </div>
     );
 };
 
+
 const ExerciseDetailPage: React.FC = () => {
-    const { ExerciseID } = useParams<{ ExerciseID: string }>();
+    const { exerciseId } = useParams<{ exerciseId: string }>();
 
     return (
-        <div className="exercise-detail-page">
-            <div className="background" style={{ backgroundImage: `url(${gymBackground})` }} />
-            <div className="modal-container">
-                <ExerciseDetailComponent exerciseID={ExerciseID} />
-            </div>
+        <div className="exercise-detail-container">
+            <ExerciseDetailComponent exerciseId={exerciseId} />
         </div>
     );
 };
 
 export default ExerciseDetailPage;
-
-
-
-
-//Example:
-
-/*
-
-import React, { useState } from 'react';
-import { ExerciseDetailPage } from './ExerciseDetailPage'; 
-
-const App: React.FC = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-
-  return (
-    <div>
-      <h1>Your Main Content Goes Here</h1>
-      <button onClick={openModal}>Open Exercise Detail</button>
-      {isModalOpen && <ExerciseDetailPage onClose={closeModal} />}
-    </div>
-  );
-};
-
-export default App;
-
-*/

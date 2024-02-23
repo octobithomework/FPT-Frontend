@@ -15,11 +15,11 @@ const LoginPage: React.FC = () => {
     const [formError, setFormError] = useState('');
     const navigate = useNavigate();
 
-    // useEffect(() => {
-    //     if (isAuth()) {
-    //         navigate('/dashboard');
-    //     }
-    // }, [navigate]);
+    useEffect(() => {
+        if (isAuth()) {
+            navigate('/dashboard');
+        }
+    }, [navigate]);
     
     const validateForm = () => {
         let isValid = true;
