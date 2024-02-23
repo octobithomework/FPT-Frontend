@@ -1,9 +1,11 @@
 // LoginPage.tsx
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import './Login.css'; 
 import { post } from '../../Utils/APIHelpers';
+
+import { isAuth } from '../../Utils/IsAuth';
+import './Login.css'; 
 
 const LoginPage: React.FC = () => {
     const [email, setEmail] = useState('');
@@ -13,6 +15,12 @@ const LoginPage: React.FC = () => {
     const [formError, setFormError] = useState('');
     const navigate = useNavigate();
 
+    useEffect(() => {
+        if (isAuth()) {
+            navigate('/dashboard');
+        }
+    }, [navigate]);
+    
     const validateForm = () => {
         let isValid = true;
         setEmailError('');
