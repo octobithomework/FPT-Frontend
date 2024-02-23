@@ -29,14 +29,6 @@
 a {
     text-decoration: none;
     color: white;
+    cursor: pointer;
 }
 
-.navbar a {
-    color: white;
-    text-decoration: none;
-    margin: 0 10px;
-}
-
-.navbar a:hover {
-    text-decoration: underline;
-}
