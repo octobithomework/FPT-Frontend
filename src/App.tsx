@@ -29,7 +29,7 @@ const App: React.FC = () => {
             </Routes>
             <Footer />
         </Router>
-    ); // make exercise/routine detail route protected later on, not protected for dev purposes for now
+    );
 
 };
 
