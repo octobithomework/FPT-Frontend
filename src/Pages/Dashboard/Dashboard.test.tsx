@@ -33,19 +33,8 @@ describe('DashboardPage', () => {
     await waitFor(() => expect(screen.getByText(/March 2024/i)).toBeInTheDocument());
   });
 
-  it('tests interactions with the clear filter button and logs', async () => {
-    // const routineLogResponse = [
-    //   { routine_log_id: 1, routine_id: 1, date: '2024-02-21', completion_status: 0 },
-    //   { routine_log_id: 2, routine_id: 2, date: '2024-02-22', completion_status: 0 },
-    // ];
-    // const routineResponse = [
-    //   { routine_id: 1, name: 'walk', description: 'walked 10 mins', routine_visibility: 'PUBLIC' },
-    //   { routine_id: 2, name: 'talk', description: 'talked for 10 mins', routine_visibility: 'PUBLIC' },
-    // ];
-    // fetchMock.mockResponses(
-    //   JSON.stringify(routineLogResponse),
-    //   JSON.stringify(routineResponse)
-    // );
+  it('tests the banners for routines same day 2 tests', async () => {
+
     const apiResponse = [
       {
         routineLogId: 1,
@@ -60,20 +49,59 @@ describe('DashboardPage', () => {
         routineId: 2,
         name: 'talk',
         description: 'talked for 10 mins',
-        date: '2024-02-20',
+        date: '2024-02-21',
         completionStatus: 0
       }
     ];
-
-    // Remove { } around apiResponse
     fetchMock.mockResponseOnce(JSON.stringify(apiResponse), { status: 200 });
     render(<DashboardPage />);
     userEvent.click(screen.getByRole('button', { name: /today/i }));
     
     await waitFor(() => {
       expect(screen.getByText(/walk/)).toBeInTheDocument();
+      expect(screen.getByText(/talk/)).toBeInTheDocument();
     });
-      
+   
+  });
+
+  it('tests the banners for 3 routines for single day', async () => {
+
+    const apiResponse = [
+      {
+        routineLogId: 1,
+        routineId: 1,
+        name: 'walk',
+        description: 'walked 10 mins',
+        date: '2024-02-21',
+        completionStatus: 0
+      },
+      {
+        routineLogId: 2,
+        routineId: 2,
+        name: 'talk',
+        description: 'talked for 10 mins',
+        date: '2024-02-21',
+        completionStatus: 0
+      },
+      {
+        routineLogId: 3,
+        routineId: 3,
+        name: 'talk-2',
+        description: 'talked for 20 mins',
+        date: '2024-02-21',
+        completionStatus: 0
+      }
+    ];
+    fetchMock.mockResponseOnce(JSON.stringify(apiResponse), { status: 200 });
+    render(<DashboardPage />);
+    
+    userEvent.click(screen.getByRole('button', { name: /previous month/i }));
+    userEvent.click(screen.getByRole('button', { name: /today/i }));
+    await waitFor(() => {
+      expect(screen.getByText(/walk/)).toBeInTheDocument();
+      expect(screen.getByText(/talk/)).toBeInTheDocument();
+      expect(screen.queryByText(/talk-2/)).not.toBeInTheDocument();
+    });
    
   });
   
