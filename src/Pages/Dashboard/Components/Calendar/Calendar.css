@@ -1,0 +1,47 @@
+.calendar-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 65px - 60px);
+    width: 65%;  
+}
+
+.calendar-box {
+    margin: 10px;
+    width: calc(100% - 20px);
+    background-color: #333;
+    color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.fc-daygrid-day-frame {
+    cursor: pointer;
+}
+
+.fc-daygrid-event {
+    background-color: var(--fc-button-bg-color);
+    border: var(--fc-button-border-color);
+}
+
+.fc-daygrid-event:hover {
+    
+    background-color: var(--fc-button-hover-bg-color);
+    border-color: var(--fc-button-hover-border-color);
+}
+
+/* Full Calendar */
+a.fc-daygrid-day-number {
+    width: 100%;
+    text-align: center;
+}
+
+a.fc-daygrid-day-number {
+    width: 100%;
+    text-align: center;
+}
+
+a.fc-daygrid-day-number {
+    width: 100%;
+    text-align: center;
+}

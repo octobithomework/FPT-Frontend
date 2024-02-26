@@ -1,0 +1,80 @@
+.signup-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 65px - 60px); 
+    /* background-color: #f5f5f5; */
+    background-image: url('../../Assets/gym-background.jpg');
+    background-size: cover; 
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.signup-form {
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+
+.form-field {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-field label {
+    margin-bottom: 5px;
+}
+
+.form-field input {
+    width: 100%; 
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.submit-btn:hover {
+    background-color: #0056b3;
+}
+
+.signup-actions {
+    display: flex;
+    justify-content: start;
+    margin-top: 10px; 
+}
+
+.action-link {
+    text-decoration: none;
+    color: #007bff;
+    font-size: 0.9rem;
+}
+
+.action-link:hover {
+    text-decoration: underline;
+}
+
+.error {
+    color: #ff6161;
+    font-size: 0.8rem;
+    margin-top: 5px;
+}
+
+.form-error {
+    color: #ff6161;
+    font-size: 1rem;
+    text-align: center;
+    margin: 8px 0;
+}

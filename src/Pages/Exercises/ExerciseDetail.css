@@ -1,0 +1,51 @@
+.exercise-detail-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 65px - 60px);
+}
+
+.exercise-detail-box {
+  width: 35%;
+  background-color: #333;
+  color: white;
+  margin: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.exercise-detail-header {
+  border-bottom: 1px solid #444;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.exercise-detail-name {
+  text-align: center;
+  color: white;
+}
+
+.exercise-detail-info > p {
+  margin: 10px 0;
+  color: #CCCCCC;
+}
+
+.exercise-detail-description,
+.exercise-detail-category,
+.exercise-detail-body-part,
+.exercise-detail-difficulty,
+.exercise-detail-equipment {
+  font-weight: bold; 
+  color: white; 
+}
+
+.exercise-detail-value {
+  font-weight: normal;
+  color: #CCCCCC; 
+}
+
+.exercise-detail-info {
+  display: flex;
+  flex-direction: column;
+}
