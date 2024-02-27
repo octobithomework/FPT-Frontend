@@ -55,7 +55,7 @@ const RoutineLog: React.FC<RoutineLogProps> = ({ completedRoutines, currentMonth
                             <Link to={`/routine-details/${routine.routineLogId}`}>
                                 <div className="name-date-container">
                                     <p className="name">{routine.name}</p>
-                                    <p className="date">{new Date(routine.date + 'T00:00:00').toLocaleDateString()}</p>
+                                    <p className="date">Completed: {new Date(routine.date + 'T00:00:00').toLocaleDateString()}</p>
                                 </div>
                                 <div>
                                     <p className="description">{routine.description}</p>
