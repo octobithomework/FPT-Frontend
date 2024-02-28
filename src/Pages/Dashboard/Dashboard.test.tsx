@@ -15,11 +15,11 @@ describe('DashboardPage', () => {
 
   it('renders correctly', async () => {
     render(<DashboardPage />, { wrapper: BrowserRouter });
-//checks if both the previous button and next month buttons are showing up or not
+    //checks if both the previous button and next month buttons are showing up or not
     expect(screen.getByRole('button', { name: /previous month/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /next month/i })).toBeInTheDocument();
 
-   });
+  });
 
   it('tests the interacts with calendar and buttons on dashboard', async () => {
     render(<DashboardPage />, { wrapper: BrowserRouter });

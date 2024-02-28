@@ -18,6 +18,7 @@ const Navbar: React.FC = () => {
 
     return (
         <nav className="navbar">
+            <a href="/routine-management">Routines</a>
             <a href="/logout" onClick={handleLogout}>Logout</a>
         </nav>
     );

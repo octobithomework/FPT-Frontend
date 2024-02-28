@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Box, ChakraProvider, HStack, Text, Badge } from "@chakra-ui/react";
 import { getAuth } from '../../../Utils/APIHelpers';
 import { Routine } from '../../../Interfaces/Routine';
-import './RoutineManagement.css';
+import './RoutineManagement.css'; 
 
 const RoutineManagementPage: React.FC = () => {
     const [routines, setRoutines] = useState<Routine[]>([]);
@@ -27,18 +27,20 @@ const RoutineManagementPage: React.FC = () => {
     }, []);
 
     return (
-        <div className='routine-management-container'>
+        <div className='routine-mgmt-container'>
             <ChakraProvider>
-                <HStack spacing={4}>
-                    {routines.map((routine) => (
-                        <Box key={routine.routineId} p={5} shadow="md" borderWidth="1px">
-                            <Text fontSize="xl">{routine.name}</Text>
-                            <Text mt={2}>{routine.description}</Text>
-                            <Badge colorScheme={routine.visibility === 'PUBLIC' ? 'green' : 'red'}>{routine.visibility}</Badge>
-                            <Text mt={2}>Created on: {new Date(routine.created).toLocaleDateString()}</Text>
+                <div className="routine-mgmt-box">
+                    {routines.length > 0 ? routines.map((routine) => (
+                        <Box key={routine.routineId} p={5} shadow="md" borderWidth="1px" className="routine-mgmt-entry">
+                            <div className="routine-mgmt-header">
+                                <Text fontSize="xl" className="routine-mgmt-name">{routine.name}</Text>
+                                <Badge colorScheme={routine.visibility === 'PUBLIC' ? 'green' : 'red'}>{routine.visibility}</Badge>
+                            </div>
+                            <Text mt={2} className="routine-mgmt-date">Created: {new Date(routine.created).toLocaleDateString()}</Text>
+                            <Text mt={2} className="routine-mgmt-description">{routine.description}</Text>
                         </Box>
-                    ))}
-                </HStack>
+                    )) : <div className="routine-mgmt-no-routines">No routines found.</div>}
+                </div>
             </ChakraProvider>
         </div>
     );
