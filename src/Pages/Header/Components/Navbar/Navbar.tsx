@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './Navbar.css';
+import { Link } from 'react-router-dom';
 
 const Navbar: React.FC = () => {
     const location = useLocation();
@@ -18,8 +19,8 @@ const Navbar: React.FC = () => {
 
     return (
         <nav className="navbar">
-            <a href="/routine-management">Routines</a>
-            <a href="/logout" onClick={handleLogout}>Logout</a>
+            <Link to="/routine-management">Routines</Link>
+            <Link to="/logout" onClick={handleLogout}>Logout</Link>
         </nav>
     );
 };
