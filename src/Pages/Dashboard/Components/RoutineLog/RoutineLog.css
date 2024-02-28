@@ -38,7 +38,7 @@
 
 .routine-entry {
     display: flex;
-    flex-direction: column; /* Change to column layout */
+    flex-direction: column;
     justify-content: space-between;
     padding: var(--chakra-space-5);
     border-bottom: 1px solid #444;
