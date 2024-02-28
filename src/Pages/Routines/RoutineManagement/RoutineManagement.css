@@ -6,19 +6,30 @@
 }
 
 .routine-mgmt-box {
-    display: flex;
-    justify-content: center;
     position: relative;
     background-color: #333;
     width: 100%;
     height: 380px;
     border-radius: 5px;
+    overflow: auto;
+}
+
+.routine-mgmt-box-header {
+    display: flex;
+    align-items: center;
+    color: white;
+    width: 100%;
+    padding: var(--chakra-space-5);
+    border-bottom: 1px solid #444;
+}
+
+.routine-mgmt-box-header-text {
+    display: inline-block;
 }
 
 .routine-mgmt-sub-box {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    overflow: auto;
     gap: 20px;
     padding: 20px;
     width: 100%;
@@ -27,21 +38,18 @@
 }
 
 .btn-container {
-    display: flex;
-    justify-content: end;
-    border-bottom: 1px solid #444;
+    display: inline-block;
+    border: none;
 }
 
 .add-routine-btn {
-    position: absolute;
-    top: 7px;
-    left: 7px;
     background-color: #007bff;
     color: white;
     font-size: 24px;
     border-radius: 50%;
-    width: 35px;
-    height: 35px;
+    width: 30px;
+    height: 30px;
+    margin-left: 10px;
     display: flex;
     justify-content: center;
     align-items: center;

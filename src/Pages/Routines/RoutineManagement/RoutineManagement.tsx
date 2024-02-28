@@ -30,13 +30,17 @@ const RoutineManagementPage: React.FC = () => {
         <div className='routine-mgmt-container'>
             <ChakraProvider>
                 <div className="routine-mgmt-box">
-                    <div className="btn-container">
-                        <button className="add-routine-btn" title='Add Routine'>+</button>
+                    <div className="routine-mgmt-box-header">
+                        <Text fontSize="2xl" className="routine-mgmt-box-header-text">My Routines</Text>
+                        <div className="btn-container">
+                            <button className="add-routine-btn" title='Add Routine'>+</button>
+                        </div>
                     </div>
+
                     {routines.length > 0 ? (
                         <div className="routine-mgmt-sub-box">
                             {routines.map((routine) => (
-                                <Box key={routine.routineId} p={5} shadow="md" borderWidth="1px" className="routine-mgmt-entry">
+                                <Box key={routine.routineId} p={5} borderWidth="1px" className="routine-mgmt-entry">
                                     <div className="routine-mgmt-header">
                                         <Text fontSize="xl" className="routine-mgmt-name">{routine.name}</Text>
                                         <Badge colorScheme={routine.visibility === 'PUBLIC' ? 'green' : 'red'}>{routine.visibility}</Badge>
