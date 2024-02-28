@@ -28,12 +28,22 @@
     padding: .4em .65em;
     border-radius: .25em;
     margin: 20px;
-    background-color: var(--fc-button-bg-color);
-    border-color: var(--fc-button-border-color);
+    background-color: #007bff;
+}
+
+.clear-filters-btn:hover {
+    background-color: #007bff;
+    box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.1);
 }
 
 .clear-filters-btn:disabled {
+    background-color: #007bff;
     opacity: 0.65;
+}
+
+.clear-filters-btn:disabled:hover {
+    background-color: #007bff;
+    box-shadow: none;
 }
 
 .routine-entry {

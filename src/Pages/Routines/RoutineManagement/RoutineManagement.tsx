@@ -30,6 +30,9 @@ const RoutineManagementPage: React.FC = () => {
         <div className='routine-mgmt-container'>
             <ChakraProvider>
                 <div className="routine-mgmt-box">
+                    <div className="btn-container">
+                        <button className="add-routine-btn" title='Add Routine'>+</button>
+                    </div>
                     <div className="routine-mgmt-sub-box">
                         {routines.length > 0 ? routines.map((routine) => (
                             <Box key={routine.routineId} p={5} shadow="md" borderWidth="1px" className="routine-mgmt-entry">

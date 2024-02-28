@@ -15,19 +15,50 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.fc .fc-today-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+}
+
+.fc .fc-today-button:hover {
+    background-color: #007bff;
+    box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.1);
+}
+
+.fc .fc-button-primary:disabled {
+    background-color: #007bff;
+    opacity: 0.65;
+}
+
+.fc .fc-button-primary:disabled:hover {
+    background-color: #007bff;
+    box-shadow: none;
+}
+
+
+.fc .fc-prev-button, .fc .fc-next-button {
+    background-color: #007bff; /* Change to your preferred color */
+    color: white; /* Adjust text color as needed */
+    border-color: #0056b3;
+}
+
+.fc .fc-prev-button:hover, .fc .fc-next-button:hover {
+    background-color: #007bff;
+    box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.1);
+}
+
 .fc-daygrid-day-frame {
     cursor: pointer;
 }
 
 .fc-daygrid-event {
-    background-color: var(--fc-button-bg-color);
-    border: var(--fc-button-border-color);
+    background-color: #007bff;
+    border: none;
 }
 
 .fc-daygrid-event:hover {
-    
-    background-color: var(--fc-button-hover-bg-color);
-    border-color: var(--fc-button-hover-border-color);
+    box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.1);
 }
 
 /* Full Calendar */
