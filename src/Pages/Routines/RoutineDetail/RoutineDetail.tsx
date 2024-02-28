@@ -1,5 +1,5 @@
 import React, { ReactNode, useEffect, useState } from 'react';
-import { get, getAuth } from '../../Utils/APIHelpers';
+import { get, getAuth } from '../../../Utils/APIHelpers';
 import './RoutineDetail.css';
 import { Box, Divider, Heading, Popover, VStack, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverHeader, PopoverTrigger, StackDivider, Text } from '@chakra-ui/react';
 
@@ -26,7 +26,7 @@ type RoutineDetailProps = {
     popoverTrigger: ReactNode | null;
 }
 
-const RoutineDetailComponent: React.FC<RoutineDetailProps> = ({routineId, popoverTrigger} : RoutineDetailProps) => {
+const RoutineDetailComponent: React.FC<RoutineDetailProps> = ({ routineId, popoverTrigger }: RoutineDetailProps) => {
     const [routineDetail, setRoutineDetail] = useState<RoutineDetail | null>(null);
     const [isAuthorized, setIsAuthorized] = useState<boolean>(true); // Assume authorized by default
     const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -71,22 +71,22 @@ const RoutineDetailComponent: React.FC<RoutineDetailProps> = ({routineId, popove
     if (!routineDetail) {
         return <div>No Routines in database</div>;
     }
-    
+
     if (popoverTrigger) {
         return (
-                <Popover placement='left'>
-                    <PopoverTrigger>
-                        {popoverTrigger}
-                    </PopoverTrigger>
-                    <PopoverContent>
-                        <PopoverArrow bg={'#333'}/>
-                        <PopoverCloseButton/>
-                        <PopoverBody bg={'#333'}>
-                            <PopoverHeader>{routineDetail.name}</PopoverHeader>
-                            {detailDialog(routineDetail, isAuthorized)}
-                        </PopoverBody>
-                    </PopoverContent>
-                </Popover>
+            <Popover placement='left'>
+                <PopoverTrigger>
+                    {popoverTrigger}
+                </PopoverTrigger>
+                <PopoverContent>
+                    <PopoverArrow bg={'#333'} />
+                    <PopoverCloseButton />
+                    <PopoverBody bg={'#333'}>
+                        <PopoverHeader>{routineDetail.name}</PopoverHeader>
+                        {detailDialog(routineDetail, isAuthorized)}
+                    </PopoverBody>
+                </PopoverContent>
+            </Popover>
         )
     } else return detailDialog(routineDetail, isAuthorized)
 };
@@ -96,8 +96,8 @@ const detailDialog = (routineDetail: RoutineDetail, isAuthorized: boolean) => {
         <Box overflow='scroll' p={4} height={'md'}>
             <Text mb={4} fontStyle={'italic'}>{routineDetail.description}</Text>
             <Heading as="h2" size="md" mb={2}>Exercises</Heading>
-            <Divider/>
-            <VStack mb={2} divider={<StackDivider/>}>
+            <Divider />
+            <VStack mb={2} divider={<StackDivider />}>
                 {/* {routineDetail.exercises.map((exercise, index) => (
                     <Box key={index}>
                         <Text><strong>Exercise Name:</strong> {exercise.name}</Text>

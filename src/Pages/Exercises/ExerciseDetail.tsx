@@ -1,16 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { get } from '../../Utils/APIHelpers';
-import './ExerciseDetail.css'; // Import the CSS file for styling
+import { ExerciseDetail } from '../../Interfaces/Exercise';
+import './ExerciseDetail.css'; 
 
-interface ExerciseDetail {
-    name: string;
-    description: string;
-    categoryType: string;
-    bodyPartFocus: string;
-    difficultyLevel: string;
-    equipmentNeeded: string;
-}
 
 interface ExerciseDetailProps {
     exerciseId?: string; // Renamed prop to follow camelCase convention

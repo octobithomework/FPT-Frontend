@@ -4,15 +4,15 @@ import { ChakraProvider, Flex } from "@chakra-ui/react";
 import Calendar from "./Components/Calendar/Calendar"; // Ensure the correct path
 import './Dashboard.css';
 import { getAuth } from '../../Utils/APIHelpers'; // Ensure the correct path
-import { Routine } from '../../Interfaces/Routine';
+import { RoutineLogItem } from '../../Interfaces/RoutineLogItem';
 import RoutineLog from './Components/RoutineLog/RoutineLog';
 
 const DashboardPage: React.FC = () => {
-    const [completedRoutines, setCompletedRoutines] = useState<Routine[]>([]);
+    const [completedRoutines, setCompletedRoutines] = useState<RoutineLogItem[]>([]);
     const [currentMonth, setCurrentMonth] = useState(new Date().getMonth() + 1);
     const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
-    const [selectedDate, setSelectedDate] = useState<string | null >(null);
-    const [selectedId, setSelectedId] = useState<string | null >(null);
+    const [selectedDate, setSelectedDate] = useState<string | null>(null);
+    const [selectedId, setSelectedId] = useState<string | null>(null);
 
     useEffect(() => {
         const fetchCompletedRoutines = async () => {
@@ -22,11 +22,11 @@ const DashboardPage: React.FC = () => {
                     throw new Error('Failed to fetch completed routines.');
                 }
                 const newData = await response.json();
-                
-                setCompletedRoutines((prevRoutines: Routine[]) => {
-                    const updatedRoutines: Routine[] = [...prevRoutines];
-                    newData.forEach((newRoutine: Routine) => {
-                        if (!prevRoutines.some((routine: Routine) => routine.routineLogId === newRoutine.routineLogId)) {
+
+                setCompletedRoutines((prevRoutines: RoutineLogItem[]) => {
+                    const updatedRoutines: RoutineLogItem[] = [...prevRoutines];
+                    newData.forEach((newRoutine: RoutineLogItem) => {
+                        if (!prevRoutines.some((routine: RoutineLogItem) => routine.routineLogId === newRoutine.routineLogId)) {
                             updatedRoutines.push(newRoutine);
                         }
                     });
@@ -48,8 +48,8 @@ const DashboardPage: React.FC = () => {
                     setCurrentMonthYear={(month, year) => { setCurrentMonth(month); setCurrentYear(year); }}
                     onDateOrEventClick={(date, id) => (setSelectedDate(date), setSelectedId(id))}
                 />
-                <RoutineLog 
-                    completedRoutines={completedRoutines} 
+                <RoutineLog
+                    completedRoutines={completedRoutines}
                     currentMonth={currentMonth}
                     currentYear={currentYear}
                     selectedDate={selectedDate}

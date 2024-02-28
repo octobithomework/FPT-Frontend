@@ -1,10 +1,10 @@
 import React from 'react';
-import { Routine } from '../../../../Interfaces/Routine';
+import { RoutineLogItem } from '../../../../Interfaces/RoutineLogItem';
 import { Link } from 'react-router-dom';
 import './RoutineLog.css';
 
 interface RoutineLogProps {
-    completedRoutines: Routine[];
+    completedRoutines: RoutineLogItem[];
     currentMonth: number;
     currentYear: number;
     selectedDate: string | null;

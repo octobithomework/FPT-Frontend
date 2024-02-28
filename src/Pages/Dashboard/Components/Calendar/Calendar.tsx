@@ -5,10 +5,10 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from "@fullcalendar/interaction";
 import './Calendar.css';
-import { Routine } from '../../../../Interfaces/Routine';
+import { RoutineLogItem } from '../../../../Interfaces/RoutineLogItem';
 
 interface CalendarProps {
-  completedRoutines: Routine[];
+  completedRoutines: RoutineLogItem[];
   setCurrentMonthYear: (month: number, year: number) => void;
   onDateOrEventClick: (date: string, id: string) => void;
 }
@@ -17,12 +17,12 @@ const Calendar: React.FC<CalendarProps> = ({ completedRoutines, setCurrentMonthY
   const [events, setEvents] = useState<{ title: string; date: string; id: string }[]>([]);
 
   useEffect(() => {
-    const routineGroups: { [key: string]: Routine[] } = completedRoutines.reduce((acc, routine) => {
+    const routineGroups: { [key: string]: RoutineLogItem[] } = completedRoutines.reduce((acc, routine) => {
       const { name, date } = routine;
       if (!acc[date]) acc[date] = [];
       acc[date].push(routine);
       return acc;
-    }, {} as { [key: string]: Routine[] });
+    }, {} as { [key: string]: RoutineLogItem[] });
 
     const newEvents: { title: string; date: string; id: string }[] = Object.entries(routineGroups).flatMap(([date, routines]) => {
       return routines.length > 2
