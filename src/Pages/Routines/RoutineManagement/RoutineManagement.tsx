@@ -33,19 +33,22 @@ const RoutineManagementPage: React.FC = () => {
                     <div className="btn-container">
                         <button className="add-routine-btn" title='Add Routine'>+</button>
                     </div>
-                    <div className="routine-mgmt-sub-box">
-                        {routines.length > 0 ? routines.map((routine) => (
-                            <Box key={routine.routineId} p={5} shadow="md" borderWidth="1px" className="routine-mgmt-entry">
-                                <div className="routine-mgmt-header">
-                                    <Text fontSize="xl" className="routine-mgmt-name">{routine.name}</Text>
-                                    <Badge colorScheme={routine.visibility === 'PUBLIC' ? 'green' : 'red'}>{routine.visibility}</Badge>
-                                </div>
-                                <Text mt={2} className="routine-mgmt-date">Created: {new Date(routine.created).toLocaleDateString()}</Text>
-                                <Text mt={2} className="routine-mgmt-description">{routine.description}</Text>
-                            </Box>
-                        )) : <div className="routine-mgmt-no-routines">No routines found.</div>}
-                    </div>
-
+                    {routines.length > 0 ? (
+                        <div className="routine-mgmt-sub-box">
+                            {routines.map((routine) => (
+                                <Box key={routine.routineId} p={5} shadow="md" borderWidth="1px" className="routine-mgmt-entry">
+                                    <div className="routine-mgmt-header">
+                                        <Text fontSize="xl" className="routine-mgmt-name">{routine.name}</Text>
+                                        <Badge colorScheme={routine.visibility === 'PUBLIC' ? 'green' : 'red'}>{routine.visibility}</Badge>
+                                    </div>
+                                    <Text mt={2} className="routine-mgmt-date">Created: {new Date(routine.created).toLocaleDateString()}</Text>
+                                    <Text mt={2} className="routine-mgmt-description">{routine.description}</Text>
+                                </Box>
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="no-routines-found">No routines found.</div>
+                    )}
                 </div>
             </ChakraProvider>
         </div>
