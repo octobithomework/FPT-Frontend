@@ -41,3 +41,37 @@ export async function postAuth(apiPath: string, body?: any) {
   }
   return await post(apiPath, body, headers)
 }
+
+export async function put(apiPath: string, body?: any, headers = DEFAULT_HEADERS) {
+  return await fetch(DEFAULT_PATH + apiPath, {
+    method: 'PUT',
+    headers: headers,
+    body: JSON.stringify(body),
+  })
+}
+
+export async function putAuth(apiPath: string, body?: any) {
+  const headers = {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+    'Authorization': 'Bearer ' + localStorage.getItem("token")
+  }
+  return await put(apiPath, body, headers)
+}
+
+export async function del(apiPath: string, body?: any, headers = DEFAULT_HEADERS) {
+  return await fetch(DEFAULT_PATH + apiPath, {
+    method: 'DELETE',
+    headers: headers,
+    body: JSON.stringify(body),
+  })
+}
+
+export async function delAuth(apiPath: string, body?: any) {
+  const headers = {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+    'Authorization': 'Bearer ' + localStorage.getItem("token")
+  }
+  return await del(apiPath, body, headers)
+}

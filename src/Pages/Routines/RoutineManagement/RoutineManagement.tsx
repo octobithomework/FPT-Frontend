@@ -1,7 +1,7 @@
 // RoutinesListPage.js
 import React, { useEffect, useState } from 'react';
-import { Box, ChakraProvider, HStack, Text, Badge } from "@chakra-ui/react";
-import { getAuth } from '../../../Utils/APIHelpers';
+import { Box, ChakraProvider, Text, Badge } from "@chakra-ui/react";
+import { delAuth, getAuth } from '../../../Utils/APIHelpers';
 import { Routine } from '../../../Interfaces/Routine';
 import './RoutineManagement.css';
 import { Link } from 'react-router-dom';
@@ -27,6 +27,18 @@ const RoutineManagementPage: React.FC = () => {
         fetchRoutines();
     }, []);
 
+    const handleDeleteRoutine = async (routineId: string) => {
+        try {
+            const response = await delAuth(`/routines/${routineId}`);
+            if (!response.ok) {
+                throw new Error('Failed to delete routine.');
+            }
+            setRoutines(routines.filter(routine => routine.routineId.toString() !== routineId));
+        } catch (err) {
+            console.error('Error deleting routine:', err);
+        }
+    };
+
     return (
         <div className='routine-mgmt-container'>
             <ChakraProvider>
@@ -49,7 +61,7 @@ const RoutineManagementPage: React.FC = () => {
                                                 <Link to={`/routine-details/${routine.routineId}`} className="icon edit-icon">
                                                     &#9998; {/* Pencil Icon */}
                                                 </Link>
-                                                <button className="icon delete-icon" onClick={() => { console.log("hello") }}>
+                                                <button className="icon delete-icon" onClick={() => handleDeleteRoutine(routine.routineId.toString())}>
                                                     &#128465; {/* Trashcan Icon */}
                                                 </button>
                                             </div>
