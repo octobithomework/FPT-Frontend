@@ -62,7 +62,7 @@ const AddRoutineModal = ({ onAdd }: { onAdd: (data: any) => void }) => {
 
                         <FormControl mt={4}>
                             <FormLabel>Visibility</FormLabel>
-                            <select className="routine-visibility-select" value={visibility} onChange={(e) => setVisibility(e.target.value)}>
+                            <select className="modal-select" value={visibility} onChange={(e) => setVisibility(e.target.value)}>
                                 <option value="PRIVATE">Private</option>
                                 <option value="PUBLIC">Public</option>
                             </select>
