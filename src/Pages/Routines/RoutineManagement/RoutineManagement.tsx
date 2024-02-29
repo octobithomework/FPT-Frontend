@@ -1,10 +1,11 @@
 // RoutinesListPage.js
 import React, { useEffect, useState } from 'react';
 import { Box, ChakraProvider, Text, Badge } from "@chakra-ui/react";
-import { delAuth, getAuth } from '../../../Utils/APIHelpers';
+import { delAuth, getAuth, postAuth } from '../../../Utils/APIHelpers';
 import { Routine } from '../../../Interfaces/Routine';
 import './RoutineManagement.css';
 import { Link } from 'react-router-dom';
+import AddRoutineModal from './Components/AddRoutineModal/AddRoutineModal';
 
 const RoutineManagementPage: React.FC = () => {
     const [routines, setRoutines] = useState<Routine[]>([]);
@@ -39,14 +40,27 @@ const RoutineManagementPage: React.FC = () => {
         }
     };
 
+    const handleAddRoutine = async (newRoutine: Routine) => {
+        try {
+            const response = await postAuth('/routines', newRoutine); 
+            if (!response.ok) {
+                throw new Error('Failed to add routine.');
+            }
+            const addedRoutine = await response.json();
+            setRoutines([...routines, addedRoutine]);
+        } catch (err) {
+            console.error('Error adding new routine:', err);
+        }
+    };
+
     return (
         <div className='routine-mgmt-container'>
             <ChakraProvider>
                 <div className="routine-mgmt-box">
                     <div className="routine-mgmt-box-header">
                         <Text fontSize="2xl" className="routine-mgmt-box-header-text">My Routines</Text>
-                        <div className="btn-container">
-                            <button className="add-routine-btn" title='Add Routine'>+</button>
+                        <div className="routine-mgmt-btn-container">
+                            <AddRoutineModal onAdd={handleAddRoutine} />
                         </div>
                     </div>
 

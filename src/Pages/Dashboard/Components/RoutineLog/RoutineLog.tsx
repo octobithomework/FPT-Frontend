@@ -45,7 +45,7 @@ const RoutineLog: React.FC<RoutineLogProps> = ({ completedRoutines, currentMonth
     return (
         <div className="routine-log-container">
             <div className="routine-log-box">
-                <div className="btn-container">
+                <div className="routine-log-btn-container">
                     <button onClick={clearFilters} className="clear-filters-btn" disabled={isClearFiltersDisabled}>Clear Filters</button> { }
                 </div>
 
