@@ -82,7 +82,7 @@ const SignupPage: React.FC = () => {
             // Assuming the API response includes a token upon successful signup
             const data = await response.json();
             localStorage.setItem('token', data.token);
-            navigate('/dashboard'); // Redirect to dashboard or a welcome page
+            navigate('/dashboard'); // Redirect to dashboard
         } catch (err) {
             if (err instanceof Error) {
                 setFormError(err.message);

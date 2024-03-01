@@ -46,8 +46,11 @@ const RoutineManagementPage: React.FC = () => {
             if (!response.ok) {
                 throw new Error('Failed to add routine.');
             }
-            const addedRoutine = await response.json();
-            setRoutines([...routines, addedRoutine]);
+            const addedRoutineResponse = await response.json();
+            const addedRoutineId = addedRoutineResponse['routineId'];
+            newRoutine.routineId = addedRoutineId;
+            
+            setRoutines([...routines, newRoutine]);
         } catch (err) {
             console.error('Error adding new routine:', err);
         }

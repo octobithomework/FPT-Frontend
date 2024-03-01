@@ -39,6 +39,7 @@ const AddRoutineModal: React.FC<AddRoutineModalProps> = ({ onAdd }) => {
     const [nameError, setNameError] = useState('');
     const [visibilityError, setVisibilityError] = useState('');
     const [exerciseError, setExerciseError] = useState('');
+    const [uidIndex, setUidIndex] = useState(0);
 
     useEffect(() => {
         const fetchExercises = async () => {
@@ -62,10 +63,11 @@ const AddRoutineModal: React.FC<AddRoutineModalProps> = ({ onAdd }) => {
             {
                 ...selectedExercise,
                 order: addedExercises.length,
-                uid: Date.now(),
+                uid: uidIndex,
             }
 
             setAddedExercises([...addedExercises, exerciseToAdd]);
+            setUidIndex(uidIndex + 1);
         }
     };
 
@@ -98,12 +100,18 @@ const AddRoutineModal: React.FC<AddRoutineModalProps> = ({ onAdd }) => {
         setVisibility(null);
         setSelectedExercise(null);
         setAddedExercises([]);
+        setNameError('');
+        setVisibilityError('');
+        setExerciseError('');
         onClose();
 
     }
 
     const handleSubmit = async () => {
         let isValid = true;
+        setNameError('');
+        setVisibilityError('');
+        setExerciseError('');
 
         if (!name.trim()) {
             setNameError('Please enter a name for the routine.');
@@ -115,9 +123,14 @@ const AddRoutineModal: React.FC<AddRoutineModalProps> = ({ onAdd }) => {
             isValid = false;
         }
 
-        const invalidExercises = addedExercises.some((exercise: any) => exercise.sets <= 0 || exercise.repetitions <= 0 || exercise.restingTime < 0);
+        const invalidExercises = addedExercises
+            .some(exercise => (exercise?.sets || -1) <= 0
+                || (exercise?.repetitions || -1) <= 0
+                || (exercise?.restingTime || -1) < 0
+            );
+
         if (invalidExercises) {
-            setExerciseError('Each exercise must have valid sets, reps, and rest.');
+            setExerciseError('Each exercise must have non-negative sets, reps, and rest.');
             isValid = false;
         }
 
@@ -144,7 +157,7 @@ const AddRoutineModal: React.FC<AddRoutineModalProps> = ({ onAdd }) => {
                     <ModalHeader className="modal-header">Add a New Routine</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody pb={6}>
-                        <FormControl mt={4} isInvalid={!!nameError}>
+                        <FormControl isInvalid={!!nameError}>
                             <FormLabel>Name</FormLabel>
                             <Input
                                 value={name}
@@ -161,7 +174,7 @@ const AddRoutineModal: React.FC<AddRoutineModalProps> = ({ onAdd }) => {
                             />
                         </FormControl>
 
-                        <FormControl mt={4} isInvalid={!!visibilityError}>
+                        <FormControl isInvalid={!!visibilityError}>
                             <FormLabel>Visibility</FormLabel>
                             <Select
                                 options={[
@@ -177,7 +190,7 @@ const AddRoutineModal: React.FC<AddRoutineModalProps> = ({ onAdd }) => {
                             {visibilityError && <FormErrorMessage>{visibilityError}</FormErrorMessage>}
                         </FormControl>
 
-                        <FormControl mt={4}>
+                        <FormControl>
                             <FormLabel>Exercise</FormLabel>
                             <div className="add-routine-modal-add-exercise">
                                 <Select
@@ -193,6 +206,10 @@ const AddRoutineModal: React.FC<AddRoutineModalProps> = ({ onAdd }) => {
                             </div>
                         </FormControl>
 
+                        <FormControl isInvalid={!!exerciseError} className="add-routine-modal-exercise-error">
+                            {exerciseError && <FormErrorMessage>{exerciseError}</FormErrorMessage>}
+                        </FormControl>
+
                         <DragDropContext onDragEnd={handleOnDragEnd}>
                             <Droppable droppableId="exercises">
                                 {(provided) => (
@@ -200,73 +217,71 @@ const AddRoutineModal: React.FC<AddRoutineModalProps> = ({ onAdd }) => {
                                         {addedExercises.map((exercise: any, index) => (
                                             <Draggable key={exercise.uid} draggableId={exercise.uid.toString()} index={index}>
                                                 {(provided) => (
-                                                    <div>
-                                                        <Box
-                                                            className="draggable-item"
-                                                            ref={provided.innerRef}
-                                                            {...provided.draggableProps}
-                                                            {...provided.dragHandleProps}
-                                                            p={2}
-                                                            mb={2}
-                                                        >
-                                                            <div className="add-routine-modal-name-and-icons">
-                                                                {exercise.name}
-                                                                <button onClick={() => handleRemoveExercise(exercise.uid)} className="add-routine-modal-icon">
-                                                                    &#128465; {/* Trashcan Icon */}
-                                                                </button>
-                                                            </div>
+                                                    <Box
+                                                        className="draggable-item"
+                                                        ref={provided.innerRef}
+                                                        {...provided.draggableProps}
+                                                        {...provided.dragHandleProps}
+                                                        p={2}
+                                                        mb={2}
+                                                    >
+                                                        <div className="add-routine-modal-name-and-icons">
+                                                            {exercise.name}
+                                                            <button onClick={() => handleRemoveExercise(exercise.uid)} className="add-routine-modal-icon">
+                                                                &#128465; {/* Trashcan Icon */}
+                                                            </button>
+                                                        </div>
 
-                                                            <div className="add-routine-modal-draggable-inputs">
-                                                                <Input
-                                                                    className="add-routine-modal-input"
-                                                                    title="Repetitions (Reps): The number of consecutive times you perform an exercise without stopping. Aims to increase muscle endurance and strength."
-                                                                    placeholder="Reps"
-                                                                    ref={provided.innerRef}
-                                                                    width="20%"
-                                                                    type="number"
-                                                                    value={exercise.repetitions}
-                                                                    onChange={(e) => {
-                                                                        const updatedExercises = addedExercises.map((ex: any) =>
-                                                                            ex.uid === exercise.uid ? { ...ex, repetitions: parseInt(e.target.value, 0) } : ex
-                                                                        );
-                                                                        setAddedExercises(updatedExercises);
-                                                                    }}
-                                                                />
+                                                        <div className="add-routine-modal-draggable-inputs">
+                                                            <Input
+                                                                className="add-routine-modal-exercise-input"
+                                                                title="Repetitions (Reps): The number of consecutive times you perform an exercise without stopping. Aims to increase muscle endurance and strength."
+                                                                placeholder="Reps"
+                                                                ref={provided.innerRef}
+                                                                width="20%"
+                                                                type="number"
+                                                                value={exercise.repetitions}
+                                                                onChange={(e) => {
+                                                                    const updatedExercises = addedExercises.map((ex: any) =>
+                                                                        ex.uid === exercise.uid ? { ...ex, repetitions: parseInt(e.target.value, 0) } : ex
+                                                                    );
+                                                                    setAddedExercises(updatedExercises);
+                                                                }}
+                                                            />
 
-                                                                <Input
-                                                                    className="add-routine-modal-input"
-                                                                    title="Sets: A group of repetitions performed for an exercise. Multiple sets can help improve muscle strength, endurance, and growth."
-                                                                    placeholder="Sets"
-                                                                    ref={provided.innerRef}
-                                                                    width="20%"
-                                                                    type="number"
-                                                                    value={exercise.sets}
-                                                                    onChange={(e) => {
-                                                                        const updatedExercises = addedExercises.map((ex: any) =>
-                                                                            ex.uid === exercise.uid ? { ...ex, sets: parseInt(e.target.value, 0) } : ex
-                                                                        );
-                                                                        setAddedExercises(updatedExercises);
-                                                                    }}
-                                                                />
+                                                            <Input
+                                                                className="add-routine-modal-exercise-input"
+                                                                title="Sets: A group of repetitions performed for an exercise. Multiple sets can help improve muscle strength, endurance, and growth."
+                                                                placeholder="Sets"
+                                                                ref={provided.innerRef}
+                                                                width="20%"
+                                                                type="number"
+                                                                value={exercise.sets}
+                                                                onChange={(e) => {
+                                                                    const updatedExercises = addedExercises.map((ex: any) =>
+                                                                        ex.uid === exercise.uid ? { ...ex, sets: parseInt(e.target.value, 0) } : ex
+                                                                    );
+                                                                    setAddedExercises(updatedExercises);
+                                                                }}
+                                                            />
 
-                                                                <Input
-                                                                    className="add-routine-modal-input"
-                                                                    title="Resting Time (seconds): The pause between sets, allowing muscles to recover. Proper rest can improve performance and reduce injury risk."
-                                                                    placeholder="Rest"
-                                                                    ref={provided.innerRef}
-                                                                    width="20%"
-                                                                    type="number"
-                                                                    value={exercise.restingTime}
-                                                                    onChange={(e) => {
-                                                                        const updatedExercises = addedExercises.map((ex: any) =>
-                                                                            ex.uid === exercise.uid ? { ...ex, restingTime: parseInt(e.target.value, 0) } : ex
-                                                                        );
-                                                                        setAddedExercises(updatedExercises);
-                                                                    }}
-                                                                />
-                                                            </div>
-                                                        </Box>
-                                                    </div>
+                                                            <Input
+                                                                className="add-routine-modal-exercise-input"
+                                                                title="Resting Time (seconds): The pause between sets, allowing muscles to recover. Proper rest can improve performance and reduce injury risk."
+                                                                placeholder="Rest"
+                                                                ref={provided.innerRef}
+                                                                width="20%"
+                                                                type="number"
+                                                                value={exercise.restingTime}
+                                                                onChange={(e) => {
+                                                                    const updatedExercises = addedExercises.map((ex: any) =>
+                                                                        ex.uid === exercise.uid ? { ...ex, restingTime: parseInt(e.target.value, 0) } : ex
+                                                                    );
+                                                                    setAddedExercises(updatedExercises);
+                                                                }}
+                                                            />
+                                                        </div>
+                                                    </Box>
                                                 )}
                                             </Draggable>
                                         ))}
@@ -278,9 +293,7 @@ const AddRoutineModal: React.FC<AddRoutineModalProps> = ({ onAdd }) => {
                     </ModalBody>
 
                     <ModalFooter>
-                        <Button mr={3} onClick={handleSubmit} className='add-routine-modal-save'>
-                            Save
-                        </Button>
+                        <Button mr={3} onClick={handleSubmit} className='add-routine-modal-save'>Save</Button>
                         <Button onClick={handleClose} className="add-routine-modal-cancel">Cancel</Button>
                     </ModalFooter>
                 </ModalContent>

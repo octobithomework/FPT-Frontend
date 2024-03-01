@@ -4,6 +4,7 @@
 
 .add-routine-modal-add-exercise {
     display: flex;
+    align-items: center;
 }
 
 .add-routine-modal-add-exercise > :first-child {
@@ -20,7 +21,7 @@
     font-size: larger;
 }
 
-.add-routine-modal-input {
+.add-routine-modal-exercise-input {
     background-color: #333 !important;
     width: 71px !important;
     text-align: center;
@@ -35,4 +36,8 @@
 .add-routine-modal-name-and-icons, .add-routine-modal-draggable-inputs {
     display: inline-block;
     text-wrap: nowrap;
+}
+
+.add-routine-modal-exercise-error {
+    margin-left: 2px;
 }
