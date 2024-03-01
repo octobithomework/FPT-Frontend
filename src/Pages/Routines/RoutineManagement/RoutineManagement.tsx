@@ -69,7 +69,7 @@ const RoutineManagementPage: React.FC = () => {
                             {routines.map((routine) => (
                                 <Box key={routine.routineId} p={5} borderWidth="1px" className="routine-mgmt-entry">
                                     <div className="routine-mgmt-sub-header">
-                                        <div className="name-and-icons">
+                                        <div className="routine-mgmt-name-and-icons">
                                             <Text fontSize="xl" className="routine-mgmt-name">{routine.name}</Text>
                                             <div className="routine-mgmt-icon-group">
                                                 <Link to={`/routine-details/${routine.routineId}`} className="icon edit-icon">
