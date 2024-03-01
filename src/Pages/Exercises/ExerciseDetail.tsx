@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { get } from '../../Utils/APIHelpers';
-import { ExerciseDetail } from '../../Interfaces/Exercise';
+import { Exercise } from '../../Interfaces/Exercise';
 import './ExerciseDetail.css'; 
 
 
@@ -10,7 +10,8 @@ interface ExerciseDetailProps {
 }
 
 const ExerciseDetailComponent: React.FC<ExerciseDetailProps> = ({ exerciseId }: ExerciseDetailProps) => {
-    const [exerciseDetailInfo, setExerciseDetailInfo] = useState<ExerciseDetail>({
+    const [exerciseDetailInfo, setExerciseDetailInfo] = useState<Exercise>({
+        exerciseId: 0,
         name: '',
         description: '',
         categoryType: '',
@@ -29,6 +30,7 @@ const ExerciseDetailComponent: React.FC<ExerciseDetailProps> = ({ exerciseId }: 
             console.log('JSON response from server:', json);
 
             setExerciseDetailInfo({
+                exerciseId: json.exerciseId,
                 name: json.name,
                 description: json.description,
                 categoryType: json.categoryType, 
@@ -56,7 +58,7 @@ const ExerciseDetailComponent: React.FC<ExerciseDetailProps> = ({ exerciseId }: 
                 {exerciseDetailInfo.description && (
                     <>
                         <p className="exercise-detail-description">Description:</p>
-                        <p>{exerciseDetailInfo.description}</p>
+                        <p className="exercise-detail-value">{exerciseDetailInfo.description}</p>
                     </>
                 )}
                 {exerciseDetailInfo.categoryType && <p className="exercise-detail-category">Category Type: <span className="exercise-detail-value">{exerciseDetailInfo.categoryType}</span></p>}

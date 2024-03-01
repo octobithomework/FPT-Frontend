@@ -1,4 +1,5 @@
-export interface ExerciseDetail {
+export interface Exercise {
+    exerciseId: number;
     name: string;
     description: string;
     categoryType: string;

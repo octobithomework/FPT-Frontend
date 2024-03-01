@@ -2,13 +2,14 @@
     display: flex;
     justify-content: space-between;
     padding: 10px;
-    min-height: calc(100vh - 65px - 60px);
+    height: calc(100vh - 65px - 60px);
 }
 
 .routine-mgmt-box {
     background-color: #333;
     width: 100%;
-    height: 380px;
+    height: 49%;
+    min-height: 370px;
     border-radius: 5px;
     overflow: auto;
 }
@@ -64,7 +65,7 @@
     border-radius: 5px;
     background-color: #474747;
     border: 1px solid #444;
-    height: 160px;
+    height: 177px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -105,10 +106,10 @@
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100%;
-    height: 48px;
-    /* ... after 2 lines */
+    height: 65px;
+    /* ... after 3 lines */
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
 }
 
