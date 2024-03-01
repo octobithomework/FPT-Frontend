@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Select, { SingleValue } from 'react-select';
+import Select, { GroupBase, SingleValue } from 'react-select';
 import {
     Modal,
     ModalOverlay,
@@ -16,11 +16,11 @@ import {
     Textarea
 } from '@chakra-ui/react';
 import './AddRoutineModal.css';
-import { Routine } from '../../../../../Interfaces/Routine';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { get } from '../../../../../Utils/APIHelpers';
 import { Exercise } from '../../../../../Interfaces/Exercise';
 import { OptionType } from '../../../../../Interfaces/OptionType';
-import { set } from 'date-fns';
+import { add, set } from 'date-fns';
 
 interface AddRoutineModalProps {
     onAdd: (data: any) => void;
@@ -31,40 +31,54 @@ const AddRoutineModal: React.FC<AddRoutineModalProps> = ({ onAdd }) => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [visibility, setVisibility] = useState<SingleValue<OptionType>>(null);
-    const [selectedExercise, setSelectedExercise] = useState<SingleValue<OptionType>>(null);
-    const [exercises, setExercises] = useState([]);
+    const [selectedExercise, setSelectedExercise] = useState<SingleValue<Exercise>>(null);
+    const [exercises, setExercises] = useState<Exercise[]>([]);
+    const [addedExercises, setAddedExercises] = useState<Exercise[]>([]);
 
     useEffect(() => {
         const fetchExercises = async () => {
             try {
                 const response = await get('/exercises');
-
                 if (!response.ok) {
                     throw new Error('Failed to fetch exercises.');
                 }
-
-                const data = await response.json();
-
-                const exerciseOptions = data.map((exercise: Exercise) => ({
-                    value: exercise.exerciseId,
-                    label: exercise.name
-                }));
-
-                setExercises(exerciseOptions);
+                const data: Exercise[] = await response.json();
+                setExercises(data);
             } catch (error) {
                 console.error('Failed to fetch exercises', error);
             }
         };
-
         fetchExercises();
     }, []);
 
+    // const handleAddExercise = () => {
+    //     if (selectedExercise && !addedExercises.find(ex => ex.exerciseId === Number(selectedExercise.value))) {
+    //         const exercise: Exercise = exercises.find(ex => ex.exerciseId === Number(selectedExercise.value))!;
+    //         setAddedExercises((prev) => [...prev, exercise]);
+    //         setSelectedExercise(null);
+    //     }
+    // };
+
+    // const handleRemoveExercise = (index: number) => {
+    //     setAddedExercises((prev) => prev.filter((_, i) => i !== index));
+    // };
+
+    // const handleOnDragEnd = (result: { destination: { index: number; }; source: { index: number; }; }) => {
+    //     if (!result.destination) return;
+    //     const items = Array.from(addedExercises);
+    //     const [reorderedItem] = items.splice(result.source.index, 1);
+    //     items.splice(result.destination.index, 0, reorderedItem);
+
+    //     setAddedExercises(items);
+    // };
+
     const handleSubmit = async () => {
-        onAdd({ name, description, visibility });
+        onAdd({ name, description, visibility: visibility?.value, exercises: addedExercises });
         setName('');
         setDescription('');
         setVisibility(null);
         setSelectedExercise(null);
+        setAddedExercises([]);
         onClose();
     };
 
@@ -106,6 +120,7 @@ const AddRoutineModal: React.FC<AddRoutineModalProps> = ({ onAdd }) => {
                                 value={visibility}
                                 onChange={setVisibility}
                                 classNamePrefix="select"
+                                placeholder=''
                                 isSearchable={false}
                             />
                         </FormControl>
@@ -114,9 +129,11 @@ const AddRoutineModal: React.FC<AddRoutineModalProps> = ({ onAdd }) => {
                             <FormLabel>Exercise</FormLabel>
                             <Select
                                 options={exercises}
-                                value={selectedExercise}
+                                getOptionLabel={(exercise: Exercise) => exercise.name}
+                                getOptionValue={(exercise: Exercise) => exercise.exerciseId.toString()}
                                 onChange={setSelectedExercise}
                                 classNamePrefix="select"
+                                placeholder=''
                                 isSearchable={true}
                             />
                         </FormControl>
