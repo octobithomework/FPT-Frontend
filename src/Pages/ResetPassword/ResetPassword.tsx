@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode'; 
+import { jwtDecode } from 'jwt-decode';
 import './ResetPassword.css';
 import { post } from '../../Utils/APIHelpers';
+import { Button, FormControl, FormErrorMessage, FormLabel, Input } from '@chakra-ui/react';
 
 interface TokenPayload {
     sub: string;
@@ -68,7 +69,7 @@ const ResetPasswordPage: React.FC = () => {
         }
 
         try {
-            const response = await post('/reset-password/' + token, {newPassword})
+            const response = await post('/reset-password/' + token, { newPassword })
 
             if (!response.ok) {
                 throw new Error('Failed to reset password.');
@@ -83,22 +84,36 @@ const ResetPasswordPage: React.FC = () => {
     return (
         <div className="reset-password-container">
             <form onSubmit={handleSubmit} className="reset-password-form">
-                {formError && <p className="form-error">{formError}</p>}
-                <div className="form-field">
-                    <label htmlFor='email'>Email</label>
-                    <input type="email" id="email" value={email} disabled />
-                </div>
-                <div className="form-field">
-                    <label htmlFor='new-password'>New Password</label>
-                    <input type="password" id="new-password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
-                    {passwordError && <span className="error">{passwordError}</span>}
-                </div>
-                <div className="form-field">
-                    <label htmlFor='confirm-password'>Confirm Password</label>
-                    <input type="password" id="confirm-password" value={confirmNewPassword} onChange={(e) => setConfirmNewPassword(e.target.value)} />
-                    {confirmPasswordError && <span className="error">{confirmPasswordError}</span>}
-                </div>
-                <button type="submit" className="submit-btn">Reset Password</button>
+                <FormControl isInvalid={!!formError} className="form-error">
+                    {formError && <FormErrorMessage>{formError}</FormErrorMessage>}
+                </FormControl>
+
+                <FormControl>
+                    <FormLabel htmlFor='email'>Email</FormLabel>
+                    <Input type="email" id="email" value={email} isDisabled />
+                </FormControl>
+                <FormControl isInvalid={!!passwordError}>
+                    <FormLabel htmlFor='new-password'>New Password</FormLabel>
+                    <Input
+                        type="password"
+                        id="new-password"
+                        value={newPassword}
+                        onChange={(e) => setNewPassword(e.target.value)}
+                    />
+                    {passwordError && <FormErrorMessage>{passwordError}</FormErrorMessage>}
+                </FormControl>
+                <FormControl isInvalid={!!confirmPasswordError}>
+                    <FormLabel htmlFor='confirm-password'>Confirm Password</FormLabel>
+                    <Input
+                        type="password"
+                        id="confirm-password"
+                        value={confirmNewPassword}
+                        onChange={(e) => setConfirmNewPassword(e.target.value)}
+                    />
+                    {confirmPasswordError && <FormErrorMessage>{confirmPasswordError}</FormErrorMessage>}
+                </FormControl>
+
+                <Button type="submit" className="submit-btn">Reset Password</Button>
             </form>
         </div>
     );

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './ForgotPassword.css';
 import { post } from '../../Utils/APIHelpers';
+import { Button, FormControl, FormErrorMessage, FormLabel, Input } from '@chakra-ui/react';
 
 const ForgotPasswordPage: React.FC = () => {
     const [email, setEmail] = useState('');
@@ -30,7 +31,7 @@ const ForgotPasswordPage: React.FC = () => {
         }
 
         try {
-            const response = await post("/forgot-password/", {email})
+            const response = await post("/forgot-password/", { email })
 
             if (!response.ok) {
                 throw new Error('Failed to send password reset email.');
@@ -48,16 +49,26 @@ const ForgotPasswordPage: React.FC = () => {
     };
 
     return (
-        <div className="forgot-password-container"> 
-            <form onSubmit={handleSubmit} className="forgot-password-form"> 
-                {formSuccess && <p className="form-success">{formSuccess}</p>}
-                {formError && <p className="form-error">{formError}</p>}
-                <div className="form-field">
-                    <label htmlFor="email">Email</label>
-                    <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                    {emailError && <span className="error">{emailError}</span>}
-                </div>
-                <button type="submit" className="submit-btn">Send Reset Email</button>
+        <div className="forgot-password-container">
+            <form onSubmit={handleSubmit} className="forgot-password-form">
+                <FormControl isInvalid={!!formSuccess} className="form-success">
+                    {formSuccess && <FormErrorMessage>{formSuccess}</FormErrorMessage>}
+                </FormControl>
+                <FormControl isInvalid={!!formError} className="form-error">
+                    {formError && <FormErrorMessage>{formError}</FormErrorMessage>}
+                </FormControl>
+                <FormControl isInvalid={!!emailError}>
+                    <FormLabel htmlFor="email">Email</FormLabel>
+                    <Input
+                        id="email"
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                    {emailError && <FormErrorMessage>{emailError}</FormErrorMessage>}
+                </FormControl>
+
+                <Button type="submit" className="submit-btn">Send Reset Email</Button>
                 <div className="forgot-password-actions">
                     <Link to="/login" className="action-link">Return to Login</Link>
                 </div>

@@ -3,9 +3,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { post } from '../../Utils/APIHelpers';
-
 import { isAuth } from '../../Utils/IsAuth';
-import './Login.css'; 
+import './Login.css';
+import { Button, FormControl, FormErrorMessage, FormLabel, Input } from '@chakra-ui/react';
 
 const LoginPage: React.FC = () => {
     const [email, setEmail] = useState('');
@@ -20,7 +20,7 @@ const LoginPage: React.FC = () => {
             navigate('/dashboard');
         }
     }, [navigate]);
-    
+
     const validateForm = () => {
         let isValid = true;
         setEmailError('');
@@ -34,7 +34,7 @@ const LoginPage: React.FC = () => {
         if (!password) {
             setPasswordError('Password is required.');
             isValid = false;
-        } 
+        }
 
         return isValid;
     };
@@ -48,7 +48,7 @@ const LoginPage: React.FC = () => {
         }
 
         try {
-            const response = await post("/login", {email,  password})
+            const response = await post("/login", { email, password })
 
             if (!response.ok) {
                 throw new Error('Login failed.');
@@ -68,19 +68,34 @@ const LoginPage: React.FC = () => {
 
     return (
         <div className="login-container">
-            <form onSubmit={handleLogin} className="login-form">
-                {formError && <p className="form-error">{formError}</p>}
-                <div className="form-field">
-                    <label htmlFor="email">Email</label>
-                    <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                    {emailError && <span className="error">{emailError}</span>}
-                </div>
-                <div className="form-field">
-                    <label htmlFor ="password">Password</label>
-                    <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                    {passwordError && <span className="error">{passwordError}</span>}
-                </div>
-                <button type="submit" className="submit-btn">Login</button>
+            <form onSubmit={handleLogin} className="login-form input-form">
+                <FormControl isInvalid={!!formError} className="form-error">
+                    {formError && <FormErrorMessage>{formError}</FormErrorMessage>}
+                </FormControl>
+
+                <FormControl isInvalid={!!emailError}>
+                    <FormLabel htmlFor="email">Email</FormLabel>
+                    <Input
+                        id="email"
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                    {emailError && <FormErrorMessage>{emailError}</FormErrorMessage>}
+                </FormControl>
+
+                <FormControl isInvalid={!!passwordError}>
+                    <FormLabel htmlFor="password">Password</FormLabel>
+                    <Input
+                        id="password"
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                    {passwordError && <FormErrorMessage>{passwordError}</FormErrorMessage>}
+                </FormControl>
+
+                <Button type="submit" className="submit-btn">Login</Button>
                 <div className="login-actions">
                     <Link to="/signup" className="action-link">Signup</Link>
                     <Link to="/forgot-password" className="action-link">Forgot Password</Link>

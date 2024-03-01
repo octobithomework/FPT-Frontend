@@ -15,7 +15,8 @@ import {
     Input,
     Textarea,
     Box,
-    Flex
+    Flex,
+    FormErrorMessage
 } from '@chakra-ui/react';
 import './AddRoutineModal.css';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
@@ -35,6 +36,9 @@ const AddRoutineModal: React.FC<AddRoutineModalProps> = ({ onAdd }) => {
     const [selectedExercise, setSelectedExercise] = useState<SingleValue<RoutineExercise>>(null);
     const [exercises, setExercises] = useState<RoutineExercise[]>([]);
     const [addedExercises, setAddedExercises] = useState<RoutineExercise[]>([]);
+    const [nameError, setNameError] = useState('');
+    const [visibilityError, setVisibilityError] = useState('');
+    const [exerciseError, setExerciseError] = useState('');
 
     useEffect(() => {
         const fetchExercises = async () => {
@@ -83,19 +87,44 @@ const AddRoutineModal: React.FC<AddRoutineModalProps> = ({ onAdd }) => {
 
     const handleRemoveExercise = (uidToRemove: number) => {
         setAddedExercises(addedExercises.filter((exercise: any) => exercise.uid !== uidToRemove));
+        if (exerciseError) {
+            setExerciseError('');
+        }
     };
 
     const handleClose = () => {
-        // setName('');
-        // setDescription('');
-        // setVisibility(null);
-        // setSelectedExercise(null);
-        // setAddedExercises([]);
+        setName('');
+        setDescription('');
+        setVisibility(null);
+        setSelectedExercise(null);
+        setAddedExercises([]);
         onClose();
 
     }
 
     const handleSubmit = async () => {
+        let isValid = true;
+
+        if (!name.trim()) {
+            setNameError('Please enter a name for the routine.');
+            isValid = false;
+        }
+
+        if (!visibility) {
+            setVisibilityError('Please select the visibility for the routine.');
+            isValid = false;
+        }
+
+        const invalidExercises = addedExercises.some((exercise: any) => exercise.sets <= 0 || exercise.repetitions <= 0 || exercise.restingTime < 0);
+        if (invalidExercises) {
+            setExerciseError('Each exercise must have valid sets, reps, and rest.');
+            isValid = false;
+        }
+
+        if (!isValid) {
+            return;
+        }
+
         onAdd({
             name,
             description,
@@ -115,15 +144,16 @@ const AddRoutineModal: React.FC<AddRoutineModalProps> = ({ onAdd }) => {
                     <ModalHeader className="modal-header">Add a New Routine</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody pb={6}>
-                        <FormControl>
+                        <FormControl mt={4} isInvalid={!!nameError}>
                             <FormLabel>Name</FormLabel>
                             <Input
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
                             />
+                            {nameError && <FormErrorMessage>{nameError}</FormErrorMessage>}
                         </FormControl>
 
-                        <FormControl mt={4}>
+                        <FormControl>
                             <FormLabel>Description</FormLabel>
                             <Textarea
                                 value={description}
@@ -131,7 +161,7 @@ const AddRoutineModal: React.FC<AddRoutineModalProps> = ({ onAdd }) => {
                             />
                         </FormControl>
 
-                        <FormControl mt={4}>
+                        <FormControl mt={4} isInvalid={!!visibilityError}>
                             <FormLabel>Visibility</FormLabel>
                             <Select
                                 options={[
@@ -144,6 +174,7 @@ const AddRoutineModal: React.FC<AddRoutineModalProps> = ({ onAdd }) => {
                                 placeholder=''
                                 isSearchable={false}
                             />
+                            {visibilityError && <FormErrorMessage>{visibilityError}</FormErrorMessage>}
                         </FormControl>
 
                         <FormControl mt={4}>

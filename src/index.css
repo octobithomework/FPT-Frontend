@@ -9,6 +9,18 @@ body {
   margin: 0;
 }
 
+.form-error *, .form-success * {
+  justify-content: center !important;
+}
+
+.form-success .chakra-form__error-message {
+  color: var(--chakra-colors-green-500) !important;
+}
+
+.chakra-form-control {
+  margin-top: var(--chakra-space-4) !important;
+}
+
 .chakra-button {
   background-color: #007bff !important;
   color: white !important;
@@ -99,6 +111,31 @@ body {
   color: white !important;
   border: 1px solid #444 !important;
   border-radius: 5px;
+}
+
+.submit-btn {
+  margin-top: 20px;
+  width: 100%;
+}
+
+.signup-actions {
+  display: flex;
+  justify-content: start;
+  margin-top: 10px; 
+}
+
+.action-link {
+  text-decoration: none;
+  color: #007bff;
+  font-size: 0.9rem;
+}
+
+.action-link:hover {
+  text-decoration: underline;
+}
+
+[aria-invalid="true"] {
+  box-shadow: none !important;
 }
 
 

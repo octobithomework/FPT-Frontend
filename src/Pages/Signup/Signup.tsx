@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Signup.css';
 import { post } from '../../Utils/APIHelpers';
+import { Button, FormControl, FormErrorMessage, FormLabel, Input } from '@chakra-ui/react';
 
 const SignupPage: React.FC = () => {
     const [firstName, setFirstName] = useState('');
@@ -72,7 +73,7 @@ const SignupPage: React.FC = () => {
         }
 
         try {
-            const response = await post('/register', {firstName, lastName, email, password})
+            const response = await post('/register', { firstName, lastName, email, password })
 
             if (!response.ok) {
                 throw new Error('Signup failed. Make sure you are using a unique email address.');
@@ -93,34 +94,57 @@ const SignupPage: React.FC = () => {
 
     return (
         <div className="signup-container">
-        <form onSubmit={handleSignup} className="signup-form">
-            {formError && <p className="form-error">{formError}</p>}
-            <div className="form-field">
-                <label htmlFor="firstName">First Name</label>
-                <input id="firstName" type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-                {firstNameError && <span className="error">{firstNameError}</span>}
-            </div>
-            <div className="form-field">
-                <label htmlFor="lastName">Last Name</label>
-                <input id="lastName" type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />
-                {lastNameError && <span className="error">{lastNameError}</span>}
-            </div>
-            <div className="form-field">
-                <label htmlFor="email">Email</label>
-                <input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                {emailError && <span className="error">{emailError}</span>}
-            </div>
-            <div className="form-field">
-                <label htmlFor="password">Password</label>
-                <input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                {passwordError && <span className="error">{passwordError}</span>}
-            </div>
-            <button type="submit" className="submit-btn">Sign Up</button>
-            <div className="signup-actions">
-                <Link to="/login" className="action-link">Have an account? Login</Link>
-            </div>
-        </form>
-    </div>
-);
+            <form onSubmit={handleSignup} className="signup-form">
+                <FormControl isInvalid={!!formError} className="form-error">
+                    {formError && <FormErrorMessage>{formError}</FormErrorMessage>}
+                </FormControl>
+                <FormControl isInvalid={!!firstNameError}>
+                    <FormLabel htmlFor="firstName">First Name</FormLabel>
+                    <Input
+                        id="firstName"
+                        type="text"
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
+                    />
+                    {firstNameError && <FormErrorMessage>{firstNameError}</FormErrorMessage>}
+                </FormControl>
+                <FormControl isInvalid={!!lastNameError}>
+                    <FormLabel htmlFor="lastName">Last Name</FormLabel>
+                    <Input
+                        id="lastName"
+                        type="text"
+                        value={lastName}
+                        onChange={(e) => setLastName(e.target.value)}
+                    />
+                    {lastNameError && <FormErrorMessage>{lastNameError}</FormErrorMessage>}
+                </FormControl>
+                <FormControl isInvalid={!!emailError}>
+                    <FormLabel htmlFor="email">Email</FormLabel>
+                    <Input
+                        id="email"
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                    {emailError && <FormErrorMessage>{emailError}</FormErrorMessage>}
+                </FormControl>
+                <FormControl isInvalid={!!passwordError}>
+                    <FormLabel htmlFor="password">Password</FormLabel>
+                    <Input
+                        id="password"
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                    {passwordError && <FormErrorMessage>{passwordError}</FormErrorMessage>}
+                </FormControl>
+
+                <Button type="submit" className="submit-btn">Signup</Button>
+                <div className="signup-actions">
+                    <Link to="/login" className="action-link">Have an account? Login</Link>
+                </div>
+            </form>
+        </div>
+    );
 };
 export default SignupPage;

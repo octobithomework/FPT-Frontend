@@ -1,6 +1,6 @@
 // DashboardPage.js
 import React, { useEffect, useState } from 'react';
-import { ChakraProvider, Flex } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import Calendar from "./Components/Calendar/Calendar"; // Ensure the correct path
 import './Dashboard.css';
 import { getAuth } from '../../Utils/APIHelpers'; // Ensure the correct path
@@ -42,7 +42,6 @@ const DashboardPage: React.FC = () => {
 
     return (
         <Flex>
-            <ChakraProvider>
                 <Calendar
                     completedRoutines={completedRoutines}
                     setCurrentMonthYear={(month, year) => { setCurrentMonth(month); setCurrentYear(year); }}
@@ -56,7 +55,6 @@ const DashboardPage: React.FC = () => {
                     selectedId={selectedId}
                     clearFilters={() => (setSelectedDate(""), setSelectedId(""))}
                 />
-            </ChakraProvider>
         </Flex>
     );
 };
