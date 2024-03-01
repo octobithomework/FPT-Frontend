@@ -9,15 +9,15 @@ export interface Routine {
 
 export interface RoutineExercise {
     routineExerciseId: number;
-    order: number;
-    repetitions: number;
-    sets: number;
-    restingTime: number;
+    order?: number;
+    repetitions?: number;
+    sets?: number;
+    restingTime?: number;
     exerciseId: number;
     name: string;
-    description: string;
-    categoryType: string;
-    bodyPartFocus: string;
-    difficultyLevel: string;
-    equipmentNeeded: string;
+    description?: string;
+    categoryType?: string;
+    bodyPartFocus?: string;
+    difficultyLevel?: string;
+    equipmentNeeded?: string;
 }

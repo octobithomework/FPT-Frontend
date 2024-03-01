@@ -71,11 +71,11 @@ const RoutineManagementPage: React.FC = () => {
                                     <div className="routine-mgmt-sub-header">
                                         <div className="name-and-icons">
                                             <Text fontSize="xl" className="routine-mgmt-name">{routine.name}</Text>
-                                            <div className="icon-group">
+                                            <div className="routine-mgmt-icon-group">
                                                 <Link to={`/routine-details/${routine.routineId}`} className="icon edit-icon">
                                                     &#9998; {/* Pencil Icon */}
                                                 </Link>
-                                                <button className="icon delete-icon" onClick={() => handleDeleteRoutine(routine.routineId.toString())}>
+                                                <button className="routine-mgmt-icon delete-icon" onClick={() => handleDeleteRoutine(routine.routineId.toString())}>
                                                     &#128465; {/* Trashcan Icon */}
                                                 </button>
                                             </div>

@@ -90,11 +90,11 @@
     font-weight: bold;
 }
 
-.icon-group {
+.routine-mgmt-icon-group {
     margin-left: 10px;
 }
 
-.icon {
+.routine-mgmt-icon {
     margin: 0 3px;
     cursor: pointer;
     font-size: larger;
