@@ -1,7 +1,8 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 import { get, getAuth } from '../../../Utils/APIHelpers';
 import './RoutineDetail.css';
-import { Box, Divider, Heading, Popover, VStack, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverHeader, PopoverTrigger, StackDivider, Text } from '@chakra-ui/react';
+import { Box, Divider, Heading, Popover, VStack, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverHeader, PopoverTrigger, StackDivider, Text, Table, Thead, Tbody, Tr, Th, Td, Button, HStack, Flex, Tooltip } from '@chakra-ui/react';
+import { AddIcon, DeleteIcon, InfoIcon, SmallAddIcon } from '@chakra-ui/icons';
 
 interface RoutineDetail {
     routineId: string;
@@ -22,7 +23,7 @@ interface ExerciseDetail {
 // export default RoutineDetailPage;
 
 type RoutineDetailProps = {
-    routineId: string;
+    routineId: string | undefined;
     popoverTrigger: ReactNode | null;
 }
 
@@ -36,9 +37,10 @@ const RoutineDetailComponent: React.FC<RoutineDetailProps> = ({ routineId, popov
         try {
             const response = await getAuth(`/routine-details/${id}`);
             const json = await response.json();
+            console.log(json)
             setRoutineDetail(json);
             // Check if routine visibility is private and current user is not the author
-            // For demonstration, assume authorized by default
+            // For demonstration, assume authorized by default  
             setIsAuthorized(true);
         } catch (error) {
             console.error('Error fetching routine details:', error);
@@ -49,7 +51,7 @@ const RoutineDetailComponent: React.FC<RoutineDetailProps> = ({ routineId, popov
     }
 
     useEffect(() => {
-        fetchRoutineDetails(routineId);
+        if (routineId) fetchRoutineDetails(routineId);
     }, [routineId]); // Fetch routine details when RoutineID changes
 
     if (isLoading) {
@@ -93,23 +95,49 @@ const RoutineDetailComponent: React.FC<RoutineDetailProps> = ({ routineId, popov
 
 const detailDialog = (routineDetail: RoutineDetail, isAuthorized: boolean) => {
     return (
-        <Box overflow='scroll' p={4} height={'md'}>
-            <Text mb={4} fontStyle={'italic'}>{routineDetail.description}</Text>
-            <Heading as="h2" size="md" mb={2}>Exercises</Heading>
-            <Divider />
-            <VStack mb={2} divider={<StackDivider />}>
-                {/* {routineDetail.exercises.map((exercise, index) => (
-                    <Box key={index}>
-                        <Text><strong>Exercise Name:</strong> {exercise.name}</Text>
-                        <Text><strong>Repetitions:</strong> {exercise.repetitions}</Text>
-                        <Text><strong>Sets:</strong> {exercise.sets}</Text>
-                        <Text><strong>Resting Time:</strong> {exercise.restingTime} Seconds</Text>
-                    </Box>
-                ))} */}
-            </VStack>
-
-            {!isAuthorized && <Text color="red.500">Access to this routine is restricted.</Text>}
-        </Box>
+        <Flex direction='column' m={4} bgColor={"#333"}>
+            <Heading as='h1' size="lg" m={3}>{routineDetail.name}</Heading>
+            <Text mb={4} fontStyle={'italic'} ml={5}>{routineDetail.description}</Text>
+            <Divider/>
+            <Box overflow='scroll' p={4} height='md'>
+                <Table variant="simple">
+                    <Thead>
+                        <Tr>
+                        <Th>Exercise Name</Th>
+                        <Th>Repetitions</Th>
+                        <Th>Sets</Th>
+                        <Th>
+                            <Tooltip label="Amount of time to rest between sets.">
+                                <HStack>
+                                    <InfoIcon/>
+                                    <Text>Resting Time</Text>
+                                </HStack>
+                            </Tooltip>
+                        </Th>
+                        <Th>Controls</Th>
+                        </Tr>
+                    </Thead>
+                    <Tbody>
+                        {routineDetail.exercises.map((exercise, index) => (
+                        <Tr key={index}>
+                            <Td>{exercise.name}</Td>
+                            <Td>{exercise.repetitions}</Td>
+                            <Td>{exercise.sets}</Td>
+                            <Td>{exercise.restingTime} Seconds</Td>
+                            <Td>
+                                <HStack>
+                                    <Button size='sm'>&#9998;</Button>
+                                    <Button size='sm'><SmallAddIcon/></Button>
+                                    <Button size='sm'><DeleteIcon/></Button>
+                                </HStack>
+                            </Td>
+                        </Tr>
+                        ))}
+                    </Tbody>
+                </Table>
+                {!isAuthorized && <Text color="red.500">Access to this routine is restricted.</Text>}
+            </Box>
+        </Flex>
     )
 
 
