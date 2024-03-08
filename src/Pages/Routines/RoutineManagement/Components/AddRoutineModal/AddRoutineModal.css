@@ -15,10 +15,9 @@
     width: 100px;
 }
 
-.add-routine-modal-icon {
+.routine-mgmt-modal-icon {
     margin-left: 10px;
     cursor: pointer;
-    font-size: larger;
 }
 
 .add-routine-modal-exercise-input {

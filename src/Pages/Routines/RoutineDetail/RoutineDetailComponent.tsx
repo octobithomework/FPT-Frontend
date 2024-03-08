@@ -118,7 +118,7 @@ const detailDialog = (routineDetail: RoutineDetail, isAuthorized: boolean) => {
                         </Tr>
                     </Thead>
                     <Tbody>
-                        {routineDetail.exercises.map((exercise, index) => (
+                        {routineDetail.exercises?.map((exercise, index) => (
                         <Tr key={index}>
                             <Td>{exercise.name}</Td>
                             <Td>{exercise.repetitions}</Td>

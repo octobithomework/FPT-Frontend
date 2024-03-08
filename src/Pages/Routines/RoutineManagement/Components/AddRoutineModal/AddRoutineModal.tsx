@@ -22,14 +22,20 @@ import './AddRoutineModal.css';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { get } from '../../../../../Utils/APIHelpers';
 import { OptionType } from '../../../../../Interfaces/OptionType';
-import { RoutineExercise } from '../../../../../Interfaces/Routine';
+import { Routine, RoutineExercise } from '../../../../../Interfaces/Routine';
+import { set } from 'date-fns';
+import { DeleteIcon } from '@chakra-ui/icons';
 
 interface AddRoutineModalProps {
+    isOpen: boolean;
+    onOpen: () => void;
+    onClose: () => void;
     onAdd: (data: any) => void;
+    onEdit: (data: any) => void;
+    editingRoutine?: Routine | null;
 }
 
-const AddRoutineModal: React.FC<AddRoutineModalProps> = ({ onAdd }) => {
-    const { isOpen, onOpen, onClose } = useDisclosure();
+const AddRoutineModal: React.FC<AddRoutineModalProps> = ({ isOpen, onOpen, onClose, onAdd, onEdit, editingRoutine }) => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [visibility, setVisibility] = useState<SingleValue<OptionType>>(null);
@@ -55,7 +61,31 @@ const AddRoutineModal: React.FC<AddRoutineModalProps> = ({ onAdd }) => {
             }
         };
         fetchExercises();
-    }, []);
+
+        if (isOpen && editingRoutine) {
+            setName(editingRoutine.name);
+            setDescription(editingRoutine.description);
+
+            const visibility = editingRoutine.visibility.toLowerCase();
+            const capitalizedVisibility = visibility.charAt(0).toUpperCase() + visibility.slice(1);
+            setVisibility({ value: editingRoutine.visibility, label: capitalizedVisibility });
+
+            let newUidIndex = uidIndex;
+
+            const updatedExercises = editingRoutine.exercises.map((exercise: RoutineExercise) => {
+                const updatedExercise = {
+                    ...exercise,
+                    uid: newUidIndex++
+                };
+                return updatedExercise;
+            });
+
+            setAddedExercises(updatedExercises);
+            setUidIndex(newUidIndex);
+        }
+    }, [isOpen, editingRoutine]);
+
+
 
     const handleAddExercise = () => {
         if (selectedExercise) {
@@ -94,19 +124,6 @@ const AddRoutineModal: React.FC<AddRoutineModalProps> = ({ onAdd }) => {
         }
     };
 
-    const handleClose = () => {
-        setName('');
-        setDescription('');
-        setVisibility(null);
-        setSelectedExercise(null);
-        setAddedExercises([]);
-        setNameError('');
-        setVisibilityError('');
-        setExerciseError('');
-        onClose();
-
-    }
-
     const handleSubmit = async () => {
         let isValid = true;
         setNameError('');
@@ -138,14 +155,34 @@ const AddRoutineModal: React.FC<AddRoutineModalProps> = ({ onAdd }) => {
             return;
         }
 
-        onAdd({
+        const routineData = {
+            routineId: editingRoutine?.routineId,
             name,
             description,
             visibility: visibility?.value,
             exercises: addedExercises
-        });
+        };
+
+        if (editingRoutine) {
+            onEdit(routineData);
+        } else {
+            onAdd(routineData);
+        }
+
         handleClose();
     };
+
+    const handleClose = () => {
+        setName('');
+        setDescription('');
+        setVisibility(null);
+        setSelectedExercise(null);
+        setAddedExercises([]);
+        setNameError('');
+        setVisibilityError('');
+        setExerciseError('');
+        onClose();
+    }
 
     return (
         <>
@@ -227,9 +264,14 @@ const AddRoutineModal: React.FC<AddRoutineModalProps> = ({ onAdd }) => {
                                                     >
                                                         <div className="add-routine-modal-name-and-icons">
                                                             {exercise.name}
-                                                            <button onClick={() => handleRemoveExercise(exercise.uid)} className="add-routine-modal-icon">
-                                                                &#128465; {/* Trashcan Icon */}
-                                                            </button>
+
+
+
+
+                                                            <DeleteIcon
+                                                                className="routine-mgmt-modal-icon delete-icon"
+                                                                onClick={() => handleRemoveExercise(exercise.uid)}
+                                                            />
                                                         </div>
 
                                                         <div className="add-routine-modal-draggable-inputs">
