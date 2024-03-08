@@ -4,7 +4,7 @@ import { delAuth, getAuth, postAuth, putAuth } from '../../../Utils/APIHelpers';
 import { Routine } from '../../../Interfaces/Routine';
 import './RoutineManagement.css';
 import { Link } from 'react-router-dom';
-import AddRoutineModal from './Components/AddRoutineModal/AddRoutineModal';
+import RoutineManagementModal from './Components/RoutineManagementModal/RoutineManagementModal';
 import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
 import { SingleValue } from 'react-select';
 import { useDisclosure } from '@chakra-ui/react';
@@ -84,7 +84,7 @@ const RoutineManagementPage: React.FC = () => {
                 <div className="routine-mgmt-box-header">
                     <Text fontSize="2xl" className="routine-mgmt-box-header-text">My Routines</Text>
                     <div className="routine-mgmt-btn-container">
-                        <AddRoutineModal
+                        <RoutineManagementModal
                             isOpen={isOpen}
                             onOpen={onOpen}
                             onClose={handleClose}

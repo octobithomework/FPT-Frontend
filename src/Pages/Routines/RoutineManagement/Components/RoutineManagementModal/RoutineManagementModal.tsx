@@ -18,7 +18,7 @@ import {
     Flex,
     FormErrorMessage
 } from '@chakra-ui/react';
-import './AddRoutineModal.css';
+import './RoutineManagementModal.css';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { get } from '../../../../../Utils/APIHelpers';
 import { OptionType } from '../../../../../Interfaces/OptionType';
@@ -26,7 +26,7 @@ import { Routine, RoutineExercise } from '../../../../../Interfaces/Routine';
 import { set } from 'date-fns';
 import { DeleteIcon } from '@chakra-ui/icons';
 
-interface AddRoutineModalProps {
+interface RoutineManagementModalProps {
     isOpen: boolean;
     onOpen: () => void;
     onClose: () => void;
@@ -35,7 +35,7 @@ interface AddRoutineModalProps {
     editingRoutine?: Routine | null;
 }
 
-const AddRoutineModal: React.FC<AddRoutineModalProps> = ({ isOpen, onOpen, onClose, onAdd, onEdit, editingRoutine }) => {
+const RoutineManagementModal: React.FC<RoutineManagementModalProps> = ({ isOpen, onOpen, onClose, onAdd, onEdit, editingRoutine }) => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [visibility, setVisibility] = useState<SingleValue<OptionType>>(null);
@@ -186,7 +186,7 @@ const AddRoutineModal: React.FC<AddRoutineModalProps> = ({ isOpen, onOpen, onClo
 
     return (
         <>
-            <Button onClick={onOpen} className="add-routine-modal-btn">Add Routine</Button>
+            <Button onClick={onOpen} className="routine-mgmt-modal-btn">Add Routine</Button>
 
             <Modal isOpen={isOpen} onClose={handleClose}>
                 <ModalOverlay />
@@ -229,7 +229,7 @@ const AddRoutineModal: React.FC<AddRoutineModalProps> = ({ isOpen, onOpen, onClo
 
                         <FormControl>
                             <FormLabel>Exercise</FormLabel>
-                            <div className="add-routine-modal-add-exercise">
+                            <div className="routine-mgmt-modal-add-exercise">
                                 <Select
                                     options={exercises}
                                     getOptionLabel={(exercise: RoutineExercise) => exercise.name}
@@ -243,7 +243,7 @@ const AddRoutineModal: React.FC<AddRoutineModalProps> = ({ isOpen, onOpen, onClo
                             </div>
                         </FormControl>
 
-                        <FormControl isInvalid={!!exerciseError} className="add-routine-modal-exercise-error">
+                        <FormControl isInvalid={!!exerciseError} className="routine-mgmt-modal-exercise-error">
                             {exerciseError && <FormErrorMessage>{exerciseError}</FormErrorMessage>}
                         </FormControl>
 
@@ -262,21 +262,17 @@ const AddRoutineModal: React.FC<AddRoutineModalProps> = ({ isOpen, onOpen, onClo
                                                         p={2}
                                                         mb={2}
                                                     >
-                                                        <div className="add-routine-modal-name-and-icons">
+                                                        <div className="routine-mgmt-modal-name-and-icons">
                                                             {exercise.name}
-
-
-
-
                                                             <DeleteIcon
                                                                 className="routine-mgmt-modal-icon delete-icon"
                                                                 onClick={() => handleRemoveExercise(exercise.uid)}
                                                             />
                                                         </div>
 
-                                                        <div className="add-routine-modal-draggable-inputs">
+                                                        <div className="routine-mgmt-modal-draggable-inputs">
                                                             <Input
-                                                                className="add-routine-modal-exercise-input"
+                                                                className="routine-mgmt-modal-exercise-input"
                                                                 title="Repetitions (Reps): The number of consecutive times you perform an exercise without stopping. Aims to increase muscle endurance and strength."
                                                                 placeholder="Reps"
                                                                 ref={provided.innerRef}
@@ -292,7 +288,7 @@ const AddRoutineModal: React.FC<AddRoutineModalProps> = ({ isOpen, onOpen, onClo
                                                             />
 
                                                             <Input
-                                                                className="add-routine-modal-exercise-input"
+                                                                className="routine-mgmt-modal-exercise-input"
                                                                 title="Sets: A group of repetitions performed for an exercise. Multiple sets can help improve muscle strength, endurance, and growth."
                                                                 placeholder="Sets"
                                                                 ref={provided.innerRef}
@@ -308,7 +304,7 @@ const AddRoutineModal: React.FC<AddRoutineModalProps> = ({ isOpen, onOpen, onClo
                                                             />
 
                                                             <Input
-                                                                className="add-routine-modal-exercise-input"
+                                                                className="routine-mgmt-modal-exercise-input"
                                                                 title="Resting Time (seconds): The pause between sets, allowing muscles to recover. Proper rest can improve performance and reduce injury risk."
                                                                 placeholder="Rest"
                                                                 ref={provided.innerRef}
@@ -335,8 +331,8 @@ const AddRoutineModal: React.FC<AddRoutineModalProps> = ({ isOpen, onOpen, onClo
                     </ModalBody>
 
                     <ModalFooter>
-                        <Button mr={3} onClick={handleSubmit} className='add-routine-modal-save'>Save</Button>
-                        <Button onClick={handleClose} className="add-routine-modal-cancel">Cancel</Button>
+                        <Button mr={3} onClick={handleSubmit} className='routine-mgmt-modal-save'>Save</Button>
+                        <Button onClick={handleClose} className="routine-mgmt-modal-cancel">Cancel</Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>
@@ -344,4 +340,4 @@ const AddRoutineModal: React.FC<AddRoutineModalProps> = ({ isOpen, onOpen, onClo
     );
 };
 
-export default AddRoutineModal;
+export default RoutineManagementModal;

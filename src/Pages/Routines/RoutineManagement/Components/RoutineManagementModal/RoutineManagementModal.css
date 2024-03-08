@@ -1,17 +1,17 @@
-.add-routine-modal-btn {
+.routine-mgmt-modal-btn {
     margin-left: 20px;
 }
 
-.add-routine-modal-add-exercise {
+.routine-mgmt-modal-add-exercise {
     display: flex;
     align-items: center;
 }
 
-.add-routine-modal-add-exercise > :first-child {
+.routine-mgmt-modal-add-exercise > :first-child {
     flex-grow: 1;
 }
 
-.add-routine-modal-save, .add-routine-modal-cancel {
+.routine-mgmt-modal-save, .routine-mgmt-modal-cancel {
     width: 100px;
 }
 
@@ -20,7 +20,7 @@
     cursor: pointer;
 }
 
-.add-routine-modal-exercise-input {
+.routine-mgmt-modal-exercise-input {
     background-color: #333 !important;
     width: 71px !important;
     text-align: center;
@@ -32,11 +32,11 @@
     align-items: center;
 }
 
-.add-routine-modal-name-and-icons, .add-routine-modal-draggable-inputs {
+.routine-mgmt-modal-name-and-icons, .routine-mgmt-modal-draggable-inputs {
     display: inline-block;
     text-wrap: nowrap;
 }
 
-.add-routine-modal-exercise-error {
+.routine-mgmt-modal-exercise-error {
     margin-left: 2px;
 }
