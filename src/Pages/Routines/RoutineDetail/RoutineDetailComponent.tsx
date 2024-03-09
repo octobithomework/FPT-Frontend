@@ -95,26 +95,25 @@ const RoutineDetailComponent: React.FC<RoutineDetailProps> = ({ routineId, popov
 
 const detailDialog = (routineDetail: RoutineDetail, isAuthorized: boolean) => {
     return (
-        <Flex direction='column' m={4} bgColor={"#333"}>
-            <Heading as='h1' size="lg" m={3}>{routineDetail.name}</Heading>
-            <Text mb={4} fontStyle={'italic'} ml={5}>{routineDetail.description}</Text>
+        <Flex direction='column' m={6} bgColor={"#333"} minHeight={'76.5vh'}>
+            <Heading as='h1' size="lg" m={3} color={'white'}>{routineDetail.name}</Heading>
+            <Text mb={4} fontStyle={'italic'} ml={5} color={'white'}>{routineDetail.description}</Text>
             <Divider/>
             <Box overflow='scroll' p={4} height='md'>
-                <Table variant="simple">
+                <Table variant="simple" >
                     <Thead>
                         <Tr>
-                        <Th>Exercise Name</Th>
-                        <Th>Repetitions</Th>
-                        <Th>Sets</Th>
+                        <Th color='white'>Exercise Name</Th>
+                        <Th color='white'>Repetitions</Th>
+                        <Th color='white'>Sets</Th>
                         <Th>
                             <Tooltip label="Amount of time to rest between sets.">
                                 <HStack>
-                                    <InfoIcon/>
-                                    <Text>Resting Time</Text>
+                                    <InfoIcon color='white'/>
+                                    <Text color='white'>Resting Time</Text>
                                 </HStack>
                             </Tooltip>
                         </Th>
-                        <Th>Controls</Th>
                         </Tr>
                     </Thead>
                     <Tbody>
@@ -124,13 +123,6 @@ const detailDialog = (routineDetail: RoutineDetail, isAuthorized: boolean) => {
                             <Td>{exercise.repetitions}</Td>
                             <Td>{exercise.sets}</Td>
                             <Td>{exercise.restingTime} Seconds</Td>
-                            <Td>
-                                <HStack>
-                                    <Button size='sm'>&#9998;</Button>
-                                    <Button size='sm'><SmallAddIcon/></Button>
-                                    <Button size='sm'><DeleteIcon/></Button>
-                                </HStack>
-                            </Td>
                         </Tr>
                         ))}
                     </Tbody>

@@ -68,6 +68,10 @@ body {
   padding-top: 0 !important;
 }
 
+td {
+  color: white;
+}
+
 .chakra-textarea:focus {
   border-color: #007bff !important;
 }
