@@ -24,7 +24,6 @@ describe('DashboardPage', () => {
         name: 'talk-2',
         description: 'talked for 20 mins',
         date: '2024-03-3',
-       // completionStatus: 0
       },
       {
         routineLogId: '2',
@@ -32,7 +31,6 @@ describe('DashboardPage', () => {
         name: 'talk-3',
         description: 'talked for 20 mins',
         date: '2024-03-3',
-        //completionStatus: 0
       },
 ];
 
@@ -67,7 +65,6 @@ describe('DashboardPage', () => {
     await waitFor(() => {
       expect(screen.getByText(/talk-2/)).toBeInTheDocument();
       expect(screen.getByText(/talk-3/)).toBeInTheDocument();
-     // expect(screen.queryByText(/talk-2/)).not.toBeInTheDocument();
     });
 
   });
