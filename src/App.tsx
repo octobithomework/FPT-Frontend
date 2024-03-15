@@ -13,6 +13,7 @@ import DashboardPage from './Pages/Dashboard/Dashboart';
 import ExerciseDetailPage from './Pages/Exercises/ExerciseDetail';
 import RoutineDetailPage from './Pages/Routines/RoutineDetail/RoutineDetail';
 import RoutineManagementPage from './Pages/Routines/RoutineManagement/RoutineManagement';
+import UserProfilePage from './Pages/UserProfile/UserProfile';
 
 const App: React.FC = () => {
     return (
@@ -27,6 +28,7 @@ const App: React.FC = () => {
                 <Route path="/exercise-details/:exerciseId" element={<ExerciseDetailPage />} />
                 <Route path="/routine-details/:routineId" element={<ProtectedRoute component={RoutineDetailPage} />} />
                 <Route path="/routine-management" element={<ProtectedRoute component={RoutineManagementPage} />} />
+                <Route path="/user-profile" element={<ProtectedRoute component={UserProfilePage} />} />
                 <Route path="*" element={<Navigate replace to="/login" />} />
             </Routes>
             <Footer />

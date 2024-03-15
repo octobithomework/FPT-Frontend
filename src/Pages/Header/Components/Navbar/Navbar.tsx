@@ -19,6 +19,8 @@ const Navbar: React.FC = () => {
 
     return (
         <nav className="navbar">
+            <Link to="/dashboard">Dashboard</Link>
+            <Link to="/user-profile">Profile</Link>
             <Link to="/routine-management">Routines</Link>
             <Link to="/logout" onClick={handleLogout}>Logout</Link>
         </nav>
