@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { get } from '../../Utils/APIHelpers';
 import { Exercise } from '../../Interfaces/Exercise';
 import './ExerciseDetail.css'; 
@@ -19,15 +19,16 @@ const ExerciseDetailComponent: React.FC<ExerciseDetailProps> = ({ exerciseId }: 
         difficultyLevel: '',
         equipmentNeeded: ''
     });
+    const navigate = useNavigate();
 
     const getExerciseDetail = async (id: string) => {
         try {
             const response = await get('/exercise-details/' + id);
             if (!response || !response.ok) {
+                navigate('/dashboard');
                 throw new Error('Failed to fetch exercise details');
             }
             const json = await response.json();
-            console.log('JSON response from server:', json);
 
             setExerciseDetailInfo({
                 exerciseId: json.exerciseId,

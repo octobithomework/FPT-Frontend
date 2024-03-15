@@ -2,7 +2,7 @@ export interface Routine {
     routineId: number;
     name: string;
     description: string;
-    visibility: 'PUBLIC' | 'PRIVATE';
+    visibility: 'PUBLIC' | 'PRIVATE' | '';
     created: string;
     exercises: RoutineExercise[];
 }
