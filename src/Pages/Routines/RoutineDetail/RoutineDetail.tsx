@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { getAuth } from '../../../Utils/APIHelpers';
 import { Routine, RoutineExercise } from '../../../Interfaces/Routine';
 import './RoutineDetail.css';
@@ -17,11 +17,13 @@ const RoutineDetailComponent: React.FC<RoutineDetailProps> = ({ routineId }) => 
         created: '',
         exercises: []
     });
+    const navigate = useNavigate();
 
     const getRoutineDetail = async (id: string) => {
         try {
             const response = await getAuth(`/routine-details/${id}`);
             if (!response || !response.ok) {
+                navigate('/dashboard');
                 throw new Error('Failed to fetch routine details');
             }
             const json = await response.json();
@@ -56,11 +58,16 @@ const RoutineDetailComponent: React.FC<RoutineDetailProps> = ({ routineId }) => 
                 {routineDetail.exercises.length > 0 && (
                     <div className="routine-detail-exercises">
                         {routineDetail.exercises.map((exercise: RoutineExercise) => (
-                            <div key={exercise.routineExerciseId} className="routine-exercise-detail">
-                                <p>{exercise.name}</p>
-                                <p>Reps: {exercise.repetitions}</p>
-                                <p>Sets: {exercise.sets}</p>
-                                <p>Resting Time: {exercise.restingTime && <span>{exercise.restingTime} sec</span>}</p>
+                            <div key={exercise.routineExerciseId} >
+                                {/* set up link to exercise detail */}
+                                <Link to={`/exercise-details/${exercise.exerciseId}`}>
+                                    <div className="routine-exercise-detail">
+                                        <p>{exercise.name}</p>
+                                        <p>Reps: {exercise.repetitions}</p>
+                                        <p>Sets: {exercise.sets}</p>
+                                        <p>Resting Time: {exercise.restingTime && <span>{exercise.restingTime} sec</span>}</p>
+                                    </div>
+                                </Link>
                             </div>
                         ))}
                     </div>

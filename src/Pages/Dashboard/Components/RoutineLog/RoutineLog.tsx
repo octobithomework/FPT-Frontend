@@ -52,7 +52,7 @@ const RoutineLog: React.FC<RoutineLogProps> = ({ completedRoutines, currentMonth
                 {filteredRoutines.length > 0 ? (
                     filteredRoutines.map((routine) => (
                         <div key={routine.routineLogId} className="routine-entry">
-                            <Link to={`/routine-details/${routine.routineLogId}`}>
+                            <Link to={`/routine-details/${routine.routineId}`}>
                                 <div className="name-date-container">
                                     <p className="name">{routine.name}</p>
                                     <p className="date">Completed: {new Date(routine.date + 'T00:00:00').toLocaleDateString()}</p>

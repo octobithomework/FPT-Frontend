@@ -55,6 +55,11 @@
     align-items: center;
 }
 
+.routine-exercise-detail:hover {
+    cursor: pointer;
+    box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.1);
+}
+
 .routine-exercise-detail>p {
     margin: 0;
     text-align: left;
