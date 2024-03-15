@@ -11,7 +11,7 @@ import ForgotPasswordPage from './Pages/ForgotPassword/ForgotPassword';
 import ResetPasswordPage from './Pages/ResetPassword/ResetPassword';
 import DashboardPage from './Pages/Dashboard/Dashboart';
 import ExerciseDetailPage from './Pages/Exercises/ExerciseDetail';
-import RoutineDetailPage from './Pages/Routines/RoutineDetail/RoutineDetailPage';
+import RoutineDetailPage from './Pages/Routines/RoutineDetail/RoutineDetail';
 import RoutineManagementPage from './Pages/Routines/RoutineManagement/RoutineManagement';
 
 const App: React.FC = () => {

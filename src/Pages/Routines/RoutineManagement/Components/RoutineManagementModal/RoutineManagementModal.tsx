@@ -44,7 +44,6 @@ const RoutineManagementModal: React.FC<RoutineManagementModalProps> = ({ isOpen,
     const [addedExercises, setAddedExercises] = useState<RoutineExercise[]>([]);
     const [nameError, setNameError] = useState('');
     const [visibilityError, setVisibilityError] = useState('');
-    const [exerciseError, setExerciseError] = useState('');
     const [uidIndex, setUidIndex] = useState(0);
 
     useEffect(() => {
@@ -119,16 +118,12 @@ const RoutineManagementModal: React.FC<RoutineManagementModalProps> = ({ isOpen,
 
     const handleRemoveExercise = (uidToRemove: number) => {
         setAddedExercises(addedExercises.filter((exercise: any) => exercise.uid !== uidToRemove));
-        if (exerciseError) {
-            setExerciseError('');
-        }
     };
 
     const handleSubmit = async () => {
         let isValid = true;
         setNameError('');
         setVisibilityError('');
-        setExerciseError('');
 
         if (!name.trim()) {
             setNameError('Please enter a name for the routine.');
@@ -137,17 +132,6 @@ const RoutineManagementModal: React.FC<RoutineManagementModalProps> = ({ isOpen,
 
         if (!visibility) {
             setVisibilityError('Please select the visibility for the routine.');
-            isValid = false;
-        }
-
-        const invalidExercises = addedExercises
-            .some(exercise => (exercise?.sets || -1) <= 0
-                || (exercise?.repetitions || -1) <= 0
-                || (exercise?.restingTime || -1) < 0
-            );
-
-        if (invalidExercises) {
-            setExerciseError('Each exercise must have non-negative sets, reps, and rest.');
             isValid = false;
         }
 
@@ -180,7 +164,6 @@ const RoutineManagementModal: React.FC<RoutineManagementModalProps> = ({ isOpen,
         setAddedExercises([]);
         setNameError('');
         setVisibilityError('');
-        setExerciseError('');
         onClose();
     }
 
@@ -191,7 +174,9 @@ const RoutineManagementModal: React.FC<RoutineManagementModalProps> = ({ isOpen,
             <Modal isOpen={isOpen} onClose={handleClose}>
                 <ModalOverlay />
                 <ModalContent className="modal-content">
-                    <ModalHeader className="modal-header">Add a New Routine</ModalHeader>
+                    <ModalHeader className="modal-header">
+                        {editingRoutine ? "Edit an Existing Routine" : "Add a New Routine"}
+                    </ModalHeader>
                     <ModalCloseButton />
                     <ModalBody pb={6}>
                         <FormControl isInvalid={!!nameError}>
@@ -243,10 +228,6 @@ const RoutineManagementModal: React.FC<RoutineManagementModalProps> = ({ isOpen,
                             </div>
                         </FormControl>
 
-                        <FormControl isInvalid={!!exerciseError} className="routine-mgmt-modal-exercise-error">
-                            {exerciseError && <FormErrorMessage>{exerciseError}</FormErrorMessage>}
-                        </FormControl>
-
                         <DragDropContext onDragEnd={handleOnDragEnd}>
                             <Droppable droppableId="exercises">
                                 {(provided) => (
@@ -281,7 +262,7 @@ const RoutineManagementModal: React.FC<RoutineManagementModalProps> = ({ isOpen,
                                                                 value={exercise.repetitions}
                                                                 onChange={(e) => {
                                                                     const updatedExercises = addedExercises.map((ex: any) =>
-                                                                        ex.uid === exercise.uid ? { ...ex, repetitions: parseInt(e.target.value, 0) } : ex
+                                                                        ex.uid === exercise.uid ? { ...ex, repetitions: parseInt(e.target.value) || null } : ex
                                                                     );
                                                                     setAddedExercises(updatedExercises);
                                                                 }}
@@ -297,7 +278,7 @@ const RoutineManagementModal: React.FC<RoutineManagementModalProps> = ({ isOpen,
                                                                 value={exercise.sets}
                                                                 onChange={(e) => {
                                                                     const updatedExercises = addedExercises.map((ex: any) =>
-                                                                        ex.uid === exercise.uid ? { ...ex, sets: parseInt(e.target.value, 0) } : ex
+                                                                        ex.uid === exercise.uid ? { ...ex, sets: parseInt(e.target.value) || null } : ex
                                                                     );
                                                                     setAddedExercises(updatedExercises);
                                                                 }}
@@ -313,7 +294,7 @@ const RoutineManagementModal: React.FC<RoutineManagementModalProps> = ({ isOpen,
                                                                 value={exercise.restingTime}
                                                                 onChange={(e) => {
                                                                     const updatedExercises = addedExercises.map((ex: any) =>
-                                                                        ex.uid === exercise.uid ? { ...ex, restingTime: parseInt(e.target.value, 0) } : ex
+                                                                        ex.uid === exercise.uid ? { ...ex, restingTime: parseInt(e.target.value) || null } : ex
                                                                     );
                                                                     setAddedExercises(updatedExercises);
                                                                 }}
