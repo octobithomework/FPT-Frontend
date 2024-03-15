@@ -2,7 +2,20 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* color: white; */
+    color: white;
+    min-height: calc(100vh - 65px - 60px);
+}
+
+.user-profile-box {
+    width: 500px;
+    max-height: calc(100vh - 65px - 60px - 20px);
+    background-color: #333;
+    color: white;
+    margin: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 24px;
+    overflow: auto;
 }
 
 .avatar-container {
@@ -40,9 +53,16 @@
 }
 
 .user-profile-header {
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
 }
 
 .user-profile-details {
     margin-top: 20px;
+}
+
+.user-profile-save {
+    width: 100px;
+    margin-top: 24px;
 }
