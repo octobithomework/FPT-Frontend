@@ -4,10 +4,19 @@ import { getAuth, postAuth, putAuth } from '../../Utils/APIHelpers';
 import { UserProfile } from '../../Interfaces/UserProfile';
 import defaultAvatar from '../../Assets/default-profile-icon.jpg';
 import './UserProfile.css';
-import { SingleValue } from 'react-select';
+import { OptionType } from '../../Interfaces/OptionType';
+import { FormControl, FormLabel, Input, Textarea } from '@chakra-ui/react';
+import Select, { SingleValue } from 'react-select';
 
 const UserProfilePage: React.FC = () => {
-    const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
+    const [userProfile, setUserProfile] = useState<UserProfile>();
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [age, setAge] = useState('');
+    const [gender, setGender] = useState<SingleValue<OptionType>>(null);
+    const [visibility, setVisibility] = useState<SingleValue<OptionType>>(null);
+    const [bio, setBio] = useState('');
+    const [roles, setRoles] = useState<SingleValue<OptionType>>(null);
 
     const getUserProfile = async () => {
         try {
@@ -24,8 +33,23 @@ const UserProfilePage: React.FC = () => {
     };
 
     useEffect(() => {
-        getUserProfile();
-    }, []);
+        if (userProfile) {
+            setFirstName(userProfile.firstName);
+            setLastName(userProfile.lastName);
+            setAge(userProfile.age || '');
+
+            const gender = userProfile.gender?.toLowerCase() || '';
+            const capitalizedGender = gender.charAt(0).toUpperCase() + gender.slice(1);
+            setGender({ value: userProfile.gender, label: capitalizedGender });
+
+            const visibility = userProfile.visibility.toLowerCase();
+            const capitalizedVisibility = visibility.charAt(0).toUpperCase() + visibility.slice(1);
+            setVisibility({ value: userProfile.visibility, label: capitalizedVisibility });
+
+            setBio(userProfile.bio || '');
+        }
+    }, [userProfile]);
+
 
     const handleAvatarUpload = async (file: File) => {
         if (!userProfile) {
@@ -39,6 +63,7 @@ const UserProfilePage: React.FC = () => {
         // Add additional user profile information to formData
         formData.append('firstName', userProfile.firstName);
         formData.append('lastName', userProfile.lastName);
+        formData.append('visibility', userProfile.visibility);
         formData.append('age', String(userProfile.age || "") || "");
         formData.append('gender', userProfile.gender || "");
         formData.append('bio', userProfile.bio || "");
@@ -84,14 +109,69 @@ const UserProfilePage: React.FC = () => {
                         <span>+</span>
                     </div>
                 </div>
-                <h1>{userProfile?.firstName} {userProfile?.lastName}</h1>
             </div>
             <div className="user-profile-details">
-                <p>Age: {userProfile?.age}</p>
-                <p>Gender: {userProfile?.gender}</p>
-                <p>Visibility: {userProfile?.visibility}</p>
-                <p>Bio: {userProfile?.bio}</p>
-                <p>Roles: {userProfile?.roles.join(', ')}</p>
+                <FormControl>
+                    <FormLabel>First Name</FormLabel>
+                    <Input value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                </FormControl>
+
+                <FormControl>
+                    <FormLabel>Last Name</FormLabel>
+                    <Input value={lastName} onChange={(e) => setLastName(e.target.value)} />
+                </FormControl>
+
+                <FormControl>
+                    <FormLabel>Age</FormLabel>
+                    <Input value={age} type="number" onChange={(e) => setAge(e.target.value)} />
+                </FormControl>
+
+                <FormControl>
+                    <FormLabel>Gender</FormLabel>
+                    <Select
+                        options={[
+                            { value: 'MALE', label: 'Male' },
+                            { value: 'FEMALE', label: 'Female' },
+                            { value: 'OTHER', label: 'Other' },
+                        ]}
+                        value={gender}
+                        onChange={setGender}
+                        placeholder=''
+                        classNamePrefix="select"
+                        isSearchable={false}
+                    />
+                </FormControl>
+
+                <FormControl>
+                    <FormLabel>Visibility</FormLabel>
+                    <Select
+                        options={[
+                            { value: 'PUBLIC', label: 'Public' },
+                            { value: 'PRIVATE', label: 'Private' },
+                        ]}
+                        value={visibility || { value: '', label: '' }}
+                        onChange={setVisibility}
+                        placeholder=''
+                        classNamePrefix="select"
+                    />
+                </FormControl>
+
+                <FormControl>
+                    <FormLabel>Bio</FormLabel>
+                    <Textarea value={bio} onChange={(e) => setBio(e.target.value)} />
+                </FormControl>
+
+                {/* <FormControl>
+                    <FormLabel>Roles</FormLabel>
+                    <Select
+                        options={[
+                            { value: 'Admin', label: 'Admin' },
+                        ]}
+                        value={roles}
+                        onChange={setRoles}
+                        classNamePrefix="select"
+                    />
+                </FormControl> */}
             </div>
         </div>
     );

@@ -2,10 +2,10 @@ export interface UserProfile {
     userProfileId: number;
     firstName: string;
     lastName: string;
-    age: number;
-    gender: string;
+    age?: string;
+    gender?: string;
     visibility: 'PUBLIC' | 'PRIVATE' | '';
-    bio: string;
-    avatar: string;
-    roles: string[];
+    bio?: string;
+    avatar?: string;
+    roles?: string[];
 }
