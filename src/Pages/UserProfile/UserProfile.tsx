@@ -105,7 +105,7 @@ const UserProfilePage: React.FC = () => {
         }
 
         if (!age?.toString().trim() || isNaN(Number(age)) || Number(age) <= 0 || Number(age) > 150) {
-            setAgeError('Please enter a valid age between 0 and 150.');
+            setAgeError('Please enter a valid age between 1 and 150.');
             isValid = false;
         } else {
             setAgeError('');
@@ -163,7 +163,23 @@ const UserProfilePage: React.FC = () => {
     };
 
     const handleCancel = () => {
+        setFormSuccess('');
+        setFormError('');
+
+        setFirstNameError('');
+        setLastNameError('');
+        setAgeError('');
+
+        if (formRef.current) {
+            formRef.current.scrollTo({
+                top: 0,
+                behavior: 'smooth',
+            });
+        }
+
         getUserProfile();
+
+        setFormSuccess('Local changes reset.');
     };
 
     return (
