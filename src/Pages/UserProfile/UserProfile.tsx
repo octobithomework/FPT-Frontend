@@ -23,49 +23,66 @@ const UserProfilePage: React.FC = () => {
     const [ageError, setAgeError] = useState('');
     const formRef = React.useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        const getUserProfile = async () => {
-            try {
-                const response = await getAuth('/user-details');
-                if (!response || !response.ok) {
-                    throw new Error('Failed to fetch user details');
-                }
-                const json: UserProfile = await response.json();
-
-                setUserProfile(json);
-
-                if (json) {
-                    setFirstName(json.firstName);
-                    setLastName(json.lastName);
-                    setAge(json.age || '');
-
-                    const genderValue = json.gender?.toLowerCase() || '';
-                    const capitalizedGender = genderValue.charAt(0).toUpperCase() + genderValue.slice(1);
-                    setGender({ value: json.gender, label: capitalizedGender });
-
-                    const visibilityValue = json.visibility.toLowerCase();
-                    const capitalizedVisibility = visibilityValue.charAt(0).toUpperCase() + visibilityValue.slice(1);
-                    setVisibility({ value: json.visibility, label: capitalizedVisibility });
-
-                    setBio(json.bio || '');
-                }
-            } catch (error) {
-                console.error('Error fetching user details:', error);
+    const getUserProfile = async () => {
+        try {
+            const response = await getAuth('/user-details');
+            if (!response || !response.ok) {
+                throw new Error('Failed to fetch user details');
             }
-        };
+            const json: UserProfile = await response.json();
 
+            setUserProfile(json);
+
+            if (json) {
+                setFirstName(json.firstName);
+                setLastName(json.lastName);
+                setAge(json.age || '');
+
+                const genderValue = json.gender?.toLowerCase() || '';
+                const capitalizedGender = genderValue.charAt(0).toUpperCase() + genderValue.slice(1);
+                setGender({ value: json.gender, label: capitalizedGender });
+
+                const visibilityValue = json.visibility.toLowerCase();
+                const capitalizedVisibility = visibilityValue.charAt(0).toUpperCase() + visibilityValue.slice(1);
+                setVisibility({ value: json.visibility, label: capitalizedVisibility });
+
+                setBio(json.bio || '');
+            }
+        } catch (error) {
+            console.error('Error fetching user details:', error);
+        }
+    };
+
+    useEffect(() => {
         getUserProfile();
     }, []);
 
     const handleAvatarClick = () => {
         const fileInput = document.createElement('input');
         fileInput.type = 'file';
-        fileInput.accept = 'image/*';
+        fileInput.accept = '.jpeg,.jpg';
         fileInput.onchange = (e) => {
             const target = e.target as HTMLInputElement;
             const file = target.files ? target.files[0] : null;
             if (file) {
                 setAvatarFile(file);
+
+                const reader = new FileReader();
+                reader.onload = (loadEvent) => {
+                    let base64String = loadEvent.target?.result;
+                    if (typeof base64String === 'string') {
+                        base64String = base64String.replace('data:image/jpeg;base64,', '');
+
+                        setUserProfile((prevProfile: any) => ({
+                            ...prevProfile,
+                            avatar: base64String
+                        }));
+                    }
+                };
+                reader.onerror = (error) => {
+                    console.error('Error reading file:', error);
+                };
+                reader.readAsDataURL(file);
             }
         };
         fileInput.click();
@@ -145,6 +162,10 @@ const UserProfilePage: React.FC = () => {
         }
     };
 
+    const handleCancel = () => {
+        getUserProfile();
+    };
+
     return (
         <div className="user-profile-container">
             <div className="user-profile-box" ref={formRef}>
@@ -160,14 +181,14 @@ const UserProfilePage: React.FC = () => {
 
                 <div className="user-profile-header">
                     <div className="avatar-container" onClick={handleAvatarClick}>
-                        <img src={userProfile && userProfile.avatar ? `data:image/jpeg;base64,${userProfile.avatar}` : defaultAvatar} alt="User Avatar" className="user-avatar" />
+                        <img src={userProfile?.avatar ? `data:image/jpeg;base64,${userProfile.avatar}` : defaultAvatar} alt="User Avatar" className="user-avatar" />
                         <div className="avatar-overlay">
                             <span>+</span>
                         </div>
                     </div>
                 </div>
                 <div className="user-profile-details">
-                    <FormControl isInvalid={!!firstNameError}> 
+                    <FormControl isInvalid={!!firstNameError}>
                         <FormLabel>First Name</FormLabel>
                         <Input value={firstName} onChange={(e) => setFirstName(e.target.value)} />
                         {firstNameError && <FormErrorMessage>{firstNameError}</FormErrorMessage>}
@@ -221,6 +242,7 @@ const UserProfilePage: React.FC = () => {
                     </FormControl>
 
                     <Button mr={3} onClick={handleSubmit} className='user-profile-save'>Save</Button>
+                    <Button onClick={handleCancel} className='user-profile-cancel'>Cancel</Button>
                 </div>
             </div>
         </div>
